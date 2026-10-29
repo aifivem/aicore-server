@@ -570,6 +570,27 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-jobs": {
+      "name": "ai-jobs",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-management": {
       "name": "ai-management",
       "version": "0.1.0",
@@ -1547,6 +1568,8 @@
     "ai-inventory": ["ai-inventory@workspace:resources/[ai]/ai-inventory"],
 
     "ai-inventory-web": ["ai-inventory-web@workspace:resources/[ai]/ai-inventory/web"],
+
+    "ai-jobs": ["ai-jobs@workspace:resources/[ai]/ai-jobs"],
 
     "ai-management": ["ai-management@workspace:resources/[ai]/ai-management"],
 
