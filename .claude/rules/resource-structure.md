@@ -17,13 +17,13 @@ Every script follows https://github.com/overextended/fivem-ts, adapted in `templ
 
 ## Layout
 
-- `resource/client`, `resource/server`, `resource/common`: source, entry `index.ts`. Path aliases `common`, `client/*`, `server/*`, `public/*`, `types/*`.
+- `resource/client`, `resource/server`, `resource/common`: source, entry `index.ts`. Path aliases `common`, `client/*`, `server/*`.
 - `locales/*.json`: lang files read by `createLocale` (`en.json` complete base).
-- `public/`: static files and client-readable config copied to `dist/` (`public/config.json`, typed with `LoadFile("public/config.json")`). `types/public.d.ts` is generated, never edited.
+- `public/` (optional, only when a resource has static files players download): copied to `dist/` and listed in `files`. No config files there: settings live in the admin panel (`data/*.json`). A resource without static files has no `public/` folder.
 - `data/`: panel-edited content (`data/*.json`), server-side only unless the resource lists it in `files`.
 - `sql/main.sql`: the resource's tables, installed by `createDatabaseTables` at start.
 - `web/`: NUI (Vite), output `dist/web`, `ui_page` added automatically.
-- `scripts/`: build helpers (`postBuild.ts`, `typegen.ts`).
+- `scripts/`: build helper (`postBuild.ts`, the same file in every resource and the template).
 - `LICENSE` (GPL-3.0), `CLAUDE.md`, `.gitignore`: every resource is its own git repo.
 
 ## Build and manifest

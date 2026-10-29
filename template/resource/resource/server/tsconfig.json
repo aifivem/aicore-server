@@ -5,9 +5,7 @@
     "paths": {
       "common": ["../common"],
       "common/*": ["../common/*"],
-      "server/*": ["./server/*"],
-      "public/*": ["../public/*"],
-      "types/*": ["../../types/*"]
+      "server/*": ["./server/*"]
     }
   },
   "include": ["./", "../common/"]
