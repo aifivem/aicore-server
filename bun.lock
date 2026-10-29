@@ -549,6 +549,27 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-police": {
+      "name": "ai-police",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-target": {
       "name": "ai-target",
       "version": "0.1.0",
@@ -1328,6 +1349,8 @@
     "ai-inventory-web": ["ai-inventory-web@workspace:resources/[ai]/ai-inventory/web"],
 
     "ai-mysql": ["ai-mysql@workspace:resources/[ai]/ai-mysql"],
+
+    "ai-police": ["ai-police@workspace:resources/[ai]/ai-police"],
 
     "ai-target": ["ai-target@workspace:resources/[ai]/ai-target"],
 
