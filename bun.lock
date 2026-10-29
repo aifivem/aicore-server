@@ -530,6 +530,62 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-vehicleshop": {
+      "name": "ai-vehicleshop",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
+    "resources/[ai]/ai-vehicleshop/web": {
+      "name": "ai-vehicleshop-web",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/shared": "^0.1.0",
+        "@fontsource/inter": "^5.2.8",
+        "@fortawesome/fontawesome-svg-core": "^7.2.0",
+        "@fortawesome/free-solid-svg-icons": "^7.2.0",
+        "@fortawesome/react-fontawesome": "^3.2.0",
+        "@reduxjs/toolkit": "^2.11.2",
+        "@tanstack/react-pacer": "0.23.0",
+        "@tanstack/react-virtual": "^3.13.23",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "fivem-nui-react": "^1.2.0",
+        "motion": "^12.34.3",
+        "radix-ui": "^1.4.3",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+        "react-redux": "^9.2.0",
+        "tailwind-merge": "^3.5.0",
+      },
+      "devDependencies": {
+        "@csstools/postcss-color-mix-function": "^4.0.2",
+        "@csstools/postcss-oklab-function": "^5.0.2",
+        "@tailwindcss/vite": "^4.2.1",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^5.1.1",
+        "postcss-color-functional-notation": "^8.0.2",
+        "tailwindcss": "^4.2.1",
+        "typescript": "^6.0.3",
+        "vite": "^7.3.1",
+      },
+    },
     "template/resource": {
       "name": "__NAME__",
       "version": "0.1.0",
@@ -1159,6 +1215,10 @@
     "ai-vehiclekeys": ["ai-vehiclekeys@workspace:resources/[ai]/ai-vehiclekeys"],
 
     "ai-vehicles": ["ai-vehicles@workspace:resources/[ai]/ai-vehicles"],
+
+    "ai-vehicleshop": ["ai-vehicleshop@workspace:resources/[ai]/ai-vehicleshop"],
+
+    "ai-vehicleshop-web": ["ai-vehicleshop-web@workspace:resources/[ai]/ai-vehicleshop/web"],
 
     "ansis": ["ansis@4.4.0", "", {}, "sha512-9k3v7xcHwgdO/DruxGIg4HtjvlAZlcnsX/mzqUb1t3NkYnl9kK2UJ+Gq0io+vQf7iT//BD/HB/NBkUR1LWxoeA=="],
 
