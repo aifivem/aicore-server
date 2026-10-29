@@ -224,6 +224,27 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-cityhall": {
+      "name": "ai-cityhall",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-core": {
       "name": "ai-core",
       "version": "0.1.0",
@@ -1479,6 +1500,8 @@
     "ai-chat": ["ai-chat@workspace:resources/[ai]/ai-chat"],
 
     "ai-chat-web": ["ai-chat-web@workspace:resources/[ai]/ai-chat/web"],
+
+    "ai-cityhall": ["ai-cityhall@workspace:resources/[ai]/ai-cityhall"],
 
     "ai-core": ["ai-core@workspace:resources/[ai]/ai-core"],
 
