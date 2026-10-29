@@ -741,6 +741,27 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-weathersync": {
+      "name": "ai-weathersync",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "template/resource": {
       "name": "__NAME__",
       "version": "0.1.0",
@@ -1386,6 +1407,8 @@
     "ai-vehicleshop": ["ai-vehicleshop@workspace:resources/[ai]/ai-vehicleshop"],
 
     "ai-vehicleshop-web": ["ai-vehicleshop-web@workspace:resources/[ai]/ai-vehicleshop/web"],
+
+    "ai-weathersync": ["ai-weathersync@workspace:resources/[ai]/ai-weathersync"],
 
     "ansis": ["ansis@4.4.0", "", {}, "sha512-9k3v7xcHwgdO/DruxGIg4HtjvlAZlcnsX/mzqUb1t3NkYnl9kK2UJ+Gq0io+vQf7iT//BD/HB/NBkUR1LWxoeA=="],
 
