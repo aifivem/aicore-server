@@ -282,6 +282,62 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-death": {
+      "name": "ai-death",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
+    "resources/[ai]/ai-death/web": {
+      "name": "ai-death-web",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/shared": "^0.1.0",
+        "@fontsource/inter": "^5.2.8",
+        "@fortawesome/fontawesome-svg-core": "^7.2.0",
+        "@fortawesome/free-solid-svg-icons": "^7.2.0",
+        "@fortawesome/react-fontawesome": "^3.2.0",
+        "@reduxjs/toolkit": "^2.11.2",
+        "@tanstack/react-pacer": "0.23.0",
+        "@tanstack/react-virtual": "^3.13.23",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "fivem-nui-react": "^1.2.0",
+        "motion": "^12.34.3",
+        "radix-ui": "^1.4.3",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+        "react-redux": "^9.2.0",
+        "tailwind-merge": "^3.5.0",
+      },
+      "devDependencies": {
+        "@csstools/postcss-color-mix-function": "^4.0.2",
+        "@csstools/postcss-oklab-function": "^5.0.2",
+        "@tailwindcss/vite": "^4.2.1",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^5.1.1",
+        "postcss-color-functional-notation": "^8.0.2",
+        "tailwindcss": "^4.2.1",
+        "typescript": "^6.0.3",
+        "vite": "^7.3.1",
+      },
+    },
     "resources/[ai]/ai-fuel": {
       "name": "ai-fuel",
       "version": "0.1.0",
@@ -1252,6 +1308,10 @@
     "ai-core": ["ai-core@workspace:resources/[ai]/ai-core"],
 
     "ai-core-web": ["ai-core-web@workspace:resources/[ai]/ai-core/web"],
+
+    "ai-death": ["ai-death@workspace:resources/[ai]/ai-death"],
+
+    "ai-death-web": ["ai-death-web@workspace:resources/[ai]/ai-death/web"],
 
     "ai-fuel": ["ai-fuel@workspace:resources/[ai]/ai-fuel"],
 
