@@ -1,0 +1,4 @@
+-- Tables of this resource: CREATE TABLE IF NOT EXISTS, names prefixed with the resource (ai_<name>_...),
+-- every table ending with ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;".
+-- Installed by createDatabaseTables on start: missing tables and columns are added, nothing is dropped,
+-- keys are only created with a new table (plan indexes before the first release).

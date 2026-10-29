@@ -1,0 +1,27 @@
+# ai-core server
+
+The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script collection in TypeScript, built so that anyone can extend it with an AI and configure everything from one in-game admin panel.
+
+## Layout
+
+| Path | What |
+|---|---|
+| `server.cfg`, `security.cfg`, `misc.cfg`, `permission.cfg` | Server config. Secrets go into `env.cfg` (copy `env.example.cfg`). |
+| `resources/[standalone]/` | Third-party resources: ox_lib, its `require` helper, oxmysql, pma-voice. |
+| `resources/[ai]/` | ai-core resources, each `ai-*` folder its own git repo. |
+| `packages/` | The `@aicore-fivem/*` npm packages (own git repo). |
+| `template/` | Template for new resources (`bun run new <name> "<description>"`). |
+| `tools/rcon.ts` | RCON client: `bun run rcon "restart ai-core"`. |
+| `docs/research/` | Research and reasoning behind the rules. |
+| `CLAUDE.md`, `.claude/rules/` | Instructions for AI assistants (and a good read for people). |
+
+## Development setup
+
+1. Install [bun](https://bun.sh) and MariaDB.
+2. Copy `env.example.cfg` to `env.cfg`, fill in the license key and the database connection, create the database.
+3. In this folder: `bun install`, then `bun run build`.
+4. Start FXServer (txAdmin) with this folder as the server data folder.
+
+## License
+
+GPL-3.0-only.

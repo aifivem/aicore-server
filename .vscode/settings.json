@@ -1,0 +1,7 @@
+{
+  // Every ai-* resource and packages/ are their own git repos inside the server repo, which ignores them;
+  // scan deep enough that VS Code opens each one instead of greying it out as ignored.
+  "git.autoRepositoryDetection": true,
+  "git.repositoryScanMaxDepth": 5,
+  "git.repositoryScanIgnoredFolders": ["node_modules", "dist", "artifact"]
+}

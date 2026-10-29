@@ -1,0 +1,42 @@
+# FXServer runtime
+/cache/
+/db/
+.replxx_history
+*.bkp
+imgui.ini
+
+# Secrets and machine-specific settings (template: env.example.cfg)
+/env.cfg
+
+# Downloaded third-party resources (the txAdmin recipe installs them)
+/resources/\[standalone\]/
+
+# Every ai-* resource and the shared packages are their own git repos ("[" is a pattern character, so escaped)
+/resources/\[ai\]/
+/packages/
+
+# Node / build
+node_modules/
+.yarn.installed
+*.tsbuildinfo
+
+# Panel data write backups and temp files (the data file itself is in git)
+**/data/*.json.bak
+**/data/*.json.tmp
+
+# Editor / OS
+.vscode/*
+# Shared editor setting: opens the nested ai-* and packages repos instead of greying them out
+!.vscode/settings.json
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Personal Claude Code files
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Build output of the template itself (new.ts skips it; a created resource commits its own)
+/template/resource/dist/
+/template/resource/fxmanifest.lua
