@@ -612,6 +612,27 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-mechanic": {
+      "name": "ai-mechanic",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-mysql": {
       "name": "ai-mysql",
       "version": "0.1.0",
@@ -1572,6 +1593,8 @@
     "ai-jobs": ["ai-jobs@workspace:resources/[ai]/ai-jobs"],
 
     "ai-management": ["ai-management@workspace:resources/[ai]/ai-management"],
+
+    "ai-mechanic": ["ai-mechanic@workspace:resources/[ai]/ai-mechanic"],
 
     "ai-mysql": ["ai-mysql@workspace:resources/[ai]/ai-mysql"],
 
