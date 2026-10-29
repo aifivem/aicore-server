@@ -338,6 +338,27 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-doorlock": {
+      "name": "ai-doorlock",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-fuel": {
       "name": "ai-fuel",
       "version": "0.1.0",
@@ -1333,6 +1354,8 @@
     "ai-death": ["ai-death@workspace:resources/[ai]/ai-death"],
 
     "ai-death-web": ["ai-death-web@workspace:resources/[ai]/ai-death/web"],
+
+    "ai-doorlock": ["ai-doorlock@workspace:resources/[ai]/ai-doorlock"],
 
     "ai-fuel": ["ai-fuel@workspace:resources/[ai]/ai-fuel"],
 
