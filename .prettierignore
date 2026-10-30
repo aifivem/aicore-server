@@ -5,7 +5,7 @@ artifact
 **/fxmanifest.lua
 **/*.lua
 **/sql/*.sql
-**/data/*.json
+**/data
 **/tables.ts
 **/bun.lock
 docs/research
