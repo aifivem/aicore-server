@@ -48,6 +48,8 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 
 ## Entities and vehicles
 
+- On the server `GetEntityPopulationType(entity) === 7` (mission) marks an entity a script created (rentals, job and owned vehicles); ambient traffic has other types. Check stolen ambient cars in game before relying on it.
+
 - The server reads a fresh server-created vehicle's plate (`GetVehicleNumberPlateText`) as empty until the owner client's first sync: set the plate on the server and wait until it reads back before anything keys on it (vehicle keys, garages).
 
 - Strict entity lockdown: networked entities are created on the server (`CreateVehicleServerSetter`, `CreatePed`, `CreateObjectNoOffset`); clients create only local (`isNetwork = false`) entities. Wait for `DoesEntityExist` after creating; a client waits for a server entity with `NetworkDoesEntityExistWithNetworkId(netId)` before `NetToVeh`.
