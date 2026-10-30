@@ -7,13 +7,19 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 | Path | What |
 |---|---|
 | `server.cfg`, `security.cfg`, `misc.cfg`, `permission.cfg` | Server config. Secrets go into `env.cfg` (copy `env.example.cfg`). |
-| `resources/[standalone]/` | Third-party resources: ox_lib, its `require` helper, oxmysql, pma-voice. |
+| `resources/[standalone]/` | Third-party resources: pma-voice (`ai-mysql` stands in for oxmysql, no ox_lib). |
 | `resources/[ai]/` | ai-core resources, each `ai-*` folder its own git repo. |
 | `packages/` | The `@aicore-fivem/*` npm packages (own git repo). |
 | `template/` | Template for new resources (`bun run new <name> "<description>"`). |
 | `tools/rcon.ts` | RCON client: `bun run rcon "restart ai-core"`. |
 | `docs/research/` | Research and reasoning behind the rules. |
 | `CLAUDE.md`, `.claude/rules/` | Instructions for AI assistants (and a good read for people). |
+
+## Requirements
+
+| Dependency | Version | Why |
+|---|---|---|
+| FXServer (artifact) | 38039 or newer recommended; older builds still run | `onPedDeath` (citizenfx/fivem 1424ad0): the server sees player deaths itself and clients stop watching their health. On older builds ai-death falls back to a client health check. |
 
 ## Development setup
 

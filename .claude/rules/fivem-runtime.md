@@ -36,7 +36,7 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 
 - Callbacks: server `onClientCallback` (same forms and gate as `onClientEvent`; a refused call rejects the client's promise at once), client `triggerServerCallback(name, [args], timeoutMs?)`; the reverse direction `onServerCallback` / `triggerClientCallback(name, src, [args])`. Answers are `unknown`: parse them. No hand-made request/response event pairs.
 - Lang: `createLocale<typeof en>()` from `@aicore-fivem/lib/fivem` (the template's `resource/common/locale.ts`).
-- Keybinds: client `new Keybind({ name, description, defaultKey, onPressed, onReleased })`; the name contains the default key (`name_<KEY>`); mouse buttons need `defaultMapper: "MOUSE_BUTTON"`.
+- Keybinds: client `new Keybind({ name, description, defaultKey, onPressed, onReleased })`; the name is a stable id without the key (the lib appends the panel's or the default key); mouse buttons need `defaultMapper: "MOUSE_BUTTON"`. Commands: server `addCommand` (`lib.md` "Commands and keybinds").
 - Player values: `cache.ped`, `cache.playerId`, `cache.serverId`, `cache.vehicle`, `cache.seat`, `cache.weapon` (`false` = none) instead of calling natives in loops; `onCache(key, (value, old) => ...)` reacts to a change. One watcher in ai-core (100 ms) feeds every resource; nobody polls these.
 - Areas: lib `Zones` (`sphere`, `cylinder`, `poly`; each zone its own `interval` ms, default 500; `onEnter` / `onExit`). Never a hand-written distance loop; per-frame work only while inside, and only when it must draw.
 - "Press E" prompts: `showPrompt(id, text)` on enter, `hidePrompt(id)` on exit, `onPromptPressed(id => ...)` (ai-core's right-side prompt UI and its one rebindable interaction key). Never GTA help text (`BeginTextCommandDisplayHelp`) or per-frame `IsControlJustReleased`.
@@ -67,7 +67,7 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 
 ## Permissions
 
-- ACE: `group.admin` is a principal, `IsPlayerAceAllowed(src, "group.admin")` is always false. In JS `IsPlayerAceAllowed` returns `1`/`0`: wrap in `Boolean(...)`. Restricted commands use `restricted: "group.admin"`. ACE lines live in `permission.cfg`.
+- ACE: `group.admin` is a principal, `IsPlayerAceAllowed(src, "group.admin")` is always false. In JS `IsPlayerAceAllowed` returns `1`/`0`: wrap in `Boolean(...)`. Restricted commands use `addCommand` with `restricted: true` (ai-core admins) or `restricted: "group.admin"`. ACE lines live in `permission.cfg`.
 - Players do not type commands; every feature has a UI. Only developer test commands exist, restricted.
 
 ## Natives

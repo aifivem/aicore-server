@@ -19,8 +19,8 @@ ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `pr
 
 ## QBCore (server)
 
-- `QBCore.Functions`: `GetPlayer`, `GetPlayerByCitizenId`, `GetOfflinePlayerByCitizenId` (online only), `GetPlayers`, `GetQBPlayers`, `GetIdentifier`, `Notify`, `CreateCallback`, `CreateUseableItem` (ai-inventory), `HasItem`.
-- `QBCore.Commands.Add`; `QBCore.Shared.Jobs`, `Gangs` (from ai-core's job and gang definitions, grades keyed `'0'`, `'1'`...), `Items` (from ai-inventory).
+- `QBCore.Functions`: `GetPlayer`, `GetPlayerByCitizenId`, `GetOfflinePlayerByCitizenId` (online only), `GetPlayers`, `GetQBPlayers`, `GetIdentifier`, `Notify`, `CreateCallback`, `CreateUseableItem`, `CanUseItem`, `HasItem` (items through ai-core's inventory layer, `docs/compat/inventory.md`).
+- `QBCore.Commands.Add`; `QBCore.Shared.Jobs`, `Gangs` (from ai-core's job and gang definitions, grades keyed `'0'`, `'1'`...), `Items` (from the active inventory).
 - Player: `PlayerData` (`citizenid`, `cid`, `license`, `name`, `money`, `charinfo`, `job` with `onduty`/`isboss`/`grade`, `gang`, `metadata`), `Functions`: `AddMoney`, `RemoveMoney`, `SetMoney`, `GetMoney`, `SetJob`, `SetJobDuty`, `SetGang`, `SetMetaData`, `GetMetaData`, `AddItem`, `RemoveItem`, `GetItemByName`, `GetItemsByName`, `Notify`, `Save` / `UpdatePlayerData` (no-ops: ai-core saves itself).
 - Events: `QBCore:Server:PlayerLoaded`, `QBCore:Server:OnPlayerUnload`, `QBCore:Server:OnMoneyChange`, `QBCore:Server:OnJobUpdate`, `QBCore:Server:OnGangUpdate`; callbacks over `QBCore:Server:TriggerCallback` / `QBCore:Client:TriggerCallback` (30 requests per 10 s per player).
 
@@ -31,12 +31,12 @@ ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `pr
 
 ## Qbox (`exports.qbx_core`)
 
-Server: `GetPlayer` (source or citizenid), `GetPlayerByCitizenId`, `GetOfflinePlayer` (online only), `GetQBPlayers`, `GetPlayersData`, `GetJobs`, `GetGangs`, `GetJob`, `GetGang`, `Notify`, `CreateUseableItem`, `SetJob`, `AddPlayerToJob`, `RemovePlayerFromJob`, `SetPlayerPrimaryJob`, `SetJobDuty`, `AddPlayerToGang`, `RemovePlayerFromGang`, `GetGroups`, `HasGroup`, `HasPrimaryGroup`, `GetDutyCountJob`, `GetDutyCountType`, `GetSource`, `IsPlayerLoaded`, `Logout`, `GetCoreObject`.
+Server: `GetPlayer` (source or citizenid), `GetPlayerByCitizenId`, `GetOfflinePlayer` (online only), `GetQBPlayers`, `GetPlayersData`, `GetJobs`, `GetGangs`, `GetJob`, `GetGang`, `Notify`, `CreateUseableItem`, `SetJob`, `AddPlayerToJob`, `RemovePlayerFromJob`, `SetPlayerPrimaryJob`, `SetJobDuty`, `AddPlayerToGang`, `RemovePlayerFromGang`, `GetGroups`, `HasGroup`, `HasPrimaryGroup`, `GetDutyCountJob`, `GetDutyCountType`, `CanUseItem`, `GetSource`, `IsPlayerLoaded`, `Logout`, `GetCoreObject`.
 Client: `GetPlayerData`, `Notify`, `IsLoggedIn`, `GetGroups`, `HasPrimaryGroup`.
 
 ## ESX
 
-- Server `ESX`: `GetPlayerFromId`, `GetPlayerFromIdentifier` (identifier = citizenid), `GetPlayers`, `GetExtendedPlayers` (`job` / `group` filter), `GetJobs`, `RegisterServerCallback`, `RegisterUsableItem`, `GetItemLabel`, `RegisterCommand`, `GetExtendedPlayerCount`, `Player` (by id or identifier), `IsPlayerLoaded`, `GetPlayerIdFromIdentifier`, `DoesJobExist`, `GetConfig`. `GetJobs()` marks every job but `unemployed` as `whitelisted` (ai-core has no free-to-join flag; job centers list nothing else).
+- Server `ESX`: `GetPlayerFromId`, `GetPlayerFromIdentifier` (identifier = citizenid), `GetPlayers`, `GetExtendedPlayers` (`job` / `group` filter), `GetJobs`, `RegisterServerCallback`, `RegisterUsableItem`, `UseItem`, `GetItemLabel`, `RegisterCommand`, `GetExtendedPlayerCount`, `Player` (by id or identifier), `IsPlayerLoaded`, `GetPlayerIdFromIdentifier`, `DoesJobExist`, `GetConfig`. `GetJobs()` marks every job but `unemployed` as `whitelisted` (ai-core has no free-to-join flag; job centers list nothing else).
 - xPlayer: `source`, `identifier`, `name`, `job`, `group` (`admin` with the `ai.admin` ace), `getName`, `getIdentifier`, `getGroup`, `getJob`, `setJob`, `getMoney` / `addMoney` / `removeMoney` / `setMoney` (ai-core's `cash`), `getAccounts`, `getAccount`, `addAccountMoney`, `removeAccountMoney`, `setAccountMoney` (`money` = `cash`), `getInventory`, `getInventoryItem`, `hasItem`, `addInventoryItem`, `removeInventoryItem`, `canCarryItem`, `getCoords`, `showNotification`, `triggerEvent`, `kick`, `set` / `get`, `getMeta` / `setMeta`.
 - Server events: `esx:playerLoaded`, `esx:playerDropped`, `esx:playerLogout`, `esx:setJob`; callbacks over `esx:triggerServerCallback` / `esx:serverCallback`.
 - Client `ESX`: `PlayerData`, `PlayerLoaded`, `GetPlayerData`, `IsPlayerLoaded`, `SetPlayerData`, `ShowNotification`, `TriggerServerCallback`, `GetConfig`, `SecureNetEvent`; events `esx:playerLoaded`, `esx:onPlayerLogout`, `esx:setAccountMoney`, `esx:setJob`; `esx:showNotification` from the server shows ai-core's notification.

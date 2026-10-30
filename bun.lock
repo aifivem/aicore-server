@@ -54,6 +54,27 @@
         "@citizenfx/server": "latest",
       },
     },
+    "resources/[ai]/ai-admin": {
+      "name": "ai-admin",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-appearance": {
       "name": "ai-appearance",
       "version": "0.1.0",
@@ -1694,6 +1715,8 @@
     "@yuku-toolchain/types": ["@yuku-toolchain/types@0.8.7", "", {}, "sha512-2Z53dNxAJL6UvFoIrDZvYf3zlO8s4VJK4O2hhaB4mXVwwpX/7ajtss3cmfqKvamlNLWyt9FSWs4eoYdlbxpnHA=="],
 
     "__NAME__": ["__NAME__@workspace:template/resource"],
+
+    "ai-admin": ["ai-admin@workspace:resources/[ai]/ai-admin"],
 
     "ai-appearance": ["ai-appearance@workspace:resources/[ai]/ai-appearance"],
 

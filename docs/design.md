@@ -75,13 +75,14 @@ Base layer as in tgiann-multichar `src/index.css`: `*` border colour `rgba(255,2
 - **Secondary / grey button:** `bg-control hover:bg-control-hover text-white` or `bg-white/6 text-text-3 hover:bg-white/12 hover:text-white`, same shape.
 - **Destructive:** confirm action `bg-danger-solid text-white`, otherwise chip `bg-danger-bg text-danger`.
 - **Icon button:** round `size-[4.4vh] rounded-full bg-[#00000099] text-[#FFFFFFB2] hover:bg-[#101010B3] hover:text-white` over the game, `bg-control` inside a panel. Close is an icon button top right with "ESC to close" text before it on full-screen screens.
-- **Icon tabs** (bank header): row of `size-[4vh] rounded-[0.8vh] bg-control` squares, the active one `bg-tgi-green text-tgi-green-text`. **Text tabs:** label + icon, active `text-white` with a 0.2vh green underline, others `text-text-3`.
+- **Labels on controls (owner decision):** tabs, category bars and filters show icon + label; an icon alone is only for close (door), the round mic/status circles of the HUD, and filters on a grid too narrow for labels (then a tooltip). Icon-only rows read as an empty screen.
+- **Header tabs** (bank header): row of equal-width `h-[4vh] w-[12.4vh] rounded-[0.8vh] bg-control` tabs with icon + label, the active one `bg-tgi-green text-tgi-green-text` (one sliding green pill). **Category pills over the game** (vehicleshop, appearance column): `h-[3.8vh] rounded-full bg-black/60 border-white/10` icon + label (+ count), active `border-tgi-green bg-tgi-green-10`. **Text tabs:** label + icon, active `text-white` with a 0.2vh green underline, others `text-text-3`.
 - **Card / row:** `bg-white/3 border border-white/8 rounded-[1vh]`; hover `bg-white/6`; selected `border-tgi-green bg-tgi-green-10`. List rows in a solid panel: `bg-row` or `bg-surface`, `rounded-[0.8vh]`, `h-[4.8vh]`.
 - **Input / search:** pill `rounded-full bg-[#2222224D] border border-white/8 h-[3.6vh] px-[1.4vh]`, icon on the right, focus via `focus-within:border-tgi-green-40`.
 - **Toggle:** green track when on, `bg-control` off, white knob.
 - **Status chip:** `rounded-[0.4vh] px-[0.6vh] text-[1.1vh] font-bold uppercase`: green `bg-tgi-green text-tgi-green-text`, red `bg-danger-bg text-danger`, info `bg-[#3b82f626] text-[#60a5fa]`.
 - **Icon badge:** `size-[3.6vh] rounded-full bg-tgi-green-10 text-tgi-green`.
-- **HUD pieces** (lumihud): dark pills `bg-[rgba(19,19,19,0.75)] rounded-full`, round icon circles, thin bars with value, white text with `drop-shadow(0.15vh 0.1vh 0 rgba(0,0,0,0.75))` where there is no pill.
+- **HUD pieces** (lumihud): dark pills `bg-[rgba(19,19,19,0.75)] rounded-full`, round icon circles, thin bars with value, white text with `drop-shadow(0.15vh 0.1vh 0 rgba(0,0,0,0.75))` where there is no pill. Voice: a mic circle whose icon fills up to the range (green while talking, walkie-talkie on the radio) + bold range name and light "RANGE" text; no bar meters. Top right: job chip (green on duty) + grade chip + "[id] Firstname Lastname" above the money.
 
 ## Panels
 
