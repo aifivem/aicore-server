@@ -1,6 +1,6 @@
 # ESX / QB / Qbox bridge (ai-core)
 
-ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `provide`) and answers their exports, core objects and events from Lua in `resources/[ai]/ai-core/bridge/`. Every call goes to ai-core; the player mirror follows ai-core's local events. Status: written and checked on the dev server with a test resource after a full server restart (resource states, exports, legacy events, Shared tables, item definitions); not yet tested with a real ESX / QB script in game.
+ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `provide`) and answers their exports, core objects and events from Lua in `resources/[ai]/ai-core/bridge/`. Every call goes to ai-core; the player mirror follows ai-core's local events. Status: written and checked on the dev server with a test resource after a full server restart (resource states, exports, legacy events, Shared tables, item definitions); not yet tested with a real ESX / QB script. Prepared for that test: esx_joblisting 1.14.1 (ESX-Legacy-Addons, needs only es_extended) and qb-cityhall (its server part needs only qb-core), cloned under `ai-core-research/bridgetest` and `ai-core-research/jobs`; running downloaded third-party code on the dev server needs the owner's go-ahead, so it was not started.
 
 ## Detection
 
@@ -13,6 +13,9 @@ ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `pr
 | `TriggerEvent('esx:getSharedObject', cb)` | answered |
 | `exports.qbx_core:*` | works (list below) |
 | `@qbx_core/modules/playerdata.lua` include | ai-core's `modules/playerdata.lua` (keeps `QBX.PlayerData`) |
+| `@qb-core/shared/locale.lua` include | ai-core's `shared/locale.lua` (QBCore's Locale class, copied from qb-core, GPL-3.0) |
+| `@es_extended/imports.lua` include | ai-core's `imports.lua` (the `ESX` global, client `PlayerData` kept from the bridge's ESX events) |
+| `@es_extended/locale.lua` include | ai-core's `locale.lua` (`Translate`, `_`, `_U`; both `Locales['en'] = {}` and returning locale files) |
 
 ## QBCore (server)
 
@@ -33,10 +36,10 @@ Client: `GetPlayerData`, `Notify`, `IsLoggedIn`, `GetGroups`, `HasPrimaryGroup`.
 
 ## ESX
 
-- Server `ESX`: `GetPlayerFromId`, `GetPlayerFromIdentifier` (identifier = citizenid), `GetPlayers`, `GetExtendedPlayers` (`job` / `group` filter), `GetJobs`, `RegisterServerCallback`, `RegisterUsableItem`, `GetItemLabel`, `RegisterCommand`, `GetExtendedPlayerCount`.
+- Server `ESX`: `GetPlayerFromId`, `GetPlayerFromIdentifier` (identifier = citizenid), `GetPlayers`, `GetExtendedPlayers` (`job` / `group` filter), `GetJobs`, `RegisterServerCallback`, `RegisterUsableItem`, `GetItemLabel`, `RegisterCommand`, `GetExtendedPlayerCount`, `Player` (by id or identifier), `IsPlayerLoaded`, `GetPlayerIdFromIdentifier`, `DoesJobExist`, `GetConfig`. `GetJobs()` marks every job but `unemployed` as `whitelisted` (ai-core has no free-to-join flag; job centers list nothing else).
 - xPlayer: `source`, `identifier`, `name`, `job`, `group` (`admin` with the `ai.admin` ace), `getName`, `getIdentifier`, `getGroup`, `getJob`, `setJob`, `getMoney` / `addMoney` / `removeMoney` / `setMoney` (ai-core's `cash`), `getAccounts`, `getAccount`, `addAccountMoney`, `removeAccountMoney`, `setAccountMoney` (`money` = `cash`), `getInventory`, `getInventoryItem`, `hasItem`, `addInventoryItem`, `removeInventoryItem`, `canCarryItem`, `getCoords`, `showNotification`, `triggerEvent`, `kick`, `set` / `get`, `getMeta` / `setMeta`.
 - Server events: `esx:playerLoaded`, `esx:playerDropped`, `esx:playerLogout`, `esx:setJob`; callbacks over `esx:triggerServerCallback` / `esx:serverCallback`.
-- Client `ESX`: `PlayerData`, `PlayerLoaded`, `GetPlayerData`, `IsPlayerLoaded`, `SetPlayerData`, `ShowNotification`, `TriggerServerCallback`; events `esx:playerLoaded`, `esx:onPlayerLogout`, `esx:setAccountMoney`, `esx:setJob`; `esx:showNotification` from the server shows ai-core's notification.
+- Client `ESX`: `PlayerData`, `PlayerLoaded`, `GetPlayerData`, `IsPlayerLoaded`, `SetPlayerData`, `ShowNotification`, `TriggerServerCallback`, `GetConfig`, `SecureNetEvent`; events `esx:playerLoaded`, `esx:onPlayerLogout`, `esx:setAccountMoney`, `esx:setJob`; `esx:showNotification` from the server shows ai-core's notification.
 
 ## Known limits
 
