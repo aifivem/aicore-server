@@ -6,7 +6,7 @@
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-const OWNER = "TGIANN";
+const OWNER = "aifivem";
 const SERVER_REPO = `https://github.com/${OWNER}/aicore-server`;
 const SHARED = ["security.cfg", "misc.cfg", "permission.cfg"];
 

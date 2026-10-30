@@ -6,7 +6,7 @@ Installs a ready ai-core server with txAdmin: the server files (cfg templates, s
 
 1. Install FXServer and open txAdmin (https://docs.fivem.net/docs/server-manual/setting-up-a-server-txadmin/).
 2. In txAdmin's setup choose **Popular Recipes > Remote URL Template** and paste:
-   `https://raw.githubusercontent.com/TGIANN/aicore-server/main/recipe/ai-core.yaml`
+   `https://raw.githubusercontent.com/aifivem/aicore-server/main/recipe/ai-core.yaml`
 3. Fill in the server name, the license key (https://portal.cfx.re/) and a MariaDB / MySQL database. ai-core and the scripts create their own tables at the first start: there is no SQL file to import.
 4. Start the server, join, and follow the welcome card: it shows the line to make yourself an admin (`permission.cfg`). The admin panel (F10) has a setup guide.
 

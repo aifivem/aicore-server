@@ -11,7 +11,7 @@ tasks:
 
   # Server files: cfg templates and the files every install shares
   - action: download_github
-    src: https://github.com/TGIANN/aicore-server
+    src: https://github.com/aifivem/aicore-server
     ref: main
     dest: ./tmp/server
 
@@ -48,197 +48,197 @@ tasks:
 
   # ai-core and its scripts: each is its own repository with its build committed (no build tools needed)
   - action: download_github
-    src: https://github.com/TGIANN/ai-mysql
+    src: https://github.com/aifivem/ai-mysql
     ref: main
     dest: ./resources/[ai]/ai-mysql
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-core
+    src: https://github.com/aifivem/ai-core
     ref: main
     dest: ./resources/[ai]/ai-core
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-loading
+    src: https://github.com/aifivem/ai-loading
     ref: main
     dest: ./resources/[ai]/ai-loading
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-voice
+    src: https://github.com/aifivem/ai-voice
     ref: main
     dest: ./resources/[ai]/ai-voice
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-lib
+    src: https://github.com/aifivem/ai-lib
     ref: main
     dest: ./resources/[ai]/ai-lib
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-appearance
+    src: https://github.com/aifivem/ai-appearance
     ref: main
     dest: ./resources/[ai]/ai-appearance
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-inventory
+    src: https://github.com/aifivem/ai-inventory
     ref: main
     dest: ./resources/[ai]/ai-inventory
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-chat
+    src: https://github.com/aifivem/ai-chat
     ref: main
     dest: ./resources/[ai]/ai-chat
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-hud
+    src: https://github.com/aifivem/ai-hud
     ref: main
     dest: ./resources/[ai]/ai-hud
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-vehicles
+    src: https://github.com/aifivem/ai-vehicles
     ref: main
     dest: ./resources/[ai]/ai-vehicles
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-vehiclekeys
+    src: https://github.com/aifivem/ai-vehiclekeys
     ref: main
     dest: ./resources/[ai]/ai-vehiclekeys
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-fuel
+    src: https://github.com/aifivem/ai-fuel
     ref: main
     dest: ./resources/[ai]/ai-fuel
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-garages
+    src: https://github.com/aifivem/ai-garages
     ref: main
     dest: ./resources/[ai]/ai-garages
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-vehicleshop
+    src: https://github.com/aifivem/ai-vehicleshop
     ref: main
     dest: ./resources/[ai]/ai-vehicleshop
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-banking
+    src: https://github.com/aifivem/ai-banking
     ref: main
     dest: ./resources/[ai]/ai-banking
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-death
+    src: https://github.com/aifivem/ai-death
     ref: main
     dest: ./resources/[ai]/ai-death
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-police
+    src: https://github.com/aifivem/ai-police
     ref: main
     dest: ./resources/[ai]/ai-police
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-policealert
+    src: https://github.com/aifivem/ai-policealert
     ref: main
     dest: ./resources/[ai]/ai-policealert
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-prison
+    src: https://github.com/aifivem/ai-prison
     ref: main
     dest: ./resources/[ai]/ai-prison
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-doorlock
+    src: https://github.com/aifivem/ai-doorlock
     ref: main
     dest: ./resources/[ai]/ai-doorlock
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-weathersync
+    src: https://github.com/aifivem/ai-weathersync
     ref: main
     dest: ./resources/[ai]/ai-weathersync
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-radialmenu
+    src: https://github.com/aifivem/ai-radialmenu
     ref: main
     dest: ./resources/[ai]/ai-radialmenu
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-scoreboard
+    src: https://github.com/aifivem/ai-scoreboard
     ref: main
     dest: ./resources/[ai]/ai-scoreboard
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-cityhall
+    src: https://github.com/aifivem/ai-cityhall
     ref: main
     dest: ./resources/[ai]/ai-cityhall
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-management
+    src: https://github.com/aifivem/ai-management
     ref: main
     dest: ./resources/[ai]/ai-management
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-jobs
+    src: https://github.com/aifivem/ai-jobs
     ref: main
     dest: ./resources/[ai]/ai-jobs
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-mechanic
+    src: https://github.com/aifivem/ai-mechanic
     ref: main
     dest: ./resources/[ai]/ai-mechanic
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-robberies
+    src: https://github.com/aifivem/ai-robberies
     ref: main
     dest: ./resources/[ai]/ai-robberies
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-pawnshop
+    src: https://github.com/aifivem/ai-pawnshop
     ref: main
     dest: ./resources/[ai]/ai-pawnshop
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-smallresources
+    src: https://github.com/aifivem/ai-smallresources
     ref: main
     dest: ./resources/[ai]/ai-smallresources
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-drugs
+    src: https://github.com/aifivem/ai-drugs
     ref: main
     dest: ./resources/[ai]/ai-drugs
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-exitsleeping
+    src: https://github.com/aifivem/ai-exitsleeping
     ref: main
     dest: ./resources/[ai]/ai-exitsleeping
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-lapraces
+    src: https://github.com/aifivem/ai-lapraces
     ref: main
     dest: ./resources/[ai]/ai-lapraces
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-properties
+    src: https://github.com/aifivem/ai-properties
     ref: main
     dest: ./resources/[ai]/ai-properties
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-target
+    src: https://github.com/aifivem/ai-target
     ref: main
     dest: ./resources/[ai]/ai-target
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-admin
+    src: https://github.com/aifivem/ai-admin
     ref: main
     dest: ./resources/[ai]/ai-admin
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-rental
+    src: https://github.com/aifivem/ai-rental
     ref: main
     dest: ./resources/[ai]/ai-rental
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-pedscale
+    src: https://github.com/aifivem/ai-pedscale
     ref: main
     dest: ./resources/[ai]/ai-pedscale
 
   - action: download_github
-    src: https://github.com/TGIANN/ai-sirens
+    src: https://github.com/aifivem/ai-sirens
     ref: main
     dest: ./resources/[ai]/ai-sirens
 
