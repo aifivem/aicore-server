@@ -15,6 +15,7 @@ paths:
 | `@aicore-fivem/build` | Build steps (`aicore-client-errors`) | Every resource's `build` script |
 
 - The lib replaces ox_lib in ai-* resources (owner decision): never import ox_lib; what is missing gets added to the lib.
+- Resources that do not bundle the lib load it from `ai-lib` like ox_lib: Lua `shared_script '@ai-lib/init.lua'`, JavaScript `@ai-lib/dist/client.js` / `server.js` (`resources/[ai]/ai-lib/CLAUDE.md`). A change to a lib function Lua users have (`AiLib` class in ai-lib's `init.lua`) is made in `ai-lib/lua/` too.
 - Every helper is built for scale: benchmark anything that holds or walks a collection at 100k and 1M (`packages/lib/bench/`, `bun run bench`).
 - Look in `@aicore-fivem/lib` before writing a helper; add it there when a second user appears. Code specific to one resource stays in that resource.
 - Every lib function has a one-line JSDoc saying what it does. `/server`, `/client` and `/fivem` may call natives; `/shared` never does.
