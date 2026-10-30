@@ -41,6 +41,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | A character's saved look, dressing a ped, the player's clothes | lib `appearance.get(charId)` (server), `appearance.apply(ped, look)` / `read(ped)` (client) | a clothing script's exports or tables (ai-appearance included) |
 | Hands up / pointing of the local player | lib `gestures` (client) | an emote script's exports |
 | A radial menu entry (job menu, vehicle action) | lib `radial.add({ id, label, icon, parent?, canShow, onPressed })` once at start (client); `radial.refresh()` when what `canShow` reads changes | a radial script's exports (ai-radialmenu included), re-adding on a radial's start |
+| Jail a player, release, time left | lib `prison` (server) | a prison script's exports or events (ai-prison included) |
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
 | A death | ai-core `CORE.playerDiedEvent` | health polling |
 | Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server) | a death script's exports (ai-death included) |

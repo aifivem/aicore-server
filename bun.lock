@@ -893,6 +893,27 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-prison": {
+      "name": "ai-prison",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxlint": "^1.66.0",
+        "prettier": "^3.9.10",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-properties": {
       "name": "ai-properties",
       "version": "0.1.0",
@@ -1928,6 +1949,8 @@
     "ai-policealert": ["ai-policealert@workspace:resources/[ai]/ai-policealert"],
 
     "ai-policealert-web": ["ai-policealert-web@workspace:resources/[ai]/ai-policealert/web"],
+
+    "ai-prison": ["ai-prison@workspace:resources/[ai]/ai-prison"],
 
     "ai-properties": ["ai-properties@workspace:resources/[ai]/ai-properties"],
 
