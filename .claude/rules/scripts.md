@@ -19,11 +19,11 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 |---|---|---|
 | Client -> server request / event | `triggerServerCallback` / `onClientCallback`, `onClientEvent` (with `args` parser and guards) | bare `onNet` on the server, hand-made request/response pairs |
 | A player action with a refusal (buy, use, open) | server answers `ActionResult`, refuses with `fail("KEY")`; client `callAction(name, args, { fallback })` | own `fail`, `errorText`, `isObj`, notifying the error by hand |
-| A token or net id from a client | `{ args: oneArg(readId) }`, `vehicleFromNet` / `vehicleNearPlayer` | `typeof x === "number"`, `NetworkGetEntityFromNetworkId` checks by hand |
+| A token or net id from a client | `{ args: oneArg(readId) }`, `vehicleFromNet` / `pedFromNet` / `entityFromNet` / `vehicleNearPlayer` | `typeof x === "number"`, `NetworkGetEntityFromNetworkId` checks by hand |
 | A timed action the client runs (progress, dialog) | `PendingActions` (server) | own token map, counter, time check and drop cleanup |
 | Per-player server state, cooldowns, character load / unload | `PlayerMap`, `Cooldowns` (per connection), `KeyedCooldowns` (by character id, survives a reconnect), `onCharacter` | `on("playerDropped")` per map, own `Map<id, deadline>`, load listener + restart replay by hand |
 | Server -> client | `onServerEvent` (with `args`), `triggerClientCallback` / `onServerCallback` | bare `onNet` on the client |
-| A place the player uses (shop, counter, door, NPC, ATM) | `Points` (label, `canShow`, `onPressed`, `ped`, `blip`, `models` for model targets) | `Zones` + `showPrompt` + `onPromptPressed` by hand, target exports, help text, `IsControlJustPressed` loops |
+| A place the player uses (shop, counter, door, NPC, ATM) | `Points` (label, `canShow` with `hasJob` / `inGang` / `onDutyIn` for locked places, `onPressed`, `ped`, `blip`, `models` for model targets) | `Zones` + `showPrompt` + `onPromptPressed` by hand, target exports, help text, `IsControlJustPressed` loops |
 | An NPC | `ped` on a point or `LocalPed` | client `CreatePed` by hand |
 | A map blip | `blip` on a point, `Blips`, `createBlip` | `AddBlipForCoord` + `BeginTextCommandSetBlipName` |
 | The local ped, its vehicle, seat, weapon | `cache` / `onCache`, `player` | `PlayerPedId()` (except right after a model change), polling `GetVehiclePedIsIn` |
