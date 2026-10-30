@@ -13,10 +13,13 @@
     "rcon": "bun tools/rcon.ts",
     "build": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" build",
     "typecheck": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" typecheck",
-    "lint": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" lint"
+    "lint": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" lint",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.3"
   }
 }

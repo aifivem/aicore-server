@@ -3,5 +3,10 @@
   // scan deep enough that VS Code opens each one instead of greying it out as ignored.
   "git.autoRepositoryDetection": true,
   "git.repositoryScanMaxDepth": 5,
-  "git.repositoryScanIgnoredFolders": ["node_modules", "dist", "artifact"]
+  "git.repositoryScanIgnoredFolders": ["node_modules", "dist", "artifact"],
+  // Prettier with the owner's settings (.prettierrc in every repo) formats on save.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[markdown]": { "editor.formatOnSave": false },
+  "[lua]": { "editor.defaultFormatter": null, "editor.formatOnSave": false }
 }

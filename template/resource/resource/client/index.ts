@@ -1,6 +1,6 @@
-import { createLogger } from "@aicore-fivem/lib/shared";
-import { ResourceName } from "common";
+import { createLogger } from "@aicore-fivem/lib/shared"
+import { ResourceName } from "common"
 
-const log = createLogger(ResourceName);
+const log = createLogger(ResourceName)
 
-log.info("client started");
+log.info("client started")

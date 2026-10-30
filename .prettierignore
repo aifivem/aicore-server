@@ -10,3 +10,4 @@ artifact
 **/bun.lock
 docs/research
 resources/[standalone]
+*.md

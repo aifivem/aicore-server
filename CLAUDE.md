@@ -18,7 +18,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 
 ## Stack
 
-- Scripts: TypeScript, each resource follows the overextended/fivem-ts layout (bun, tsdown, oxlint, oxfmt; `resource/{client,server,common}`, `locales/`, `public/`, `web/`). Details: `.claude/rules/resource-structure.md`.
+- Scripts: TypeScript, each resource follows the overextended/fivem-ts layout (bun, tsdown, oxlint, Prettier; `resource/{client,server,common}`, `locales/`, `public/`, `web/`). Details: `.claude/rules/resource-structure.md`.
 - Bridge: part of ai-core, no separate bridge resources (owner decision). ai-core `provide`s `es_extended`, `qb-core` and `qbx_core` and answers their exports, core objects and events, so another script uses ai-core as if it were that framework. The bridge code lives in ai-core's `bridge/` folder, Lua 5.4 with full LuaLS annotations, the only Lua in the project (`.claude/rules/lua-bridges.md`).
 - Shared code: our own `@aicore-fivem/lib` (callbacks, locale, waitFor, streaming, keybinds, rate limits, DB tables...), **no ox_lib in ai-* resources** (owner decision). Anything used twice goes into the lib (`.claude/rules/lib.md`).
 - DB: our own engine `@aicore-fivem/mysql` (owner decision): every ai-* resource runs a small pool in-process; `ai-mysql` stands in for oxmysql for third-party scripts (`.claude/rules/database.md`). Never guess a signature: read the source or `.d.ts` in `node_modules`.
