@@ -7,11 +7,12 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { availableParallelism } from "node:os";
 import { join } from "node:path";
 
-const [script, ...only] = process.argv.slice(2);
-if (!script) {
+const [first, ...only] = process.argv.slice(2);
+if (!first) {
   console.error("usage: bun tools/run.ts <script> [resource...]");
   process.exit(1);
 }
+const script = first;
 
 const root = join(import.meta.dir, "..", "resources", "[ai]");
 const resources = readdirSync(root)
