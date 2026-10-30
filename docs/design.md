@@ -85,7 +85,7 @@ Base layer as in tgiann-multichar `src/index.css`: `*` border colour `rgba(255,2
 
 ## Panels
 
-- **Full-screen screen** (inventory, character select, appearance, shop catalogue): no outer panel; the game shows through, blurred in Lua (`TriggerScreenblurFadeIn(250)` while open) with a light CSS scrim (`bg-[radial-gradient(...)]` 0.5-0.8 at the edges). Title block top left, ESC + close top right.
+- **Full-screen screen** (inventory, character select, appearance, shop catalogue): no outer panel; the game shows through with a light CSS scrim (`bg-[radial-gradient(...)]` 0.5-0.8 at the edges), blurred in Lua (`TriggerScreenblurFadeIn(250)` while open, `FadeOut` on close and resource stop) unless the screen's subject stands in the world (appearance ped, showroom vehicle). Title block top left, ESC + close top right.
 - **Solid panel** (bank, garage, scoreboard, admin): `bg-panel rounded-[1.4vh]` with a header row (display title left, icon tabs centre, close right), body cards on `bg-surface` / `bg-row`.
 - **Centered settings panel / dialog:** tgiann-ui recipe (c).
 - Pictures behind full-screen menus that are not over gameplay (character select, loading) stay in ai-core `web/public/backgrounds/`.

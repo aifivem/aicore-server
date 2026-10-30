@@ -25,4 +25,5 @@ Every NUI follows the `tgiann-ui` skill in full (owner decision): stack, vh scal
 - When the screen mirrors something GTA has (creator, shops, barber), copy the closest TGIANN sibling UI first (catalog in `tgiann-ui` `components.md`, `[encrypted]` nonbuild folders), then reskin.
 - Texts come from the resource's lang file (sent with the screen's open message), never literals; buttons start with a verb.
 - A screen loads one snapshot and applies deltas; no polling, no refetch after an action.
+- `web/vite.config.ts` `server.fs.allow` lists `".."` and `"../../../../node_modules"`: bun hoists packages (fonts) to the workspace root, and without it the browser preview gets 403 on the font files and screenshots render in a system font (the build is not affected).
 - Before reporting, run the `ux-rules.md` delivery checklist and verify with a browser screenshot (`bun run webdev`, headless Edge or puppeteer, presets in `web/src/dev/preview.ts`).
