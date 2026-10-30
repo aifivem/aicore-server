@@ -82,6 +82,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -139,6 +140,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -195,6 +197,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -273,6 +276,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -330,6 +334,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -450,6 +455,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -506,6 +512,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -563,6 +570,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -789,6 +797,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -866,6 +875,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -943,6 +953,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -1037,6 +1048,7 @@
       "dependencies": {
         "@aicore-fivem/shared": "^0.1.0",
         "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
         "@fortawesome/free-solid-svg-icons": "^7.2.0",
         "@fortawesome/react-fontawesome": "^3.2.0",
@@ -1240,6 +1252,8 @@
     "@floating-ui/utils": ["@floating-ui/utils@0.2.12", "", {}, "sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww=="],
 
     "@fontsource/inter": ["@fontsource/inter@5.3.0", "", {}, "sha512-RofMylZmjlJEfELXeNHFWBRcSs75rGU/6bV2S2jfnvv/3rPXPGe0LgUJTklcHZ9lM4OZmAVFhcJPnACfb91A3g=="],
+
+    "@fontsource/unbounded": ["@fontsource/unbounded@5.3.0", "", {}, "sha512-pPD6hsTnjoQRr6pCsqMHbHBfauB4LZygCNQEUJHu+CO2wzDFHqELEFSG7sTwo5Z5Gr4q3OK0fIILOXBJDv6lcw=="],
 
     "@fortawesome/fontawesome-common-types": ["@fortawesome/fontawesome-common-types@7.3.1", "", {}, "sha512-k0C0sdHmZtAo6dRDtd1Z/qcpyHbL0CKsjV8seMY/21xGhY5Wsv0XRmiI/xEEH4y2c9b1+jvgNs/3EqhV27yUEA=="],
 

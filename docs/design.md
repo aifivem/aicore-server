@@ -1,51 +1,109 @@
-# Design language: Dark Minimal
+# Design language: TGIANN
 
-The visual system of every ai-core screen (owner decision). Reference: `docs/design/dark-minimal-reference.jpg` (character select, pause menu, settings, notifications, HUD). Follow the reference as the source of truth for any new screen: same charcoal surfaces, one restrained green accent, the same typography, spacing, borders and components. Keep the interface readable during gameplay; no unnecessary panels or decoration, no heavy blur, glass effects or glow.
+Every ai-core screen looks like a sibling of the TGIANN store scripts (owner decision). The `tgiann-ui` skill applies in full: stack, vh scale, colour tokens, panel recipes, old-CEF limits, motion, performance, UX rules, Apple HIG. This file only adds what is specific to ai-core: the token block every NUI pastes, the heading font, and which TGIANN UI each ai-* screen copies.
 
-This file replaces only the `tgiann-ui` skill's colour tokens and panel looks. Everything else comes from the skill (owner decision): the stack (shadcn/Radix components re-skinned with these tokens, TanStack Router / Virtual / Pacer, Redux Toolkit, motion, fivem-nui-react; `.claude/rules/nui.md`), vh scale, old-CEF limits, hairlines in whole pixels, motion, performance, UX rules and the Apple HIG references.
+Reference pictures: `docs/design/tgiann/*.png` (the TGIANN live demos; ignore their "DEMO MENU" / "LIVE DEMO" side panel, it is demo only). Source of each sibling: `C:\TGIANN\FivemServers\esx_test\txData\ESXLegacy_74F21A.base\resources\[tgiann]\[encrypted]\tgiann-<name>-nonbuild` (read it for measurements, never copy a whole file).
 
-## Tokens
+## Look in one paragraph
 
-| Token | Value | Use |
-|---|---|---|
-| `--bg` | `#0B0E10` | Page / full-screen background, behind panels |
-| `--panel` | `#111619` | Panels, cards, notifications, nav |
-| `--panel-raised` | `#161C1F` | Hover, active nav row, inputs, slider track |
-| `--line` | `#252D30` | Borders (1px hairline), dividers |
-| `--accent` | `#36FF9F` | Primary actions, selection, active states, positive values |
-| `--accent-text` | `#0B0E10` | Text on a filled accent |
-| `--text` | `#FFFFFF` | Titles, values |
-| `--text-2` | `#C9D1D3` | Body text |
-| `--text-3` | `#7D8A8E` | Labels, hints, timestamps |
-| `--danger` | `#F04A4A` | Destructive actions, errors |
-| `--warn` | `#F5B742` | Warnings |
+Neutral near-black surfaces (no blue tint), white text with white-alpha secondary text, hairlines in white at 4-10 % alpha, one accent green `#36ff9f` used only as accent. Screen titles are huge, heavy, wide uppercase words (the display font). Primary actions are filled green with dark `#333` text and bold label; icon actions are round buttons. Full-screen screens float directly over the game (blurred by Lua, light CSS scrim), panels over gameplay are solid `rgba(14,14,14,0.95)` with radius 1.4vh. No outlined green buttons, no wide-letter-spaced captions, no blue-grey charcoal.
 
-- Radius: panels 1vh, cards 1vh, buttons and inputs 0.6vh, chips full.
-- Borders are always a 1px `--line` hairline (whole pixels: `0.1vh` is 1.08px at 1080p and CEF drops it on rounded corners); the selected card swaps it for `--accent` plus a faint accent tint and a soft glow (`box-shadow: 0 0 2.4vh rgba(54,255,159,0.18)`), nothing stronger.
-- No backdrop blur. Over a background image a panel stays opaque (`--panel` at 0.92-0.96 alpha at most).
+## Token block (every `web/src/index.css`)
+
+```css
+@import "@fontsource/unbounded/800.css";
+
+:root {
+  --green: #36ff9f;
+  --green-hover: #2bcc7f;
+  --green-text: #333333;
+  --tgi-green-rgb: 54, 255, 159;
+  --green-10: rgba(54, 255, 159, 0.1);
+  --green-15: rgba(54, 255, 159, 0.15);
+  --green-20: rgba(54, 255, 159, 0.2);
+  --green-30: rgba(54, 255, 159, 0.3);
+  --green-40: rgba(54, 255, 159, 0.4);
+  --green-60: rgba(54, 255, 159, 0.6);
+  --radius: 0.6vh;
+}
+
+@theme inline {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Unbounded", "Inter", sans-serif;
+  --color-tgi-green: var(--green);
+  --color-tgi-green-hover: var(--green-hover);
+  --color-tgi-green-text: var(--green-text);
+  --color-tgi-green-10: var(--green-10);
+  --color-tgi-green-15: var(--green-15);
+  --color-tgi-green-20: var(--green-20);
+  --color-tgi-green-30: var(--green-30);
+  --color-tgi-green-40: var(--green-40);
+  --color-tgi-green-60: var(--green-60);
+  --color-panel: rgba(14, 14, 14, 0.95);
+  --color-page: #0e0e0e;
+  --color-header: #141414;
+  --color-surface: #181818;
+  --color-float: #161616;
+  --color-row: #111111;
+  --color-control: #222222;
+  --color-control-hover: #333333;
+  --color-line: rgba(255, 255, 255, 0.04);
+  --color-line-strong: rgba(255, 255, 255, 0.1);
+  --color-text: #ffffff;
+  --color-text-2: rgba(255, 255, 255, 0.8);
+  --color-text-3: rgba(255, 255, 255, 0.5);
+  --color-text-4: rgba(255, 255, 255, 0.22);
+  --color-danger: #f87171;
+  --color-danger-solid: #ef4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.15);
+  --color-warn: #f5b742;
+  /* plus the vh scale block from tgiann-ui foundation.md */
+}
+```
+
+Base layer as in tgiann-multichar `src/index.css`: `*` border colour `rgba(255,255,255,0.1)`, focus ring `box-shadow: 0 0 0 0.2vh var(--green-60)`, `:where(.uppercase:not(.font-display)) { letter-spacing: 0.04em }`, scrollbar thumb `#333333` round, `scroll-fade-*` utilities. A tinted accent surface is `bg-tgi-green-10/15`, never `bg-tgi-green/10` or a literal `rgba(54,255,159,…)`.
 
 ## Typography
 
-- Inter (400/500/600/700). Sizes: label 1.2vh, body 1.3-1.4vh, card title 1.8vh, panel title 2.2vh, numbers in the HUD 2-3.2vh.
-- Section captions (above a block, like "SETTINGS MENU" in the reference) are 1.2vh uppercase, letter-spacing 0.24em, `--text-3`.
-- The server brand (top left of full-screen screens): name 2.6vh, 600, letter-spacing 0.3em uppercase, subtitle 1.1vh letter-spacing 0.5em `--text-3`, a small accent icon before it.
-- Numbers use `tabular-nums`; money in `--accent` only where it is the player's own balance on the HUD.
+- Body Inter 400/500/600/700. Display font Unbounded 800 (`font-display`, OFL, stands in for TGIANN's Agrandir: owner decision, Agrandir's licence does not allow shipping it in a public repo), always uppercase, `leading-none`, tracking `-0.01em`.
+- Screen title (top left of a full-screen screen: INVENTORY, CHOOSE CHARACTER) `font-display text-[4.4vh]`, one line of `text-[1.6vh] text-text-2` under it. Panel title (bank "FLEECA BANK", garage "My Vehicles") `font-display text-[1.6vh]`. Section label `text-[1.2vh] uppercase font-semibold text-text-3` (tracking from the base rule, no wide spacing).
+- Values `tabular-nums`; money green only where it is the player's own balance (HUD, bank).
 
 ## Components
 
-- **Primary button:** outline style: `--panel` fill, 1px `--accent` border, `--accent` text, 600; hover fills `rgba(54,255,159,0.12)`. A filled accent button only for the single most important action of a dialog.
-- **Secondary button:** 1px `--line` border, `--text-2` text; hover `--panel-raised`.
-- **Destructive button:** 1px border `rgba(240,74,74,0.6)`, `--danger` text; hover `rgba(240,74,74,0.12)`.
-- **Card (character select):** tall card, image area on top (character portrait or silhouette), name 1.8vh 600, two info rows with icon (`--text-3` icon, `--text-2` text), primary button full width, then secondary + destructive side by side. The "create" card is a dashed `--line` outline with a large thin `+` and two lines of text.
-- **Navigation (menus):** left column on `--panel`, brand at the top, rows with icon + label; the active row has `--panel-raised` fill, a 0.3vh accent bar on the left and an accent icon. Footer: small status (server online dot, player count, version) in `--text-3`.
-- **Content panel:** title 2.2vh + one-line description in `--text-3`, then cards on `--panel` with `--line` borders. Key/value rows: icon + label left (`--text-3`/`--text-2`), value right (`--text`), accent for the highlighted value.
-- **Tabs:** a row of equal cells inside a `--line` frame; the active cell has `--accent` text/icon and a 0.2vh accent underline.
-- **Slider:** 0.6vh track `--panel-raised`, accent fill, white round thumb, value right in `--text-2`.
-- **Toggle:** pill 4.2 x 2.4vh, on = accent fill with white knob, off = `--panel-raised` with grey knob.
-- **Notification:** `--panel` card, 0.4vh coloured bar on the left (accent success, danger error, warn warning), round icon in the same colour, title 1.4vh 600, body 1.25vh `--text-3`, remaining seconds top right.
-- **HUD:** minimap bottom left with street name next to it; status items bottom centre (round icon in a thin ring coloured by meaning, value above a label); money top right (cash in accent, bank in `--text`); speedometer bottom right (thin arc, large number, unit, gear, fuel bar). Nothing else stays on screen while playing.
+- **Primary button:** `bg-tgi-green text-tgi-green-text font-bold hover:bg-tgi-green-hover rounded-full` (big screen action: PLAY `h-[5.2vh] px-[3vh]`; panel action `h-[3.6vh]`) with an icon before the label. One per view.
+- **Secondary / grey button:** `bg-control hover:bg-control-hover text-white` or `bg-white/6 text-text-3 hover:bg-white/12 hover:text-white`, same shape.
+- **Destructive:** confirm action `bg-danger-solid text-white`, otherwise chip `bg-danger-bg text-danger`.
+- **Icon button:** round `size-[4.4vh] rounded-full bg-[#00000099] text-[#FFFFFFB2] hover:bg-[#101010B3] hover:text-white` over the game, `bg-control` inside a panel. Close is an icon button top right with "ESC to close" text before it on full-screen screens.
+- **Icon tabs** (bank header): row of `size-[4vh] rounded-[0.8vh] bg-control` squares, the active one `bg-tgi-green text-tgi-green-text`. **Text tabs:** label + icon, active `text-white` with a 0.2vh green underline, others `text-text-3`.
+- **Card / row:** `bg-white/3 border border-white/8 rounded-[1vh]`; hover `bg-white/6`; selected `border-tgi-green bg-tgi-green-10`. List rows in a solid panel: `bg-row` or `bg-surface`, `rounded-[0.8vh]`, `h-[4.8vh]`.
+- **Input / search:** pill `rounded-full bg-[#2222224D] border border-white/8 h-[3.6vh] px-[1.4vh]`, icon on the right, focus via `focus-within:border-tgi-green-40`.
+- **Toggle:** green track when on, `bg-control` off, white knob.
+- **Status chip:** `rounded-[0.4vh] px-[0.6vh] text-[1.1vh] font-bold uppercase`: green `bg-tgi-green text-tgi-green-text`, red `bg-danger-bg text-danger`, info `bg-[#3b82f626] text-[#60a5fa]`.
+- **Icon badge:** `size-[3.6vh] rounded-full bg-tgi-green-10 text-tgi-green`.
+- **HUD pieces** (lumihud): dark pills `bg-[rgba(19,19,19,0.75)] rounded-full`, round icon circles, thin bars with value, white text with `drop-shadow(0.15vh 0.1vh 0 rgba(0,0,0,0.75))` where there is no pill.
 
-## Backgrounds
+## Panels
 
-- Full-screen menus that are not over gameplay (character select, loading) use a night Los Santos image, darkened towards the panels: `web/public/backgrounds/skyline.jpg`, `wet-drive.jpg` in ai-core. The image never competes with text: a dark gradient over the side that holds content.
-- Screens over gameplay (pause menu, settings, notifications, HUD) have no background image; panels sit on the live game.
+- **Full-screen screen** (inventory, character select, appearance, shop catalogue): no outer panel; the game shows through, blurred in Lua (`TriggerScreenblurFadeIn(250)` while open) with a light CSS scrim (`bg-[radial-gradient(...)]` 0.5-0.8 at the edges). Title block top left, ESC + close top right.
+- **Solid panel** (bank, garage, scoreboard, admin): `bg-panel rounded-[1.4vh]` with a header row (display title left, icon tabs centre, close right), body cards on `bg-surface` / `bg-row`.
+- **Centered settings panel / dialog:** tgiann-ui recipe (c).
+- Pictures behind full-screen menus that are not over gameplay (character select, loading) stay in ai-core `web/public/backgrounds/`.
+
+## Sibling per screen
+
+| ai-* screen | Copy from (`docs/design/tgiann/`, `tgiann-<name>-nonbuild`) |
+|---|---|
+| ai-core character select | `multichar.png`, tgiann-multichar |
+| ai-core context menu, input, progress, notify, prompts | tgiann-core (tgiann-core-nonbuild), `radialmenu.png` for the menu list look |
+| ai-core admin panel | tgiann-core admin lib (tgiann-core-nonbuild admin panel) |
+| ai-inventory | `inventory.png`, tgiann-inventory |
+| ai-appearance | `clothing.png`, tgiann-clothing |
+| ai-banking | `bank.png`, tgiann-bank |
+| ai-garages | `realparking.png`, tgiann-realparking |
+| ai-vehicleshop | `vehicleshop.png`, tgiann-vehicleshop |
+| ai-chat | `chat.png`, tgiann-chat |
+| ai-hud | `lumihud.png`, tgiann-lumihud |
+| ai-radialmenu, ai-target | `radialmenu.png`, tgiann-radialmenu-target |
+| ai-scoreboard | `esc-menu.png`, tgiann-esc / tgiann-leaderboard |
+| ai-death | tgiann-core / lumihud text styles (big display title, round icon buttons) |

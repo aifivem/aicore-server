@@ -12,7 +12,7 @@ A third goal shapes the code: **compatibility with ready-made scripts**. Almost 
 1. This repo: this file, `.claude/rules/`, each script's `CLAUDE.md`, `docs/`.
 2. The `tgiann-fivem-dev` skill (engine, natives, state bags, oxmysql, NUI contract, process rules) and `tgiann-ui` (every NUI rule: stack, components, motion, UX, Apple HIG). Rules there that are specific to tgiann-core, ESX/QB/Qbox store scripts, Lua style, LuaLS or escrow do not apply here, except in ai-core's Lua bridge. Its "every script uses ox_lib" rule does not apply: ai-* resources use `@aicore-fivem/lib`.
 3. `tgiann-mysql` for anything touching SQL.
-4. Look of every NUI: `docs/design.md` (Dark Minimal, owner decision) replaces only the `tgiann-ui` colour tokens and panel looks; the rest of the skill applies (`.claude/rules/nui.md`).
+4. Look of every NUI: TGIANN style (owner decision): `tgiann-ui` in full plus `docs/design.md` (token block, display font, sibling per screen; `.claude/rules/nui.md`).
 
 When they conflict, the higher one wins. A skill rule that does not apply here gets one line in the matching rules file.
 
