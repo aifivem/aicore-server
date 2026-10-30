@@ -37,16 +37,19 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 - Callbacks: server `onClientCallback` (same forms and gate as `onClientEvent`; a refused call rejects the client's promise at once), client `triggerServerCallback(name, [args], timeoutMs?)`; the reverse direction `onServerCallback` / `triggerClientCallback(name, src, [args])`. Answers are `unknown`: parse them. No hand-made request/response event pairs.
 - Lang: `createLocale<typeof en>()` from `@aicore-fivem/lib/fivem` (the template's `resource/common/locale.ts`).
 - Keybinds: client `new Keybind({ name, description, defaultKey, onPressed, onReleased })`; the name is a stable id without the key (the lib appends the panel's or the default key); mouse buttons need `defaultMapper: "MOUSE_BUTTON"`. Commands: server `addCommand` (`lib.md` "Commands and keybinds").
-- Player values: `cache.ped`, `cache.playerId`, `cache.serverId`, `cache.vehicle`, `cache.seat`, `cache.weapon` (`false` = none) instead of calling natives in loops; `onCache(key, (value, old) => ...)` reacts to a change. One watcher in ai-core (100 ms) feeds every resource; nobody polls these.
+- Player values: `cache.ped`, `cache.playerId`, `cache.serverId`, `cache.vehicle`, `cache.seat`, `cache.weapon` (`false` = none) instead of calling natives in loops; `onCache(key, (value, old) => ...)` reacts to a change. One watcher in ai-core feeds every resource (entering a vehicle from the game event at once; ped, weapon and in-vehicle seat / exit read every 100 ms); nobody polls these. `onCache("vehicle")` instead of reading `GetVehiclePedIsIn` / `IsPedInAnyVehicle` on a timer.
 - Areas: lib `Zones` (`sphere`, `cylinder`, `poly`; each zone its own `interval` ms, default 500; `onEnter` / `onExit`). Never a hand-written distance loop; per-frame work only while inside, and only when it must draw.
-- "Press E" prompts: `showPrompt(id, text)` on enter, `hidePrompt(id)` on exit, `onPromptPressed(id => ...)` (ai-core's right-side prompt UI and its one rebindable interaction key). Never GTA help text (`BeginTextCommandDisplayHelp`) or per-frame `IsControlJustReleased`.
+- Interaction points: lib `Points` (prompt or target as the owner picks, `lib.md` "Interaction points"); `showPrompt` / `hidePrompt` only for a prompt that is not at a place. Never GTA help text (`BeginTextCommandDisplayHelp`) or per-frame `IsControlJustReleased`.
+- Game events instead of polling: client `gameEventTriggered (name, args)` (`CEventNetworkPlayerEnteredVehicle`: [player, vehicle]; `CEventNetworkEntityDamage` for hits and deaths of any entity), client `entityDamaged (victim, culprit, weapon, baseDamage)`, server `entityCreated` / `entityCreating` (cancelable) / `entityRemoved`, `weaponDamageEvent`, `onPedDeath` (ai-core's `CORE.playerDiedEvent`). There is no exit-vehicle, seat or weapon-switch event: those come from lib `cache` / `onCache`. Details: `aicore-fivem` `references/events.md`.
+- OneSync scope events (`playerEnteredScope` / `playerLeftScope`) cost per player in scope: one set of handlers in ai-core only; resources use lib `playersNear` / `playersNearEntity`.
+- Interiors and private areas hide players with the conceal natives (`NetworkConcealPlayer`), routing buckets only for fully separate worlds (character screen, instanced houses).
 - Waiting and loading: `sleep`, `waitFor` (resolves on the first non-`undefined` value, write `cond || undefined`; default timeout 10 s, `false` for none), `requestModel`, `requestAnimDict`, `requestPtfxAsset`.
 
 ## JS runtime
 
 - On the server, return to the game thread with `setImmediate` before calling a native inside a Node callback (fs, http, Node timers), or it fails with "No current resource manager".
 - Client code has no DOM/Node APIs (fs, Buffer, localStorage, fetch); packages using them never enter the client bundle.
-- Never write bare `exports` in source and never `export` a value from an entry file (the script shows "Started" but does not load). Use `registerExport(name, fn)` / `resourceExport("ai-core").fn()` from `@aicore-fivem/lib`.
+- Never write bare `exports` in source and never `export` a value from an entry file (the script shows "Started" but does not load). Use `registerExport(name, fn)` and a top-level `const core = resourceExport("ai-core")` from `@aicore-fivem/lib` (`lib.md` "Exports of other resources").
 
 ## Events and naming
 

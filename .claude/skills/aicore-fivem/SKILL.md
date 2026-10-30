@@ -21,6 +21,7 @@ The project's own rules come first: `CLAUDE.md` (goals, process), `.claude/rules
 | `references/engine.md` | Any client/server code: state bags, runtime costs, `provide` and exports, official docs findings, JS native returns, entities, peds and animation, input and raycasts, DUI, how GTA does it |
 | `references/sync.md` | Any server -> client data: banned patterns, snapshot per session or screen, delta actions, single push point, broadcast vs targeted, aggregates, checklist |
 | `references/runtime.md` | TS/JS runtime limits, timer and tick cost, events and latent events, exports, state bags vs GlobalState, security convars, measuring (with sources) |
+| `references/events.md` | Game and engine events instead of polling: vehicle enter, damage, entity created / removed, death, scope events and their cost, OneSync facts |
 | `references/docs.md` | Findings from the official FiveM docs: manifest, sandbox, ids, OneSync, security, server events, ACL, convars, NUI, game features worth using |
 | `references/data.md` | Where each kind of data lives, the three write paths, distribution to clients, data between resources, in-memory structures (the reasoning behind `.claude/rules/data-and-sync.md`) |
 | `references/scale.md` | The stress test (1M players in the DB, 10k online): what was slow, what changed, numbers, known limits |

@@ -1,14 +1,15 @@
 # Vehicle keys layer
 
-Every ai-* script gives, takes and checks vehicle keys through ai-core (owner decision: compatibility lives in ai-core, one change reaches every script). Scripts call lib `vehicleKeys.give / remove / has` (server); ai-core forwards to the active key system through one adapter file per system.
+Every ai-* script gives, takes and checks vehicle keys through ai-core (owner decision: compatibility lives in ai-core, one change reaches every script). Scripts call lib `vehicleKeys.give(source, vehicle, purpose) / remove / has` (server); ai-core forwards to the active key system through one adapter file per system.
 
 ## How it works
 
 - Server layer: `resources/[ai]/ai-core/resource/server/vehicleKeys/` (`index.ts` exports `GiveVehicleKeys`, `RemoveVehicleKeys`, `HasVehicleKeys`; `registry.ts` lists the adapters in detection order; `adapters/` one file per system).
 - Pick: ai-core panel, General tab, "Vehicle keys": `auto` (the first running system in registry order) or one system. Picked again when a system starts or stops. GlobalState `ai:vehicleKeys` tells clients which one is active.
-- A vehicle is a server entity or a plate. Systems with a server API get the call directly; systems with only a client API get it through ai-core's client (`ai-core:client:vehicleKeys (action, netId, plate)`), where `resource/client/vehicleKeys/adapters/<system>.ts` calls them (the vehicle must be networked).
+- A vehicle is a server entity or a plate. Systems with a server API get the call directly; systems with only a client API get it through ai-core's client (`ai-core:client:vehicleKeys (action, netId, plate, purpose)`), where `resource/client/vehicleKeys/adapters/<system>.ts` calls them (the vehicle must be networked).
+- Every give names why the player gets the key (`KeyPurpose` in `@aicore-fivem/shared`): `purchase` (now owned, a new key), `garage` (owned vehicle out of storage), `job` (work vehicle), `rental`, `temporary` (default: admin spawn, test drive, robbery vehicle). A system that knows the difference gets it (tgiann-hotwire below); the others give a key the same way for every purpose.
 - `HasVehicleKeys` answers true when the system cannot tell or none runs, so no script locks players out because of the key layer.
-- ai-vehicles gives the keys to whoever takes an owned vehicle out; ai-admin (`car`) and ai-jobs (work vehicles) give theirs.
+- Callers: ai-vehicles `SpawnVehicle(id, at, asker, cb, purpose = "garage")` (ai-garages: `garage`, ai-vehicleshop: `purchase`), ai-jobs `job`, ai-rental `rental`, ai-admin `car` `temporary`.
 
 ## Adapters
 
@@ -25,7 +26,7 @@ API facts come from each system's docs and from other bridges that support them 
 | vehicles_keys (Jaksam) | server | `giveVehicleKeysToPlayerId(source, plate, "temporary")` / `removeKeysFromPlayerId` | no |
 | mVehicle | server | `AddTemporalVehicle(source, vehicle)` / none | no |
 | cd_garage | server | client event `cd_garage:AddKeys (plate)` / none | no |
-| tgiann-hotwire | client | `GiveKeyVehicle(vehicle, true)` / none | no |
+| tgiann-hotwire | server | by purpose, below / `SetNonRemoveableIgnition(netId, vehicle, false)` for a fixed ignition key | `keyInIgnition` state or a `car_key` item with the plate |
 | qs-vehiclekeys | client | `GiveKeys(plate, model, true)` / `RemoveKeys(plate, model)` | no |
 | okokGarage | client | server events `okokGarage:GiveKeys` / `RemoveKeys` (plate) | no |
 | 0r-vehiclekeys, filo_vehiclekey | client | `GiveKeys` / `RemoveKeys` (plate) | no |
@@ -38,6 +39,17 @@ API facts come from each system's docs and from other bridges that support them 
 | mm_carkeys | client | `GiveKeyItem(plate, vehicle)` / `RemoveKeyItem(plate)` | no |
 | p_carkeys | client | server events `p_carkeys:CreateKeys` / `RemoveKeys` (plate) | no |
 | rd_vehiclekeys | client | server events `rd_vehiclekeys:server:GiveKeys` / `RemoveKeys` (plate) | no |
+
+### tgiann-hotwire by purpose
+
+Keys are `car_key` items (metadata `plate` + `keyId`); a key can sit in the ignition (entity state `keyInIgnition`, saved per plate). Server exports take `(netId, entity, ...)`; `GiveKeyPlate(source, plate, isNew)`.
+
+| Purpose | Call | Result |
+|---|---|---|
+| `purchase` | `GiveKeyPlate(source, plate, true)` | new key id: a key item, older copies stop working |
+| `garage` | `CheckKeyInIgnitionWhenSpawn(netId, vehicle)` | the key goes back into the ignition when it was there at parking; the owner keeps the item otherwise |
+| `job`, `rental`, `temporary` | `SetNonRemoveableIgnition(netId, vehicle, true)` | a key fixed in the ignition, nothing in an inventory |
+| any, plate only | `GiveKeyPlate(source, plate, false)` | a key item with the plate's current key id |
 
 Sources disagree on wasabi_carlock's server argument order (`(plate, source)` in one bridge); the adapter follows the order its documentation link gives, `(source, plate)`.
 
