@@ -10,7 +10,7 @@ A third goal shapes the code: **compatibility with ready-made scripts**. Almost 
 ## Source priority
 
 1. This repo: this file, `.claude/rules/`, each script's `CLAUDE.md`, `docs/`.
-2. The project skills in `.claude/skills/`: `aicore-fivem` (engine, natives, state bags, sync, runtime, debugging), `aicore-ui` (NUI stack, CEF limits, performance, motion, UX), `aicore-mysql` (SQL). They load by themselves when a task matches; read them when they do not.
+2. The project skills in `.claude/skills/`: `aicore-fivem` (engine, natives, state bags, sync, runtime, debugging), `aicore-ui` (NUI stack, CEF limits, performance, motion, UX), `aicore-mysql` (SQL), `aicore-script-update` (updating ai-* scripts from their GitHub releases and third-party scripts from the owner's files, keeping the server's data and changes). They load by themselves when a task matches; read them when they do not.
 3. `aicore-mysql` for anything touching SQL.
 4. Look of every NUI: TGIANN style (owner decision): `docs/design.md` (token block, display font, sibling per screen, reference pictures) plus `aicore-ui` (`.claude/rules/nui.md`).
 
