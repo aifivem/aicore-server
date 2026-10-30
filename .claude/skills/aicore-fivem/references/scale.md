@@ -8,7 +8,7 @@ How ai-core behaves with a database that has seen 1,000,000 players and 10,000 o
 - `bench/stress.ts [pool]` runs ai-core's real DB code (`@aicore-fivem/mysql`, `users.ts`, `characters/repo.ts`, `jobs/repo.ts`, `money/account.ts`) with natives stubbed: 10k players logging in at once (account upsert, character screen with card extras, character load: accounts, jobs, gangs), then the periodic save of 10k characters, then one paycheck for 10k players. Run with `bun --preload ./bench/preload.ts bench/stress.ts 10`.
 - `bench/explain.ts`: EXPLAIN of every per-login query on the seeded data.
 - `packages/lib/bench/online.bench.ts`: the online mirror and proximity helpers at 2048 and 10k online (ai-core's `GetPlayersInScope` stubbed with precomputed 424 m scope lists, copied per call like the export).
-- `packages/lib/bench/players.bench.ts`: per-player stores (`PendingActions`, `PlayerMap`, `Cooldowns`), panel records views, the `onCharacter` restart replay and the gate's capped log preview.
+- `packages/lib/bench/players.bench.ts`: per-player stores (`PendingActions`, `PlayerMap`, `Cooldowns`), `KeyedCooldowns` by character id, panel records views, the `onCharacter` restart replay and the gate's capped log preview.
 
 ## Findings
 
@@ -27,7 +27,7 @@ How ai-core behaves with a database that has seen 1,000,000 players and 10,000 o
 | Account rows read first, only missing types inserted | `money/book.ts` `loadAccounts` |
 | ai-core pool 10 connections (`ai_core_pool_size`), other resources keep 5 | `database.ts` |
 | Ped death lookup by entity owner (O(1)) | `player/deaths.ts` |
-| lib `online`: each resource's mirror of loaded players (character, job and gang names, duty, on-duty sets per job) from ai-core's events | `packages/lib/src/server/online.ts` |
+| lib `online`: each resource's mirror of loaded players (character, job and gang memberships with grades, member sets per job and gang, duty, on-duty sets per job) from ai-core's events | `packages/lib/src/server/online.ts` |
 | lib `playersNear(source, radius)` / `playersNearEntity(entity, radius)`: candidates from OneSync scope events instead of everyone online | `packages/lib/src/server/proximity.ts` |
 | chat, police, scoreboard, management, cityhall, death, robberies truck, smallresources AFK moved to them | those resources' `resource/server` |
 
@@ -45,10 +45,12 @@ Pool size alone (old code): 5 → 11.1 s, 10 → 8.2 s, 20 → 7.4 s for the log
 
 Memory helpers (natives stubbed):
 
-| Online (avg. in scope) | Mirror start | `playersNear` | `nearestPlayerTo` | Walk on-duty police |
-|---|---|---|---|---|
-| 2,048 (~22) | 2 ms | 5 µs | 6 µs | 4 µs |
-| 10,000 (~112) | 5 ms | 25 µs | 25 µs | 8 µs |
+| Online (avg. in scope) | Mirror start | `playersNear` | `nearestPlayerTo` | Walk on-duty police | Police members + grades (`jobMembers`) vs walking everyone | One `jobsChanged` |
+|---|---|---|---|---|---|---|
+| 2,048 (~22) | 3 ms | 6 µs | 4 µs | 4 µs | 35 µs (409 members) vs 67 µs | 1.1 µs |
+| 10,000 (~112) | 9 ms | 21 µs | 18 µs | 6 µs | 117 µs (2,000 members) vs 329 µs | 1.0 µs |
+
+A job channel message or a boss menu walks only the job's members (`online.jobMembers`), and a grade check (`online.jobGrade`) is a memory read instead of a `GetJobs` export copy.
 
 `playersNear` / `nearestPlayerTo` cost one `GetPlayersInScope` export call (a copy of the scope list) plus one coordinate read per candidate; ai-core keeps the scope sets, so there is no seed in the resource.
 
@@ -58,6 +60,8 @@ Per-player stores and panel views (natives stubbed; a server holds at most 2,048
 |---|---|---|---|---|
 | 100k | 0.3 / 0.2 µs | 0.1 µs | 0.4 ms (first call) | 149 ms / 2 µs |
 | 1M | 0.5 / 0.3 µs | 0.1 µs | 0.09 ms | 1.0 s / 2 µs |
+
+`KeyedCooldowns` by character id (cooldowns that survive a reconnect): `start` 0.2 / 0.35 µs at 100k characters and 0.3 / 0.4 µs at 1M (second round includes the sweeps that drop expired entries when the map doubles), `ready` 0.06-0.09 µs; expired entries never pile up.
 
 `onCharacter` replay of 10,000 loaded players after a restart: 23 ms including the `online` mirror start. The gate's refusal line for a ~10 MB argument list: `previewJson` 0.35 ms instead of 14 ms for `JSON.stringify` (and no 10 MB string).
 

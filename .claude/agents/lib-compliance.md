@@ -26,7 +26,7 @@ For each "never" in the table, grep its patterns, then read every hit in context
 - State bags: `Entity(`, `Player(`, `GlobalState`, `LocalPlayer.state`, `AddStateBagChangeHandler`, `.state.set(` outside the lib.
 - Places and peds: `AddBlipForCoord`, `BeginTextCommandSetBlipName`, client `CreatePed(` outside `LocalPed`, `BeginTextCommandDisplayHelp`, hand-made distance loops (`setInterval` / `setTick` with `GetEntityCoords` and a distance compare) where `Points` / `Zones` fit, direct `ox_target` / `qb-target` exports.
 - Local player: `PlayerPedId()` (allowed only right after a model change), polling `GetVehiclePedIsIn` / `IsPedInAnyVehicle`, `GetSelectedPedWeapon` in timers.
-- Per-frame work: `setTick(` instead of `TickLoop`, `DisableControlAction` outside lib `controls`, ticks that run while idle.
+- Periodic work: any `setTick(` / `setInterval(` / self-rearming `setTimeout` loop instead of lib `every` (or `TickLoop`), `DisableControlAction` outside lib `controls`, jobs that run while idle; in ai-lib's Lua modules a `CreateThread` + `Wait` loop instead of `aiLib.every`.
 - Waiting: `while (` with `await sleep` / `Wait`, own model or anim dict request loops.
 - Cross-resource: inventory, key, phone, weather or emote script exports or events called directly, `resourceExport("x")` inside functions.
 - Server vehicles: `CreateVehicleServerSetter` outside `spawnVehicle`, own `vehicleType` callbacks.

@@ -13,7 +13,7 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 
 ## Runtime costs (JS/TS)
 
-- An empty `setTick` or a 1 s `setInterval` costs about 0.05 ms in resmon (Lua `Wait(1000)` costs 0): one shared tick per resource, cleared when idle.
+- An empty `setTick` or a 1 s `setInterval` costs about 0.05 ms in resmon (Lua `Wait(1000)` costs 0): one shared tick per resource (lib `every`), cleared when idle.
 - Exports and cross-resource events copy their data (functions pass as references). Large or frequent payloads stall the server: never return whole objects from an export, never call another resource's export on a hot path; mirror the data and follow delta events.
 - Latent events: `bps` is BYTES per second (default 25000). The payload is held in memory and sliced per tick on its own channel.
 - msgpack (events, exports, state bags) silently drops anything deeper than 16 levels: send deep data as a JSON string and parse it at the last stop. `SendNUIMessage` is JSON and has no such limit.

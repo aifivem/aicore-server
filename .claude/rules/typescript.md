@@ -20,7 +20,7 @@ paths:
 - Class or function: "does it need to remember state?" Yes → a class that keeps the state and its operations together (`Player`, `PlayerRegistry`, `Cooldown`, `TickLoop`). No → a plain function (validation, conversion, native wrappers). Event/export registration stays at module level and hands the work to a class or function. React components and hooks are always functions. Red flag: module-level `let` state plus functions reading/writing it, or a pile of functions taking the same object first; both become a class.
 - `try/catch` only at real error boundaries (database, HTTP, JSON.parse). Errors are never swallowed: log with context or rethrow.
 - No condition-wait loops (`while (!x) await sleep()`): `waitFor(check, timeoutMs?)` from `@aicore-fivem/lib/shared`.
-- One-off delay `setTimeout`. Periodic watcher `setInterval` / `clearInterval`. Per-frame work (drawing, control reads) uses `setTick` and is cleared when done; no idle ticks (each costs ~0.05 ms in resmon). Prefer `TickLoop` from `@aicore-fivem/lib/client`.
+- One-off delay `setTimeout`. Every periodic job (a watcher every N ms, per-frame drawing and control reads) is lib `every(ms, fn)` on the resource's one scheduler tick, switched off when not needed (`lib.md` "Periodic work"); never `setInterval` / `setTick`.
 - No object/array/closure allocation inside ticks or frequent events.
 - Files stay under ~200 lines; split past 150.
 - Comments are English and short, and carry only the constraint the code cannot show. Reasons and history go into the script's `CLAUDE.md`.

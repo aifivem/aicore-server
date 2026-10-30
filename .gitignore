@@ -10,6 +10,8 @@ imgui.ini
 
 # Downloaded third-party resources (the txAdmin recipe installs them)
 /resources/\[standalone\]/
+# Third-party scripts used only to test compatibility on this machine
+/resources/\[test\]/
 
 # Every ai-* resource and the shared packages are their own git repos ("[" is a pattern character, so escaped)
 /resources/\[ai\]/

@@ -21,17 +21,17 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | A player action with a refusal (buy, use, open) | server answers `ActionResult`, refuses with `fail("KEY")`; client `callAction(name, args, { fallback })` | own `fail`, `errorText`, `isObj`, notifying the error by hand |
 | A token or net id from a client | `{ args: oneArg(readId) }`, `vehicleFromNet` / `vehicleNearPlayer` | `typeof x === "number"`, `NetworkGetEntityFromNetworkId` checks by hand |
 | A timed action the client runs (progress, dialog) | `PendingActions` (server) | own token map, counter, time check and drop cleanup |
-| Per-player server state, cooldowns, character load / unload | `PlayerMap`, `Cooldowns`, `onCharacter` | `on("playerDropped")` per map, load listener + restart replay by hand |
+| Per-player server state, cooldowns, character load / unload | `PlayerMap`, `Cooldowns` (per connection), `KeyedCooldowns` (by character id, survives a reconnect), `onCharacter` | `on("playerDropped")` per map, own `Map<id, deadline>`, load listener + restart replay by hand |
 | Server -> client | `onServerEvent` (with `args`), `triggerClientCallback` / `onServerCallback` | bare `onNet` on the client |
 | A place the player uses (shop, counter, door, NPC, ATM) | `Points` (label, `canShow`, `onPressed`, `ped`, `blip`, `models` for model targets) | `Zones` + `showPrompt` + `onPromptPressed` by hand, target exports, help text, `IsControlJustPressed` loops |
 | An NPC | `ped` on a point or `LocalPed` | client `CreatePed` by hand |
 | A map blip | `blip` on a point, `Blips`, `createBlip` | `AddBlipForCoord` + `BeginTextCommandSetBlipName` |
 | The local ped, its vehicle, seat, weapon | `cache` / `onCache`, `player` | `PlayerPedId()` (except right after a model change), polling `GetVehiclePedIsIn` |
-| Teleport, animation, freeze | `player.teleport` / `playAnim` / `freeze`, `fadeOut` | fade + coords + collision code by hand |
+| Teleport, animation, freeze | `player.teleport` / `playAnim` / `freeze`, `fadeOut` / `fadeIn` | fade + coords + collision code by hand, a bare `DoScreenFadeIn` |
 | A vehicle created by the server | `spawnVehicle` (with key `purpose`), `vehicleType` | `CreateVehicleServerSetter` + waits + plate + bags by hand, own `vehicleType` callbacks |
 | Vehicle keys | `vehicleKeys.give(source, vehicle, purpose)` / `remove` / `has` | a key script's exports |
 | Items, stashes, usable items | lib `inventory` | an inventory's exports |
-| Character, money, jobs, gangs, duty | ai-core exports through one top-level `const core = resourceExport("ai-core")`; `online` for lookups across players | own tables or copies, `GetLoadedSources()` + an export per player in a loop |
+| Character, money, jobs, gangs, duty | ai-core exports through one top-level `const core = resourceExport("ai-core")`; `online` for lookups across players (`jobGrade`, `jobMembers`, `onDutyFor`) | own tables or copies, `GetLoadedSources()` + an export per player in a loop, `core.GetJobs` for a grade check |
 | Players near someone | `playersNear` / `playersNearEntity`; the closest one `nearestPlayer` (client) / `nearestPlayerTo` (server) | walking every player, own scope handlers, `GetActivePlayers` loops |
 | A position or distance on the server | `coordsOf`, `entityCoords`, `isNear`, `distance` | own `pos` / `distance` helpers |
 | The local ped fired a shot | lib `onShot` (client) | sampling `IsPedShooting` on a timer |
@@ -55,9 +55,12 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Notifications, progress, menus, inputs | lib `notify`, `progress`, `menu`, `input` | own NUI for them |
 | Logs | `aiLog` | `console.log` for events, webhooks |
 | Waiting and loading | `waitFor`, `sleep`, `requestModel`, `requestAnimDict`, `requestAnimSet`, `requestPtfxAsset` | `while (!x) await sleep()` |
-| Per-frame work | `TickLoop` (on only while needed) | idle `setTick` |
+| Periodic work (per frame or every N ms) | lib `every(ms, fn)` (0 = every frame; switched with `set(active)` while needed), `TickLoop` for an on / off per-frame job | `setInterval`, `setTick`, a self-rearming `setTimeout`, idle jobs |
 | Disabled controls (cuffed, seat belt, menus) | lib `controls.disable(reason, list)` / `controls.disableAll(reason, except?)` / `enable(reason)` | a `TickLoop` or tick per feature calling `DisableControlAction` / `DisableAllControlActions` |
-| The vehicle near the player or a point | lib `nearestVehicle` (client), `nearestVehicleTo` / `nearestVehicleAt` (server) | own pool loops, `GetClosestVehicle` |
+| The vehicle near the player or a point | lib `nearestVehicle` (client, `filter` for a condition), `nearestVehicleTo` / `nearestVehicleAt` (server) | own pool loops, `GetClosestVehicle` |
+| A server entity on the client by net id | lib `waitForEntity(netId)` | `waitFor(() => NetworkDoesEntityExistWithNetworkId(...))` + `NetToVeh` by hand |
+| A line of sight / surface probe (client) | lib `raycast(from, to, options)` | `StartExpensiveSynchronousShapeTestLosProbe` + `GetShapeTestResult` by hand |
+| A NUI page's lang texts (web) | `web/src/lib/lang.ts` wrapping lib `LangTexts` | own text store or placeholder code |
 | Areas without an interaction | `Zones` | distance loops |
 | Another resource's exports | one top-level `resourceExport("x")` / `optionalExport` per call for optional ones | `resourceExport("x").Fn()` inside functions |
 | Database | `db` (typed tables) / `mysql` | oxmysql exports, raw string SQL with values |

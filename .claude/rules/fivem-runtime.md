@@ -20,14 +20,14 @@ Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `
 
 ## Events, exports, state bags
 
-- Event payloads stay small; multi-KB data goes through `TriggerLatentClientEvent` / `TriggerLatentServerEvent` (`bps` is bytes per second per target, default 25000).
+- Event payloads stay small; multi-KB data goes through `TriggerLatentClientEvent` / `TriggerLatentServerEvent` (`bps` is bytes per second per target, default 25000). On the client a latent server event has `source` 0 (a normal one 65535): never test the source for truthiness (`aicore-fivem` `runtime.md`).
 - Data deeper than 16 levels is silently cut by msgpack: send deep data as a JSON string and parse it at the last stop.
 - Exports and cross-resource events copy their data. No export returns a whole object; hot paths never call another resource's export; a consumer mirrors what it needs and updates it from delta events.
 - Exports stay synchronous; no promise crosses a resource boundary.
 - Static data ships as files and is read locally, never sent through events or exports.
 - State bags only through lib `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` (`lib.md` "State bags"): never `Entity(e).state`, `Player(p).state`, `GlobalState`, `LocalPlayer.state` or `AddStateBagChangeHandler` in a script. A raw read builds proxies, calls natives, copies under engine locks and decodes msgpack every time (it stalls server ticks under load); a raw change handler runs before the value is stored; a set is deferred when any handler exists. Reasons and numbers: `aicore-fivem` `references/statebags.md`.
 - Per-entity data goes into the entity's state bag; shared runtime state into one `GlobalGroup` key per item; never broadcast whole configs. Values are flat (one key per value, `state.x.y = v` does not replicate).
-- A client waits for a server-created entity with `waitFor(() => NetworkDoesEntityExistWithNetworkId(netId))`, then `NetToVeh/NetToPed/NetToObj`. entity↔netId conversion goes through one helper. Never send entity handles or player indices between machines.
+- A client waits for a server-created entity with lib `waitForEntity(netId, timeoutMs)` (`NetworkDoesEntityExistWithNetworkId` + `NetToEnt`, 0 on timeout). entity↔netId conversion goes through one helper. Never send entity handles or player indices between machines.
 - `GetEntityArchetypeName` does not exist on the server: validate a model with `GetHashKey(model) === GetEntityModel(entity)`.
 
 ## @aicore-fivem/lib (instead of ox_lib)
@@ -48,6 +48,7 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 ## JS runtime
 
 - On the server, return to the game thread with `setImmediate` before calling a native inside a Node callback (fs, http, Node timers), or it fails with "No current resource manager".
+- Periodic work on either side runs on the resource's one scheduler: lib `every(ms, fn)` (0 = every frame), never `setInterval` / `setTick` (`lib.md` "Periodic work"). Server jobs run on the game thread, so natives work in them.
 - Client code has no DOM/Node APIs (fs, Buffer, localStorage, fetch); packages using them never enter the client bundle.
 - Never write bare `exports` in source and never `export` a value from an entry file (the script shows "Started" but does not load). Use `registerExport(name, fn)` and a top-level `const core = resourceExport("ai-core")` from `@aicore-fivem/lib` (`lib.md` "Exports of other resources").
 

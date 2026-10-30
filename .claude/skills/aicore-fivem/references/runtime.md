@@ -13,8 +13,9 @@
 - **[measured]** An empty JS `setTick`, or a 1 s `setInterval`, raises a resource to ~0.05 ms in resmon; a Lua thread with `Wait(1000)` shows 0.00 ms. Cfx's explanation in GitHub issue #1653: the JS scheduler lacks Lua's "bookmark" scheduling and the V8 C++ API costs more than the Lua C API; "50 microseconds is still very much negligible and this won't go up much more with actual code" (2022; lower numbers were reported in 2024).
 - **[claim]** The overhead of many JS resources is not noticeable; the cost comes from timers (Cfx forum, 2024).
 - Resulting rules:
-  - Every timer carries a base cost. One shared tick loop per resource; a tick with nothing to do is cleared with `clearTick` at once. No idle `setTick`.
-  - Periodic checks use `setInterval` at the interval the job needs, not every frame. Only drawing and control reads run every frame.
+  - Every tick handler and every timer carries a fixed per-frame cost (a runtime crossing and the scheduler walk), whatever its interval: ten `setInterval`s cost ten times one. So a resource has one scheduler (lib `every(ms, fn)`, Lua `aiLib.every`) owning a single `setTick`, and every periodic job registers there at the interval it needs (0 = every frame; only drawing and control reads need that). The tick is removed while no job is active (no idle tick) and added back on the next `set(true)`.
+  - Inside the tick, jobs of one interval share a queue ordered by due time: a frame with nothing due costs one `GetGameTimer` and one comparison, a due frame touches only the due jobs; each job keeps its own phase (first run one interval after it was switched on) so a check that must not run at once (a sit watch) behaves like `setInterval`. Measured with natives stubbed (`packages/lib/bench/scheduler.bench.ts`): 10 / 100 / 1000 jobs at mixed intervals cost 0.4 / 0.8 / 1.6 µs of JS a frame against 0.3 / 1.6 / 14.6 µs for the same jobs as separate timers, before the per-handler runtime cost the separate timers add in the game; a frame with nothing due 0.02 µs.
+  - Lua threads sleep for free ("bookmark" scheduling), so the Lua scheduler is one thread that `Wait`s until the next due job and ends when none is active; a job that becomes due sooner starts a new thread and the sleeping one ends when it wakes. A Lua job never `Wait`s (it would hold every other job).
   - No object/array allocation inside a tick (GC pressure); unchanged results are not recomputed.
   - Target: idle resmon below 0.10 ms **[claim, widely accepted]**; nothing counts as "optimized" without a measurement.
 
@@ -24,6 +25,7 @@
 - **[official]** The latent `bps` argument is bytes per second per target; `0`/`-1` means the default 25000. Sent to `-1`, the total is `bps × player count`. Very large `bps` (~10,000,000) causes connectivity problems.
 - **[experience]** Event, export and state bag arguments go through msgpack; data deeper than 16 levels silently turns into `nil`. Deep data (an admin schema) travels as a JSON string and is decoded at the last stop.
 - **[experience]** MessagePack can turn a missing field into `null`: check `!= null` at the boundary and normalize with `?? undefined`.
+- **[source]** On a client, a normal server event arrives with source `net:65535`, a latent one with `net:0`: the client registers the server as event reassembly target 0 (`ResourceNetBindings.cpp` `RegisterTarget(0, 0xFF)`, `EventReassemblyComponent.cpp` `"net:" + std::to_string(source)`), so JS `source` is `0`. A local emit carries a string source. "From the server" is `typeof source === "number"` (lib `fromServer`), never a truthiness test, or every latent event is dropped. Lua: `source ~= nil and source ~= ''`.
 - Every client event is validated (type, range, ownership, distance) and rate limited. Money, item and permission decisions are never made on the client.
 
 ## 4. Calls between resources (exports, local events)
