@@ -76,6 +76,7 @@ Write current truth in imperative form, no history ("used to be X"). Fix a wrong
 ## Process
 
 - Writing or changing a script: `.claude/rules/scripts.md` is the hard checklist (which lib helper for which job, what is never written by hand).
+- Audits are project agents in `.claude/agents/`: `lib-compliance` (code that bypasses the lib or ai-core), `lib-candidates` (repeated code that belongs in the lib or an ai-core layer), `stability-audit` (security, loops, memory, sync and SQL under 2048 / 10k players and 1M records, with benches). Their reports are findings; the fixes follow the rules here.
 
 - After a TS change, in the resource: `bun run typecheck`, `bun run lint`, `bun run build`. The game only reads `dist/` and the generated `fxmanifest.lua`.
 - Server commands go through RCON: `bun tools/rcon.ts --log <txData profile>/logs/fxserver.log --wait 3 "ensure ai-core"`. After a build, `ensure`/`restart` the resource and search the log for `Failed to load script`, `SCRIPT ERROR`, `[client error]`, not only for "Started". `bun tools/rcon.ts "aicore_db slow"` shows database statistics of every resource. A new resource or a changed `fxmanifest.lua` needs `refresh` first.
