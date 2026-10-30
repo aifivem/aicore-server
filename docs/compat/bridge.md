@@ -1,12 +1,12 @@
 # ESX / QB / Qbox bridge (ai-core)
 
-ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `provide`) and answers their exports, core objects and events from Lua in `resources/[ai]/ai-core/bridge/`. Every call goes to ai-core; the player mirror follows ai-core's local events. Status: written and checked on the dev server with a test resource (exports, legacy events, Shared tables, item definitions); not yet tested with a real ESX / QB script in game.
+ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `provide`) and answers their exports, core objects and events from Lua in `resources/[ai]/ai-core/bridge/`. Every call goes to ai-core; the player mirror follows ai-core's local events. Status: written and checked on the dev server with a test resource after a full server restart (resource states, exports, legacy events, Shared tables, item definitions); not yet tested with a real ESX / QB script in game.
 
 ## Detection
 
 | Style | Status |
 |---|---|
-| `GetResourceState('es_extended' / 'qb-core' / 'qbx_core')` | `provide` lines are in the manifest. On the running dev server they still report `missing` after `refresh` + restart of ai-core, while `oxmysql` (provided by ai-mysql since server start) reports `started`: provides seem to be read only at server start. Verify after the next full server restart. |
+| `GetResourceState('es_extended' / 'qb-core' / 'qbx_core')` | `started` (checked after a full server restart; provides added while the server runs are only read at the next server start) |
 | `exports['qb-core']:GetCoreObject()` | works |
 | `TriggerEvent('QBCore:GetObject', cb)` | works |
 | `exports.es_extended:getSharedObject()` | works |
