@@ -40,3 +40,4 @@ CLAUDE.local.md
 # Build output of the template itself (new.ts skips it; a created resource commits its own)
 /template/resource/dist/
 /template/resource/fxmanifest.lua
+.claude/skills/aicore-fivem/tools/natives-cache/

@@ -5,7 +5,7 @@ paths:
 
 # NUI
 
-Every NUI follows the `tgiann-ui` skill in full (owner decision): stack, vh scale, colour tokens, panel recipes, old-CEF limits, shadcn rules and component catalog, motion, `nui-performance.md`, UX rules and the Apple HIG references. Every screen looks like a TGIANN sibling: `docs/design.md` holds the token block, the display font and which TGIANN UI each screen copies. Transport and React architecture: `tgiann-fivem-dev` `references/nui.md`.
+Every NUI follows the `aicore-ui` skill (owner decision): stack, vh scale, old-CEF limits, shared-renderer performance, motion and UX rules. Every screen looks like a TGIANN sibling: `docs/design.md` holds the token block, the display font, the panel and component recipes and which reference picture each screen copies. Transport and React architecture: snapshot + delta through `fivem-nui-react`.
 
 ## Stack (every ai-* NUI)
 
@@ -21,8 +21,8 @@ Every NUI follows the `tgiann-ui` skill in full (owner decision): stack, vh scal
 ## Look and behaviour
 
 - Colours, surfaces and component looks: `docs/design.md` and the TGIANN reference pictures in `docs/design/tgiann/`. Tokens are CSS variables in the NUI's `index.css`, used through Tailwind theme colours; never a raw hex that has a token.
-- Behaviour from `tgiann-ui`: `ux-rules.md` (one primary action, hit targets at least 2.8vh, hover/active/focus-visible on everything interactive, Escape closes the last opened layer, empty/loading/error states), `motion.md` (150 ms hover and press, 200-300 ms enters, exits shorter, interruptible), `apple-hig/` for interaction questions and the eight-principle review vocabulary.
-- When the screen mirrors something GTA has (creator, shops, barber), copy the closest TGIANN sibling UI first (catalog in `tgiann-ui` `components.md`, `[encrypted]` nonbuild folders), then reskin.
+- Behaviour from `aicore-ui` `references/ux.md` (one primary action, hit targets at least 2.8vh, hover/active/focus-visible on everything interactive, Escape closes the last opened layer, empty/loading/error states) and `references/performance.md` (150 ms hover and press, 200-300 ms enters, exits shorter, interruptible, compositor tweens).
+- When the screen mirrors something GTA has (creator, shops, barber), start from the closest reference picture in `docs/design/tgiann/` and read how GTA builds it (`aicore-fivem` engine.md "how GTA does it").
 - Texts come from the resource's lang file (sent with the screen's open message), never literals; buttons start with a verb.
 - A screen loads one snapshot and applies deltas; no polling, no refetch after an action.
 - `web/vite.config.ts` `server.fs.allow` lists `".."` and `"../../../../node_modules"`: bun hoists packages (fonts) to the workspace root, and without it the browser preview gets 403 on the font files and screenshots render in a system font (the build is not affected).

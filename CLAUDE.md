@@ -10,9 +10,9 @@ A third goal shapes the code: **compatibility with ready-made scripts**. Almost 
 ## Source priority
 
 1. This repo: this file, `.claude/rules/`, each script's `CLAUDE.md`, `docs/`.
-2. The `tgiann-fivem-dev` skill (engine, natives, state bags, oxmysql, NUI contract, process rules) and `tgiann-ui` (every NUI rule: stack, components, motion, UX, Apple HIG). Rules there that are specific to tgiann-core, ESX/QB/Qbox store scripts, Lua style, LuaLS or escrow do not apply here, except in ai-core's Lua bridge. Its "every script uses ox_lib" rule does not apply: ai-* resources use `@aicore-fivem/lib`.
-3. `tgiann-mysql` for anything touching SQL.
-4. Look of every NUI: TGIANN style (owner decision): `tgiann-ui` in full plus `docs/design.md` (token block, display font, sibling per screen; `.claude/rules/nui.md`).
+2. The project skills in `.claude/skills/`: `aicore-fivem` (engine, natives, state bags, sync, runtime, debugging), `aicore-ui` (NUI stack, CEF limits, performance, motion, UX), `aicore-mysql` (SQL). They load by themselves when a task matches; read them when they do not.
+3. `aicore-mysql` for anything touching SQL.
+4. Look of every NUI: TGIANN style (owner decision): `docs/design.md` (token block, display font, sibling per screen, reference pictures) plus `aicore-ui` (`.claude/rules/nui.md`).
 
 When they conflict, the higher one wins. A skill rule that does not apply here gets one line in the matching rules file.
 
@@ -22,7 +22,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 - Bridge: part of ai-core, no separate bridge resources (owner decision). ai-core `provide`s `es_extended`, `qb-core` and `qbx_core` and answers their exports, core objects and events, so another script uses ai-core as if it were that framework. The bridge code lives in ai-core's `bridge/` folder, Lua 5.4 with full LuaLS annotations, the only Lua in the project (`.claude/rules/lua-bridges.md`).
 - Shared code: our own `@aicore-fivem/lib` (callbacks, locale, waitFor, streaming, keybinds, rate limits, DB tables...), **no ox_lib in ai-* resources** (owner decision). Anything used twice goes into the lib (`.claude/rules/lib.md`).
 - DB: our own engine `@aicore-fivem/mysql` (owner decision): every ai-* resource runs a small pool in-process; `ai-mysql` stands in for oxmysql for third-party scripts (`.claude/rules/database.md`). Never guess a signature: read the source or `.d.ts` in `node_modules`.
-- NUI: the `tgiann-ui` stack: React 19 + Vite + TypeScript, Tailwind v4, shadcn/ui (Radix), TanStack Router / Virtual / Pacer, Redux Toolkit, `motion`, `fivem-nui-react` (`.claude/rules/nui.md`).
+- NUI: the `aicore-ui` stack: React 19 + Vite + TypeScript, Tailwind v4, shadcn/ui (Radix), TanStack Router / Virtual / Pacer, Redux Toolkit, `motion`, `fivem-nui-react` (`.claude/rules/nui.md`).
 - Third-party resources: pma-voice only. No ox_lib on the server (owner decision): a third-party script that needs it (many ESX/QB/Qbox scripts) is installed by the server owner together with that script. No oxmysql: `ai-mysql` provides it. Ask before adding another resource or npm package.
 
 ## Structure
@@ -45,7 +45,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 
 ## Data sync (HARD RULE)
 
-Live data from server to client/NUI goes as snapshot + delta: one full snapshot when a session or screen opens, then only changed rows/fields, only to who needs it (owner, group members, players with the screen open). Banned: "changed, refetch" signals, polling, broadcasting per-player data to everyone (`-1`), resending constant data every tick, action responses carrying the whole screen (they return `{ ok }`). Countdowns and expiry run on the client clock. Read `tgiann-fivem-dev` `references/server-client-sync.md` before writing any server→client push.
+Live data from server to client/NUI goes as snapshot + delta: one full snapshot when a session or screen opens, then only changed rows/fields, only to who needs it (owner, group members, players with the screen open). Banned: "changed, refetch" signals, polling, broadcasting per-player data to everyone (`-1`), resending constant data every tick, action responses carrying the whole screen (they return `{ ok }`). Countdowns and expiry run on the client clock. Read the `aicore-fivem` skill's `references/sync.md` before writing any server→client push.
 
 ## Knowledge layout
 
@@ -68,7 +68,7 @@ Before finishing, write down anything reusable:
 - A correct-usage rule ("use X for Y", "never Z") → one line in the matching `.claude/rules/*.md` (new file with `paths:` if none fits).
 - A mechanism with code shape, or the research behind a decision → `docs/research/<topic>.md`.
 - Something specific to one script → that script's `CLAUDE.md`, in its template section.
-- A finding valid for every FiveM project (native, CEF, runtime) → also the `tgiann-fivem-dev` / `tgiann-ui` skill.
+- A finding valid for every FiveM project (engine, native, CEF, runtime, SQL) → the matching project skill in `.claude/skills/` (`aicore-fivem`, `aicore-ui`, `aicore-mysql`).
 - Owner preferences and project status → auto memory, not the repo.
 
 Write current truth in imperative form, no history ("used to be X"). Fix a wrong note instead of adding a second one. No file or function lists that reading the code shows.
@@ -79,7 +79,7 @@ Write current truth in imperative form, no history ("used to be X"). Fix a wrong
 - Server commands go through RCON: `bun tools/rcon.ts --log <txData profile>/logs/fxserver.log --wait 3 "ensure ai-core"`. After a build, `ensure`/`restart` the resource and search the log for `Failed to load script`, `SCRIPT ERROR`, `[client error]`, not only for "Started". `bun tools/rcon.ts "aicore_db slow"` shows database statistics of every resource. A new resource or a changed `fxmanifest.lua` needs `refresh` first.
 - Restarting a resource stops the resources that depend on it; `ensure` them again afterwards and check each one ends `Started`.
 - A change that needs a full server start (new `provide` lines): `bun tools/rcon.ts "quit \"<reason>\""`; txAdmin starts the server again within seconds.
-- Before using a native the codebase does not use yet, verify name, argument order and client/server availability with the `tgiann-fivem-dev` skill's `tools/native.py`. Native names in JS are the same PascalCase as in Lua.
+- Before using a native the codebase does not use yet, verify name, argument order and client/server availability with `python .claude/skills/aicore-fivem/tools/native.py <name>`. Native names in JS are the same PascalCase as in Lua.
 - Before choosing a command name, grep all of `resources/` for it (command mapping is case-insensitive).
 - `fxmanifest.lua` is generated by the build, never edited by hand. Versions live in `package.json`; only the owner bumps them. Never re-add code the owner deleted; say so if its removal causes a problem.
 - Recursive scans of `C:\TGIANN` take minutes; search inside a known folder.

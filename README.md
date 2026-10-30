@@ -13,7 +13,7 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 | `template/` | Template for new resources (`bun run new <name> "<description>"`). |
 | `tools/rcon.ts` | RCON client: `bun run rcon "restart ai-core"`. |
 | `docs/research/` | Research and reasoning behind the rules. |
-| `CLAUDE.md`, `.claude/rules/` | Instructions for AI assistants (and a good read for people). |
+| `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `.claude/skills/` | Instructions and knowledge for AI assistants (and a good read for people). |
 
 ## Requirements
 
@@ -27,6 +27,16 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 2. Copy `env.example.cfg` to `env.cfg`, fill in the license key and the database connection, create the database.
 3. In this folder: `bun install`, then `bun run build`.
 4. Start FXServer (txAdmin) with this folder as the server data folder.
+
+## Working with an AI
+
+The project is built so that someone who cannot code can ask an AI to change a script or write a new one and get a result that fits. Open this folder in Claude Code (or another agent: it reads `AGENTS.md`) and ask in your own words. The AI finds:
+
+- `CLAUDE.md`: goals, structure, decisions, the build and check process.
+- `.claude/rules/`: topic rules that load when matching files are edited.
+- `.claude/skills/aicore-fivem`, `aicore-ui`, `aicore-mysql`: FiveM engine, NUI and SQL knowledge.
+- `resources/[ai]/<script>/CLAUDE.md`: what each script does and why.
+- `docs/research/`: the reasoning behind decisions, `docs/compat/`: notes on third-party scripts.
 
 ## License
 

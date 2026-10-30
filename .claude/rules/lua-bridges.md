@@ -14,6 +14,6 @@ The only Lua in the project is ai-core's framework bridge (`resources/[ai]/ai-co
 - The bridge holds no game logic: every call forwards to ai-core (same resource, JS side) and the `xPlayer` / `PlayerData` mirrors update from ai-core's local delta events, never by calling ai-core per read.
 - A table handed to another resource (core object, Player, xPlayer) is copied by msgpack: metatables and `__index` proxies are lost, functions become references back into ai-core. Hand out plain tables filled at that moment (`QBCore.Shared.*` is rebuilt on every `GetCoreObject`).
 - `provide` lines added while the server runs report `missing` in `GetResourceState` (even after `refresh` and a resource restart) until the next full server start; exports and events answer at once.
-- Verify a resource with the `tgiann-fivem-dev` skill's `tools/qbx-check.mjs` and fix what it reports. The tgiann-core / store-script specific Lua rules of that skill do not apply.
+- Check the bridge with the Lua language server (VS Code "Lua" or "Qbox Lua" extension, LuaLS) and fix every diagnostic.
 - No ox_lib dependency in the bridges: plain CfxLua and natives (`SetTimeout`, `Citizen.Await`, promises); the scripts the bridges serve may load ox_lib themselves.
 - Same security and sync rules as the TS code: validate client input, snapshot + delta, no polling.

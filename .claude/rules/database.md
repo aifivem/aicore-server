@@ -7,7 +7,7 @@ paths:
 
 # Database (MariaDB, @aicore-fivem/mysql)
 
-Load the `tgiann-mysql` skill before any SQL work (its oxmysql notes describe the same result types and parameter rules). These are the project-specific rules.
+Load the `aicore-mysql` skill before any SQL work. These are the project-specific rules.
 
 - Our own engine, no oxmysql on the server (owner decision). ai-* resources use `import { mysql } from "@aicore-fivem/mysql"` (`query`, `single`, `scalar`, `insert`, `update`, `prepare`, `rawExecute`, `transaction`, `startTransaction`, `awaitConnection`); each resource runs its own small pool in-process (`ai_mysql_pool_size`, default 5; ai-core 10 via `ai_core_pool_size`), no export hop per query.
 - Typed access: the build runs `aicore-db-types`, which writes `resource/server/tables.ts` (row types `Tables`, insert shapes `TableInserts`) from `sql/main.sql`; a resource keeps `export const db = tables<Tables, TableInserts>()` in `resource/server/db.ts` and writes simple queries as `db.select(table, columns, where, { orderBy, limit })`, `db.first`, `db.insert`, `db.update(table, set, where)`, `db.remove(table, where)` (equality filters; update and delete refuse an empty filter). Joins, ranges, upserts and bulk statements stay `mysql.query<Pick<Tables["t"], "a" | "b">[]>(...)`, typed from the same file. Never edit `tables.ts`; change the SQL and build.

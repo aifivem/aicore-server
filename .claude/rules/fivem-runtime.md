@@ -6,7 +6,7 @@ paths:
 
 # FiveM client/server (TypeScript)
 
-Engine and native knowledge: `tgiann-fivem-dev` skill `notes-fivem.md` (translate Lua examples to TS). Research behind these rules: `docs/research/fivem-runtime.md`, `docs/research/fivem-docs.md`.
+Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `references/sync.md`). Research behind these rules: `docs/research/fivem-runtime.md`, `docs/research/fivem-docs.md`.
 
 ## Security model (enforced by security.cfg)
 
@@ -72,6 +72,6 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 
 ## Natives
 
-- Before using a native new to the codebase, verify it with the `tgiann-fivem-dev` skill's `tools/native.py` (name, argument order, client/server apiset).
+- Before using a native new to the codebase, verify it with `python .claude/skills/aicore-fivem/tools/native.py <name>` (name, argument order, client/server apiset).
 - Clothing is addressed by collection name + local index (`SetPedCollectionComponentVariation`), never by global drawable index.
 - DUI is created once and lives forever; `DestroyDui` only in `onResourceStop`.

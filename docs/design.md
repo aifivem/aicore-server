@@ -1,8 +1,8 @@
 # Design language: TGIANN
 
-Every ai-core screen looks like a sibling of the TGIANN store scripts (owner decision). The `tgiann-ui` skill applies in full: stack, vh scale, colour tokens, panel recipes, old-CEF limits, motion, performance, UX rules, Apple HIG. This file only adds what is specific to ai-core: the token block every NUI pastes, the heading font, and which TGIANN UI each ai-* screen copies.
+Every ai-core screen looks like a sibling of the TGIANN store scripts (owner decision). The `aicore-ui` skill holds the stack, vh scale, old-CEF limits, motion, performance and UX rules. This file holds what is specific to the look: the token block every NUI pastes, the heading font, and which TGIANN UI each ai-* screen copies.
 
-Reference pictures: `docs/design/tgiann/*.png` (the TGIANN live demos; ignore their "DEMO MENU" / "LIVE DEMO" side panel, it is demo only). Source of each sibling: `C:\TGIANN\FivemServers\esx_test\txData\ESXLegacy_74F21A.base\resources\[tgiann]\[encrypted]\tgiann-<name>-nonbuild` (read it for measurements, never copy a whole file).
+Reference pictures: `docs/design/tgiann/*.png` (the TGIANN live demos; ignore their "DEMO MENU" / "LIVE DEMO" side panel, it is demo only).
 
 ## Look in one paragraph
 
@@ -57,7 +57,7 @@ Neutral near-black surfaces (no blue tint), white text with white-alpha secondar
   --color-danger-solid: #ef4444;
   --color-danger-bg: rgba(239, 68, 68, 0.15);
   --color-warn: #f5b742;
-  /* plus the vh scale block from tgiann-ui foundation.md */
+  /* plus the vh scale block from the aicore-ui skill (references/foundation.md) */
 }
 ```
 
@@ -88,12 +88,12 @@ Base layer as in tgiann-multichar `src/index.css`: `*` border colour `rgba(255,2
 
 - **Full-screen screen** (inventory, character select, appearance, shop catalogue): no outer panel; the game shows through with a light CSS scrim (`bg-[radial-gradient(...)]` 0.5-0.8 at the edges), blurred in Lua (`TriggerScreenblurFadeIn(250)` while open, `FadeOut` on close and resource stop) unless the screen's subject stands in the world (appearance ped, showroom vehicle). Title block top left, ESC + close top right.
 - **Solid panel** (bank, garage, scoreboard, admin): `bg-panel rounded-[1.4vh]` with a header row (display title left, icon tabs centre, close right), body cards on `bg-surface` / `bg-row`.
-- **Centered settings panel / dialog:** tgiann-ui recipe (c).
+- **Centered settings panel / dialog:** `background: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), rgba(94,94,94,0.1)`, `rounded-[1.4vh] p-[1.5vh] flex flex-col gap-[1vh]`; widths: menu 63vh, editor 78vh, dialog `w-[44vh] rounded-[1.2vh] p-[2vh]`. Cards `bg-white/3 border border-white/8 rounded-[1vh] p-[1.2vh]`, icon badge `size-[2.6vh] rounded-full bg-tgi-green-10 text-tgi-green`.
 - Pictures behind full-screen menus that are not over gameplay (character select, loading) stay in ai-core `web/public/backgrounds/`.
 
 ## Sibling per screen
 
-| ai-* screen | Copy from (`docs/design/tgiann/`, `tgiann-<name>-nonbuild`) |
+| ai-* screen | Reference picture in `docs/design/tgiann/` (and the TGIANN script it shows) |
 |---|---|
 | ai-core character select | `multichar.png`, tgiann-multichar |
 | ai-core context menu, input, progress, notify, prompts | tgiann-core (tgiann-core-nonbuild), `radialmenu.png` for the menu list look |

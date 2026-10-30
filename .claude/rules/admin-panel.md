@@ -8,7 +8,7 @@ paths:
 
 # Admin panel (every ai-* script)
 
-Every setting a server owner tunes lives in ai-core's one admin panel (F10 or `/aiadmin`, ACE `ai.admin`). The idea and UX come from the `tgiann-admin-panel` skill (owner experience first, live save, server validation, snapshot + delta); its tgiann-core / Lua specifics do not apply. Contract: `@aicore-fivem/shared` `admin.ts`.
+Every setting a server owner tunes lives in ai-core's one admin panel (F10 or `/aiadmin`, ACE `ai.admin`). The owner's experience comes first: someone who never opened a code file sets every value without docs (plain labels and hints, units, pickers and world tools instead of typed values), every edit saves live after server validation, and changes reach players as deltas. Contract: `@aicore-fivem/shared` `admin.ts`.
 
 ## Adding a panel to a script
 
