@@ -710,6 +710,57 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-loading": {
+      "name": "ai-loading",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxlint": "^1.66.0",
+        "prettier": "^3.9.10",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
+    "resources/[ai]/ai-loading/web": {
+      "name": "ai-loading-web",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/shared": "^0.1.0",
+        "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
+        "@fortawesome/fontawesome-svg-core": "^7.2.0",
+        "@fortawesome/free-solid-svg-icons": "^7.2.0",
+        "@fortawesome/react-fontawesome": "^3.2.0",
+        "clsx": "^2.1.1",
+        "fivem-nui-react": "^1.2.0",
+        "motion": "^12.34.3",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+        "tailwind-merge": "^3.5.0",
+      },
+      "devDependencies": {
+        "@csstools/postcss-color-mix-function": "^4.0.2",
+        "@csstools/postcss-oklab-function": "^5.0.2",
+        "@tailwindcss/vite": "^4.2.1",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^5.1.1",
+        "postcss-color-functional-notation": "^8.0.2",
+        "tailwindcss": "^4.2.1",
+        "typescript": "^6.0.3",
+        "vite": "^7.3.1",
+      },
+    },
     "resources/[ai]/ai-management": {
       "name": "ai-management",
       "version": "0.1.0",
@@ -1933,6 +1984,10 @@
     "ai-lapraces": ["ai-lapraces@workspace:resources/[ai]/ai-lapraces"],
 
     "ai-lib": ["ai-lib@workspace:resources/[ai]/ai-lib"],
+
+    "ai-loading": ["ai-loading@workspace:resources/[ai]/ai-loading"],
+
+    "ai-loading-web": ["ai-loading-web@workspace:resources/[ai]/ai-loading/web"],
 
     "ai-management": ["ai-management@workspace:resources/[ai]/ai-management"],
 
