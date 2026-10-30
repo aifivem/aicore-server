@@ -6,7 +6,7 @@ paths:
 
 # Data and sync
 
-Server memory is the source of truth; the DB is its persistent copy; clients mirror only what they need. Reasoning and sources: `docs/research/data-management.md`.
+Server memory is the source of truth; the DB is its persistent copy; clients mirror only what they need. Reasoning and sources: the `aicore-fivem` skill, `references/data.md`.
 
 ## Where data lives
 
@@ -48,7 +48,7 @@ Data without a class is a design bug. Players can download everything in `files`
 
 - ai-core alone owns player, character, money, job, gang and permission data; no other resource stores a copy in its own table.
 - Other resources mirror the fields they need, fetched once and updated from ai-core's local delta events; hot paths never call ai-core exports.
-- Never walk every online player on a frequent path (`GetLoadedSources()` + an export per player): who is on duty, a character name or job comes from lib `online`, who is near from `playersNear` / `playersNearEntity` (scope candidates). Measured: `docs/research/stress-test.md`.
+- Never walk every online player on a frequent path (`GetLoadedSources()` + an export per player): who is on duty, a character name or job comes from lib `online`, who is near from `playersNear` / `playersNearEntity` (scope candidates). Measured: the `aicore-fivem` skill, `references/scale.md`.
 - Bridges keep the ESX `xPlayer` / QB `PlayerData` mirror on the Lua side from the same delta events.
 
 ## In memory (TypeScript)

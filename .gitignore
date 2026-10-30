@@ -41,3 +41,6 @@ CLAUDE.local.md
 /template/resource/dist/
 /template/resource/fxmanifest.lua
 .claude/skills/aicore-fivem/tools/natives-cache/
+
+# Maintainer's private research notes (kept on the maintainer's machine, never in git)
+docs/research/

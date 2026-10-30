@@ -5,7 +5,7 @@ A public (GPL-3.0) FiveM framework and script collection written in TypeScript. 
 1. **Anyone can work on it with an AI.** A server owner who cannot code asks an AI to change a file or write a script, and the result fits the system. Rules, templates and notes in this repo exist for that; keep them short, current and correct.
 2. **One admin panel for everything.** Every `ai-*` script is configured in ai-core's in-game admin panel. A setting a server owner tunes never lives only in a file.
 
-A third goal shapes the code: **compatibility with ready-made scripts**. Almost every FiveM script is written for ESX, QB or Qbox, so any of them must run on ai-core unchanged: ai-core itself presents as those frameworks through its built-in bridge (owner decision: without this nobody can use the framework); ai-core uses other scripts through adapters. No script or vendor is a priority target, and this project ships and develops no third-party scripts: the work goes into ai-core and the ai-* scripts, a server owner installs the scripts they want together with their dependencies. See `docs/research/compatibility.md`.
+A third goal shapes the code: **compatibility with ready-made scripts**. Almost every FiveM script is written for ESX, QB or Qbox, so any of them must run on ai-core unchanged: ai-core itself presents as those frameworks through its built-in bridge (owner decision: without this nobody can use the framework); ai-core uses other scripts through adapters. No script or vendor is a priority target, and this project ships and develops no third-party scripts: the work goes into ai-core and the ai-* scripts, a server owner installs the scripts they want together with their dependencies. See `docs/compat/README.md`.
 
 ## Source priority
 
@@ -37,7 +37,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 - Language and text: everything in the repos is English (code, comments, docs, commit messages). Player-facing text comes from lang files only (`locales/en.json` is the complete base; other languages are added on top).
 - License GPL-3.0-only in every repo. Code taken from GPL frameworks (ESX, QBCore, Qbox, ND) is allowed.
 - No obfuscation; build output is readable.
-- Jobs and gangs: several per character (switchable in the panel, `maxJobs` / `maxGangs`), at most one on-duty job and one active gang at a time, salary only from the on-duty job. No generic group system. Details: `docs/research/multijob.md`.
+- Jobs and gangs: several per character (switchable in the panel, `maxJobs` / `maxGangs`), at most one on-duty job and one active gang at a time, salary only from the on-duty job. No generic group system. Details: `resources/[ai]/ai-core/resource/server/jobs/CLAUDE.md`.
 - Data: panel-edited content in each resource's `data/*.json`, panel-edited secrets (webhooks, API keys) in its git-ignored `data/secrets.json`, player data in the DB, server memory is the source of truth (`.claude/rules/data-and-sync.md`). `env.cfg` holds only what the server needs to start (license, database connection, RCON).
 - Scale first (owner decision): every system is planned and written as if it holds millions of records (what does this do at 100,000 and 1,000,000?). Code in `packages/` and ai-core is benchmarked at 100k and 1M with natives stubbed (`packages/lib/bench/`) before it counts as done, and the numbers go into the report.
 - Security: the server is authoritative and runs with strict security convars (`security.cfg`). Code is written for them; they are never loosened to make a script work.
@@ -55,7 +55,7 @@ Live data from server to client/NUI goes as snapshot + delta: one full snapshot 
 | Topic rules | `.claude/rules/*.md` (`paths:` frontmatter) | when a matching file is read or edited |
 | Script knowledge | `resources/[ai]/<script>/CLAUDE.md` (what the whole script needs) | when a file in that script is read |
 | Folder knowledge | a `CLAUDE.md` in the folder it is about (`web/`, `resource/server/admin/`, ...) | when a file in that folder is read |
-| Research and reasoning behind rules | `docs/research/*.md` | read by hand when designing |
+| Reasoning behind rules, engine knowledge, measurements | `.claude/skills/<skill>/references/*.md` | when the skill loads or by hand |
 | Compatibility notes per third-party script | `docs/compat/<script>.md` | read by hand when working on that script |
 | Design language | `docs/design.md` + `docs/design/` reference | NUI work (`nui.md` rule points there) |
 
@@ -66,7 +66,7 @@ New script: `template/resource/CLAUDE.md` is copied with it. Knowledge about one
 Before finishing, write down anything reusable:
 
 - A correct-usage rule ("use X for Y", "never Z") → one line in the matching `.claude/rules/*.md` (new file with `paths:` if none fits).
-- A mechanism with code shape, or the research behind a decision → `docs/research/<topic>.md`.
+- A mechanism with code shape, or the reasoning behind a decision → the matching project skill's `references/<topic>.md` (general) or the folder's `CLAUDE.md` (one script). `docs/research/` is the maintainer's private notes, not in git.
 - Something specific to one script → that script's `CLAUDE.md`, in its template section.
 - A finding valid for every FiveM project (engine, native, CEF, runtime, SQL) → the matching project skill in `.claude/skills/` (`aicore-fivem`, `aicore-ui`, `aicore-mysql`).
 - Owner preferences and project status → auto memory, not the repo.

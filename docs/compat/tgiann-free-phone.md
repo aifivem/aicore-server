@@ -1,6 +1,6 @@
 # tgiann-free-phone
 
-The phone of choice (owner decision): ai-* scripts do not write their own phone. Status: the source was not found on this machine (searched the esx_test, vLand and crew server folders and GitHub), so nothing is tested yet. tgiann phones reach the framework through tgiann-core's ESX / QB bridge; on ai-core they should see ai-core as ESX or QB through ai-core's bridge (`docs/compat/bridge.md`).
+The phone of choice (owner decision): ai-* scripts do not write their own phone. Status: not tested yet. tgiann phones reach the framework through tgiann-core's ESX / QB bridge; on ai-core they should see ai-core as ESX or QB through ai-core's bridge (`docs/compat/bridge.md`).
 
 ## Integration points (optional dependency through `optionalExport`; every script works without the phone)
 

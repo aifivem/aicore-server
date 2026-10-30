@@ -12,7 +12,6 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 | `packages/` | The `@aicore-fivem/*` npm packages (own git repo). |
 | `template/` | Template for new resources (`bun run new <name> "<description>"`). |
 | `tools/rcon.ts` | RCON client: `bun run rcon "restart ai-core"`. |
-| `docs/research/` | Research and reasoning behind the rules. |
 | `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `.claude/skills/` | Instructions and knowledge for AI assistants (and a good read for people). |
 
 ## Requirements
@@ -36,7 +35,7 @@ The project is built so that someone who cannot code can ask an AI to change a s
 - `.claude/rules/`: topic rules that load when matching files are edited.
 - `.claude/skills/aicore-fivem`, `aicore-ui`, `aicore-mysql`: FiveM engine, NUI and SQL knowledge.
 - `resources/[ai]/<script>/CLAUDE.md`: what each script does and why.
-- `docs/research/`: the reasoning behind decisions, `docs/compat/`: notes on third-party scripts.
+- `docs/compat/`: framework surfaces and notes on third-party scripts.
 
 ## License
 

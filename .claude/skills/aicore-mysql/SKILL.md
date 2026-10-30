@@ -5,7 +5,7 @@ description: MySQL / MariaDB on ai-core - schema and data types, indexes, query 
 
 # ai-core MySQL / MariaDB
 
-Project rules first: `.claude/rules/database.md` (engine API, typed access, result types, table install), `.claude/rules/data-and-sync.md` (what lives in the DB, when it is written). Stress numbers and what batching bought: `docs/research/stress-test.md`.
+Project rules first: `.claude/rules/database.md` (engine API, typed access, result types, table install), `.claude/rules/data-and-sync.md` (what lives in the DB, when it is written). Stress numbers and what batching bought: the `aicore-fivem` skill's `references/scale.md`.
 
 ## Workflow
 

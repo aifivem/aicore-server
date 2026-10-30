@@ -12,7 +12,7 @@ The project's own rules come first: `CLAUDE.md` (goals, process), `.claude/rules
 1. **Server authoritative, strict security.** `security.cfg` runs strict entity lockdown, state bag strict mode and request-control filtering; code is written for it, never loosened. Networked entities are created on the server; clients ask through validated callbacks (lib `onClientCallback` / `onClientEvent` gate).
 2. **Snapshot + delta.** Live server data reaches clients as one snapshot, then only changes, only to who needs it. No polling, no "changed, refetch" signals, no per-player data to `-1`, no constant data per tick; action answers are `{ ok }`. Read `references/sync.md` before writing any server -> client push.
 3. **Our lib, not ox_lib.** ai-* resources use `@aicore-fivem/lib` (callbacks, keybinds, zones, prompts, menu, inventory, vehicle keys, commands). Missing helper? Add it to the lib.
-4. **Scale first.** Plan every system for millions of records and 2048 players online; never walk every online player on a frequent path (lib `online`, `playersNear`); benchmark collection helpers (`docs/research/stress-test.md`).
+4. **Scale first.** Plan every system for millions of records and 2048 players online; never walk every online player on a frequent path (lib `online`, `playersNear`); benchmark collection helpers (`references/scale.md`).
 
 ## References
 
@@ -20,6 +20,10 @@ The project's own rules come first: `CLAUDE.md` (goals, process), `.claude/rules
 |---|---|
 | `references/engine.md` | Any client/server code: state bags, runtime costs, `provide` and exports, official docs findings, JS native returns, entities, peds and animation, input and raycasts, DUI, how GTA does it |
 | `references/sync.md` | Any server -> client data: banned patterns, snapshot per session or screen, delta actions, single push point, broadcast vs targeted, aggregates, checklist |
+| `references/runtime.md` | TS/JS runtime limits, timer and tick cost, events and latent events, exports, state bags vs GlobalState, security convars, measuring (with sources) |
+| `references/docs.md` | Findings from the official FiveM docs: manifest, sandbox, ids, OneSync, security, server events, ACL, convars, NUI, game features worth using |
+| `references/data.md` | Where each kind of data lives, the three write paths, distribution to clients, data between resources, in-memory structures (the reasoning behind `.claude/rules/data-and-sync.md`) |
+| `references/scale.md` | The stress test (1M players in the DB, 10k online): what was slow, what changed, numbers, known limits |
 
 ## Looking up natives
 

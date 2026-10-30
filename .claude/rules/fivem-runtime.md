@@ -6,7 +6,7 @@ paths:
 
 # FiveM client/server (TypeScript)
 
-Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `references/sync.md`). Research behind these rules: `docs/research/fivem-runtime.md`, `docs/research/fivem-docs.md`.
+Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `references/sync.md`). Research behind these rules: `references/runtime.md` and `references/docs.md` in the same skill.
 
 ## Security model (enforced by security.cfg)
 

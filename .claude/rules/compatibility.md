@@ -7,7 +7,7 @@ paths:
 
 # Compatibility with other scripts
 
-Reasoning and findings: `docs/research/compatibility.md`.
+Reasoning and findings: `docs/compat/README.md`; framework surfaces: `docs/compat/frameworks.md`.
 
 - Three layers: the framework bridge inside ai-core (ai-core presents as `es_extended`, `qb-core` and `qbx_core`, so ESX/QB/Qbox scripts run on it), integration adapters (ai-core uses other scripts: inventory, target, notify, phone, dispatch, fuel, keys, garage, clothing, banking, housing, death, voice), and one compat note per tested third-party script in `docs/compat/<script>.md`.
 - No script or vendor is a priority target (owner decision): bridges follow each framework's public API, most-used functions first, so any ESX/QB/Qbox script works; the project itself ships no third-party scripts.

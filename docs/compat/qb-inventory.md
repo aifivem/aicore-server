@@ -11,4 +11,4 @@ Returned items carry both shapes: `count` / `metadata` (ox) and `amount` / `info
 ## Known limits
 
 - Hooks and listeners (`AddHook`, `AddListener`), `CreateShop` / `OpenShop` (shops come from the panel), `SetInventory`, `GetInventory`, `SaveInventory`, `LoadInventory`, `UseItem` and the functions that take a QB items table (`GetFirstSlotByItem`, `GetSlotsByItem`, `GetTotalWeight`) are not answered.
-- `Player.Functions.AddItem` / `RemoveItem` / `GetItemByName` and `QBCore.Functions.CreateUseableItem` belong to the framework bridge in ai-core, which is not written yet (see `docs/research/progress.md`); until then QB scripts reach the inventory only through these exports.
+- `Player.Functions.AddItem` / `RemoveItem` / `GetItemByName` and `QBCore.Functions.CreateUseableItem` belong to the framework bridge in ai-core, which answers them through ai-core's inventory layer (`docs/compat/inventory.md`).
