@@ -21,8 +21,9 @@ Every NUI follows the `aicore-ui` skill (owner decision): stack, vh scale, old-C
 ## Look and behaviour
 
 - Colours, surfaces and component looks: `docs/design.md` and the TGIANN reference pictures in `docs/design/tgiann/`. Tokens are CSS variables in the NUI's `index.css`, used through Tailwind theme colours; never a raw hex that has a token.
-- Behaviour from `aicore-ui` `references/ux.md` (one primary action, hit targets at least 2.8vh, hover/active/focus-visible on everything interactive, Escape closes the last opened layer, empty/loading/error states) and `references/performance.md` (150 ms hover and press, 200-300 ms enters, exits shorter, interruptible, compositor tweens).
+- Behaviour from `aicore-ui` `references/ux.md` (one primary action, hit targets at least 2.8vh, hover/active on everything interactive, Escape closes the last opened layer, empty/loading/error states) and `references/performance.md` (150 ms hover and press, 200-300 ms enters, exits shorter, interruptible, compositor tweens).
 - When the screen mirrors something GTA has (creator, shops, barber), start from the closest reference picture in `docs/design/tgiann/` and read how GTA builds it (`aicore-fivem` engine.md "how GTA does it").
+- No focus rings or outlines (owner decision): keyboard focus never draws a ring, box-shadow or outline; a focused row may only change its fill or text colour (as hover does).
 - A screen that takes the NUI focus closes on Escape when the key comes up (`keyup`), never on the press: once the focus is gone the game gets the release and opens the pause menu. A list driven by arrows and the pointer highlights one row: the pointer moves the focus, the style is on `:focus` with `outline-none` (a focus ring plus a hover fill shows two highlights and a border before the fill).
 - Texts come from the resource's lang file (sent with the screen's open message), never literals; buttons start with a verb.
 - A screen loads one snapshot and applies deltas; no polling, no refetch after an action.

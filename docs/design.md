@@ -108,3 +108,4 @@ Base layer as in tgiann-multichar `src/index.css`: `*` border colour `rgba(255,2
 | ai-radialmenu, ai-target | `radialmenu.png`, tgiann-radialmenu-target |
 | ai-scoreboard | `esc-menu.png`, tgiann-esc / tgiann-leaderboard |
 | ai-death | tgiann-core / lumihud text styles (big display title, round icon buttons) |
+| ai-policealert | tgiann-policealert (tgiann-policealert-nonbuild `AlertBox`: navy card, red code chip, glowing icon, red blink for high priority) |

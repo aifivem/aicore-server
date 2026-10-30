@@ -8,7 +8,7 @@ The phone of choice (owner decision): ai-* scripts do not write their own phone.
 |---|---|---|
 | ai-banking | bank app: balance, transfers, history | bank and ATM screens |
 | ai-garages | garage app: owned vehicles, where they are | garage menus at the garages |
-| ai-police | police alerts as phone notifications, calls to 911 | blip + notification card (`SendAlert`) |
+| ai-police | police alerts as phone notifications, calls to 911 | ai-policealert's alert cards with a blip (lib `dispatch`, `dispatch.md`) |
 | ai-death | EMS calls when down | revive by medics nearby, hospital respawn |
 | ai-mechanic | invoices from mechanics to customers | job account pays, no invoice |
 | ai-drugs | delivery missions by message | street sales from the radial menu |

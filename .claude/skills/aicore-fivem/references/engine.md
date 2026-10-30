@@ -64,6 +64,9 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - Ped config flag 429 stops the ped starting a vehicle's engine by accelerating; without it a key system that only switches the engine off shows it starting and stalling while W is held.
 - Server `SetPedIntoVehicle` right after `CreateVehicleServerSetter` can miss while the entity has no owner yet: retry until `GetPedInVehicleSeat` answers the ped (lib `spawnVehicle` does, every 150 ms up to 2 s).
 
+- `AttachEntityToEntity` with `syncRot` false reads the offset and the rotation in world axes: build them from the parent's matrix and rotation (lc_fuel's nozzle at the fuel cap does this).
+- `RopeUnloadTextures` unloads the rope textures for every rope in the scene: call it only when the last rope of the resource is gone.
+
 ## Peds, animation, NPCs
 
 - `CreatePed(z)` and `SetEntityCoords` apply the foot offset: from a player's `GetEntityCoords` pass `z - 1.0`. `SetEntityCoordsNoOffset` does not, and the ped sinks 1 m.

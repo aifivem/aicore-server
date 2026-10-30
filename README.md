@@ -7,7 +7,7 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 | Path | What |
 |---|---|
 | `server.cfg`, `security.cfg`, `misc.cfg`, `permission.cfg` | Server config. Secrets go into `env.cfg` (copy `env.example.cfg`). |
-| `resources/[standalone]/` | Third-party resources: pma-voice (`ai-mysql` stands in for oxmysql, no ox_lib). |
+| `resources/[standalone]/` | Third-party resources the owner installs (none needed: `ai-voice` stands in for pma-voice, `ai-mysql` for oxmysql, no ox_lib). |
 | `resources/[ai]/` | ai-core resources, each `ai-*` folder its own git repo. |
 | `packages/` | The `@aicore-fivem/*` npm packages (own git repo). |
 | `template/` | Template for new resources (`bun run new <name> "<description>"`). |

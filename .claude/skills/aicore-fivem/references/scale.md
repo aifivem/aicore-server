@@ -49,6 +49,18 @@ Memory helpers (natives stubbed):
 | 2,048 | 4 ms | 18 ms | 6 µs | 3 µs |
 | 10,000 | 5 ms | 255 ms | 21 µs | 9 µs |
 
+Admin player search (`bun bench/playerSearch.ts` in ai-core, MariaDB 11.4, own database, median of 7; 60 first x 100 last names, 2% soft-deleted):
+
+| Search | 100k characters | 1M characters |
+|---|---|---|
+| Prefix `jo` (10% of names), one page | 2.4 ms | 7.0 ms |
+| One word `Martinez` (first or last name) | 1.8 ms | 14.4 ms |
+| Two words `john sm` | 1.3 ms | 9.9 ms |
+| No match | 0.4 ms | 1.1 ms |
+| Citizen id / `license:` / `discord:` | 0.5-0.8 ms | 0.5-1.6 ms |
+
+A one-word name runs two keyset branches (first name, last name: `id < cursor ORDER BY id DESC LIMIT 26`) merged in the app; with a common prefix the optimizer walks the primary key backwards until 26 rows match, with a rare one it takes the `(deleted_at, name, ...)` index range and sorts the covered ids. Never `OFFSET`, never `LIKE '%x%'`.
+
 ## Known limits
 
 - A crash loses at most the last 50 ms of money changes plus the flush in flight (before: the writes in flight).
