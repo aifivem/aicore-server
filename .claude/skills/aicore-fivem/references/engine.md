@@ -74,6 +74,7 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - Scenario props (BBQ spatula, cups) are held as the ped's weapon object and fall when the task is cleared: delete attached non-mission objects before `ClearPedTasks`.
 - "Plays any animation" has no native: ask the running tasks, `GetIsTaskActive(ped, 134)` (TaskPlayAnim), `135` (synchronized scene), `118` (scenario); a gesture key (hands up) does not start over them.
 - The pointing move network (`task_mp_pointing`, `anim@mp_point`) wants the camera's relative heading in radians for its blocked-capsule spot; stop it when the player aims, falls, melees or ragdolls, or the arm stays up.
+- Taking clothes off and back on: read the worn piece as collection name + local index (`GetPedCollectionNameFromDrawable` / `GetPedCollectionLocalIndexFromDrawable`, props `...FromProp`), put the base-game "off" drawable per freemode sex (pants 61 / 14, shoes 34 / 35, top 252 / 74 with undershirt 15, arms 15, decals 0; props cleared), restore with `SetPedCollectionComponentVariation` / `SetPedCollectionPropIndex`. The owning client changes its ped; clothes replicate (ai-inventory `client/clothes.ts`).
 
 ## Input, NUI focus, raycasts
 
