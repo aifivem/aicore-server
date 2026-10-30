@@ -39,6 +39,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Server commands / key binds | `addCommand` / `Keybind` | `RegisterCommand`, `RegisterKeyMapping` |
 | Player-facing text | `Locale("KEY")` from `locales/en.json` | literals |
 | A full-screen UI (inventory, bank, shop, editor) | `hud.hide("<screen>")` on open, `hud.show("<screen>")` on close | hiding the HUD or the radar by hand |
+| A key the player should know (open keys, tool controls) | `Keybind` `hint`, lib `keyHints.show` / `hide` for temporary ones | own on-screen key help |
 | Notifications, progress, menus, inputs | lib `notify`, `progress`, `menu`, `input` | own NUI for them |
 | Logs | `aiLog` | `console.log` for events, webhooks |
 | Waiting and loading | `waitFor`, `sleep`, `requestModel`, `requestAnimDict`, `requestPtfxAsset` | `while (!x) await sleep()` |

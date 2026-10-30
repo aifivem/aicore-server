@@ -12,7 +12,7 @@ Every setting a server owner tunes lives in ai-core's one admin panel (F10 or `/
 
 ## Adding a panel to a script
 
-- Schema in `resource/server/schema.ts` (JSON safe, no functions): `files` (data model per `data/<file>.json`: `settings` = one object whose top-level keys are sections, `records` = `{ key: record }`), `tabs` (one owner task each, icon + label + one-sentence desc), cards (icon, title, desc) with widgets (`text`, `number`, `switch`, `select`, `tags`, `point`, `list`, read-only `info`).
+- Schema in `resource/server/schema.ts` (JSON safe, no functions): `files` (data model per `data/<file>.json`: `settings` = one object whose top-level keys are sections, `records` = `{ key: record }`), `tabs` (one owner task each, icon + label + one-sentence desc), cards (icon, title, desc) with widgets (`text`, `number`, `switch`, `select`, `tags`, `point`, `list`, read-only `info`). A `select` option may have the value `""` ("none" / "use the script's default"); the widget maps it internally, so a schema writes it plainly.
 - `resource/server/content.ts`: `export const panel = new AdminPanel(schema)` (lib), then read with `panel.get(file)` and follow `panel.onChange(file, ...)`; never read the data file yourself. A class that parses both (`AppearanceContent` in ai-appearance) keeps the typed values.
 - Data the world needs (blips, store points, prices shown to players) is `sync: "all"`: list the file in `fxFiles`, read it on the client with `new AdminWorld([files])` (the cached file, then the changes since start, then live changes). Everything else is `sync: "admin"` and never reaches non-admins.
 - Every text is a lang key in the script's own `locales/en.json`; generic panel words (Save, Delete, errors) come from ai-core's.
