@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+artifact
+**/fxmanifest.lua
+**/*.lua
+**/sql/*.sql
+**/data/*.json
+**/tables.ts
+**/bun.lock
+docs/research
+resources/[standalone]
