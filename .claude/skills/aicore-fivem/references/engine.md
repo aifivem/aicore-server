@@ -48,6 +48,8 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 
 ## Entities and vehicles
 
+- The server reads a fresh server-created vehicle's plate (`GetVehicleNumberPlateText`) as empty until the owner client's first sync: set the plate on the server and wait until it reads back before anything keys on it (vehicle keys, garages).
+
 - Strict entity lockdown: networked entities are created on the server (`CreateVehicleServerSetter`, `CreatePed`, `CreateObjectNoOffset`); clients create only local (`isNetwork = false`) entities. Wait for `DoesEntityExist` after creating; a client waits for a server entity with `NetworkDoesEntityExistWithNetworkId(netId)` before `NetToVeh`.
 - Server-side `GetVehiclePedIsIn(ped, true)` does not return the vehicle the ped sits in (the "last vehicle" is written only when leaving); replication lags at high ping, so wait instead of checking once.
 - Server-side vehicle health natives return 0 until a client owns the entity (`NetworkGetEntityOwner === -1`): never judge "wrecked" on an unowned entity.
@@ -75,6 +77,7 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - "Plays any animation" has no native: ask the running tasks, `GetIsTaskActive(ped, 134)` (TaskPlayAnim), `135` (synchronized scene), `118` (scenario); a gesture key (hands up) does not start over them.
 - The pointing move network (`task_mp_pointing`, `anim@mp_point`) wants the camera's relative heading in radians for its blocked-capsule spot; stop it when the player aims, falls, melees or ragdolls, or the arm stays up.
 - Taking clothes off and back on: read the worn piece as collection name + local index (`GetPedCollectionNameFromDrawable` / `GetPedCollectionLocalIndexFromDrawable`, props `...FromProp`), put the base-game "off" drawable per freemode sex (pants 61 / 14, shoes 34 / 35, top 252 / 74 with undershirt 15, arms 15, decals 0; props cleared), restore with `SetPedCollectionComponentVariation` / `SetPedCollectionPropIndex`. The owning client changes its ped; clothes replicate (ai-inventory `client/clothes.ts`).
+- The player's character inside a NUI without a separate camera: a local copy (`CreatePed(..., false, false)` + `ClonePedToTarget`) placed by `SetEntityMatrix` with axes scaled 0.2 right in front of the rendered camera, at depth `height * 0.2 / (areaShare * 2 * tan(fov / 2))` under the area's screen point (`GetWorldCoordFromScreenCoord`), so it fills the area without touching walls or ground; every frame `SetIkTarget(ped, 1, ped, 12844, ...)` + `ForcePedMotionState(ped, MotionState_None)` stop it turning its head and stepping, `SetEntityLocallyInvisible(player)` hides the real one, `DrawLightWithRange` lights it, and the screen blur goes off (it would blur the copy). Re-clone after a clothes change (ai-inventory `client/worldPed.ts`).
 
 ## Input, NUI focus, raycasts
 
@@ -82,12 +85,14 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - Screen rays come from the rendered camera (`GetFinalRenderedCamCoord/Rot/Fov`) so they follow camera interpolation; `GetWorldCoordFromScreenCoord(sx, sy)` gives origin and direction directly.
 - Per-frame raycasts use async probes (start one per frame, read the previous handle) or the synchronous expensive probe; never a wait loop per frame.
 - A raycast that ignores the player ped also ignores the vehicle it sits in.
+- The key a player bound to a `RegisterKeyMapping` command: `GetControlInstructionalButton(0, GetHashKey("+command") | 0x80000000, true)` returns `t_X` (strip `t_`), and follows the player's own rebinding in the settings.
 - Key mappings cannot combine modifiers: read modifiers with `IsRawKeyDown(vk)` while the mapping's handler runs. Control 177 is also bound to the right mouse button: in mouse-look screens use 194 (Backspace) or 200/322 (Esc) to cancel.
 - Many world markers: let the NUI project and move them (one camera message per change, DOM transforms in one rAF) instead of per-frame native draws.
 
 ## Radar and blips
 
 - Do not gate `DisplayRadar` on `IsRadarHidden`: it does not reliably reflect `DisplayRadar(false)`. Compute the wanted state and apply it.
+- The health / armour bars under the minimap: every frame while it shows, call the `minimap` scaleform's `SETUP_HEALTH_ARMOUR` with 3 (`BeginScaleformMovieMethod` + `ScaleformMovieMethodAddParamInt(3)`); a one-time call is undone by the game.
 - `SetBlipCategory(blip, id)`: 12-133 are named custom categories (`AddTextEntry("BLIP_CAT_" + id, label)`); two scripts using the same id merge into one group.
 
 ## DUI
