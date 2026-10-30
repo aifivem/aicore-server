@@ -613,6 +613,28 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-lapraces": {
+      "name": "ai-lapraces",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/mysql": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-management": {
       "name": "ai-management",
       "version": "0.1.0",
@@ -1678,6 +1700,8 @@
     "ai-inventory-web": ["ai-inventory-web@workspace:resources/[ai]/ai-inventory/web"],
 
     "ai-jobs": ["ai-jobs@workspace:resources/[ai]/ai-jobs"],
+
+    "ai-lapraces": ["ai-lapraces@workspace:resources/[ai]/ai-lapraces"],
 
     "ai-management": ["ai-management@workspace:resources/[ai]/ai-management"],
 
