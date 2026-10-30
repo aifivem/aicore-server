@@ -98,6 +98,10 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - The health / armour bars under the minimap: every frame while it shows, call the `minimap` scaleform's `SETUP_HEALTH_ARMOUR` with 3 (`BeginScaleformMovieMethod` + `ScaleformMovieMethodAddParamInt(3)`); a one-time call is undone by the game.
 - `SetBlipCategory(blip, id)`: 12-133 are named custom categories (`AddTextEntry("BLIP_CAT_" + id, label)`); two scripts using the same id merge into one group.
 
+## Audio submixes
+
+- FiveM has 40 audio submix slots (`kSubmixCount` in NuiAudioSink.cpp), shared with the game's own audio. Past the limit `CreateAudioSubmix` returns -1 ("Exceeded maximum number of audio submixes"); older builds overwrote memory (the "voice bugs out" reports). A submix is cached by name for the game session and can never be deleted: create each once, reuse by name (ai-voice's submix registry), and a disabled submix frees its slot only after the player restarts the game.
+
 ## DUI
 
 - `DestroyDui` does not free everything: create a DUI once and keep it for the resource's lifetime; destroy only in `onResourceStop`.

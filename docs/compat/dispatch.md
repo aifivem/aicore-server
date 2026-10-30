@@ -17,6 +17,8 @@ Every ai-* script sends police alerts through ai-core (owner decision: compatibi
 | tgiann-policealert | with `source`: server export `Alert(source, { jobs, label, code, icon, coords, duration, bgAnimate, blip, custom })` (the suspect's client adds street, zone, vehicle, gender, then the alert goes through its own spam check); without: `SendCustomAlert({ label, code, icon, coords, duration, bgAnimate, blip, sound, information = { custom } }, jobs)`. `message` becomes a custom info row, `priority: "high"` the blinking background, `blip.sprite` its blip (it picks the colour). It answers `police:server:policeAlert` itself. | written from its 2.10 source, untested on ai-core |
 | ai-policealert (default, last in the order) | export `DispatchAlert(alert)`: built-in alert cards (below) | tested in the browser preview; in game untested |
 
+tgiann-policealert's prime hours (`IsPrimeTime`) feed ai-core's prime time salary: `prime-time.md`.
+
 tgiann-policealert sends its own shot alerts (`config.shotFireAlert`): turn off one of them (ai-police panel "Shot alerts" or its config), or shots alert twice.
 
 ### ai-policealert alert cards

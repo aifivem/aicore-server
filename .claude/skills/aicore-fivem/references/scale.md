@@ -7,7 +7,8 @@ How ai-core behaves with a database that has seen 1,000,000 players and 10,000 o
 - Local MariaDB 11.4, separate database `ai_core_stress` (never the server's own). `resources/[ai]/ai-core/bench/seed.ts` fills it with MariaDB's sequence engine: 1M users, 1.5M characters, 6M money accounts (4 per character), 1.5M job rows, 5M ledger rows (about 1.6 GB with indexes).
 - `bench/stress.ts [pool]` runs ai-core's real DB code (`@aicore-fivem/mysql`, `users.ts`, `characters/repo.ts`, `jobs/repo.ts`, `money/account.ts`) with natives stubbed: 10k players logging in at once (account upsert, character screen with card extras, character load: accounts, jobs, gangs), then the periodic save of 10k characters, then one paycheck for 10k players. Run with `bun --preload ./bench/preload.ts bench/stress.ts 10`.
 - `bench/explain.ts`: EXPLAIN of every per-login query on the seeded data.
-- `packages/lib/bench/online.bench.ts`: the online mirror and proximity helpers at 2048 and 10k online.
+- `packages/lib/bench/online.bench.ts`: the online mirror and proximity helpers at 2048 and 10k online (ai-core's `GetPlayersInScope` stubbed with precomputed 424 m scope lists, copied per call like the export).
+- `packages/lib/bench/players.bench.ts`: per-player stores (`PendingActions`, `PlayerMap`, `Cooldowns`), panel records views, the `onCharacter` restart replay and the gate's capped log preview.
 
 ## Findings
 
@@ -44,10 +45,21 @@ Pool size alone (old code): 5 → 11.1 s, 10 → 8.2 s, 20 → 7.4 s for the log
 
 Memory helpers (natives stubbed):
 
-| Online | Mirror start | Scope seed (once) | `playersNear` | Walk on-duty police |
+| Online (avg. in scope) | Mirror start | `playersNear` | `nearestPlayerTo` | Walk on-duty police |
 |---|---|---|---|---|
-| 2,048 | 4 ms | 18 ms | 6 µs | 3 µs |
-| 10,000 | 5 ms | 255 ms | 21 µs | 9 µs |
+| 2,048 (~22) | 2 ms | 5 µs | 6 µs | 4 µs |
+| 10,000 (~112) | 5 ms | 25 µs | 25 µs | 8 µs |
+
+`playersNear` / `nearestPlayerTo` cost one `GetPlayersInScope` export call (a copy of the scope list) plus one coordinate read per candidate; ai-core keeps the scope sets, so there is no seed in the resource.
+
+Per-player stores and panel views (natives stubbed; a server holds at most 2,048 entries per store):
+
+| Size | `PendingActions` start / take | `Cooldowns.ready` | One `playerDropped` (every store of the resource) | Records view: load / one record edit |
+|---|---|---|---|---|
+| 100k | 0.3 / 0.2 µs | 0.1 µs | 0.4 ms (first call) | 149 ms / 2 µs |
+| 1M | 0.5 / 0.3 µs | 0.1 µs | 0.09 ms | 1.0 s / 2 µs |
+
+`onCharacter` replay of 10,000 loaded players after a restart: 23 ms including the `online` mirror start. The gate's refusal line for a ~10 MB argument list: `previewJson` 0.35 ms instead of 14 ms for `JSON.stringify` (and no 10 MB string).
 
 Admin player search (`bun bench/playerSearch.ts` in ai-core, MariaDB 11.4, own database, median of 7; 60 first x 100 last names, 2% soft-deleted):
 
@@ -65,6 +77,5 @@ A one-word name runs two keyset branches (first name, last name: `id < cursor OR
 
 - A crash loses at most the last 50 ms of money changes plus the flush in flight (before: the writes in flight).
 - `playersNear` reaches at most the OneSync scope (~424 m); a ranged chat channel above that only reaches players in scope.
-- The scope seed runs once when a resource first asks after its start (255 ms at 10k online, 18 ms at 2048).
 - ai-scoreboard still sends every name to the player who opens it (about 30 bytes per player).
 - `ai_core_transactions` grows by one row per money change (a paycheck every 15 min for 2048 players is about 200k rows a day); it has no retention yet.
