@@ -19,5 +19,7 @@ Every setting a server owner tunes lives in ai-core's one admin panel (F10 or `/
 - Values with a place in the world are `point` widgets (Use my position, Teleport), `ground: true` for floor points teleported to with `SetEntityCoords`, `from: "camera"` for camera positions. Never ask the owner to type coordinates.
 - Every text field has a placeholder example; every field a hint when the label alone does not say the unit or the rule; numbers carry their unit.
 - A new icon name in a schema is added to ai-core `web/src/features/admin/icons.ts`.
+- A records tab's `deleteLabel` is a short verb label ("Delete shop"): it is the delete button and the dialog's action. What a delete leaves behind goes into `deleteDesc` (shown in the dialog instead of the generic text).
+- `list` rows take `text`, `number`, `switch` and `point` widgets (route checkpoints, spawn lists).
 - Cross-field rules: `panel.rule(file, (key, next) => errorKey | null)`; keys that must never be deleted go in the file's `locked`.
 - A record the script itself changes (live game state the panel shows) is stored with `panel.commit(file, key, value)`.
