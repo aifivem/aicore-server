@@ -11,9 +11,9 @@
   "scripts": {
     "new": "bun template/new.ts",
     "rcon": "bun tools/rcon.ts",
-    "build": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" build",
-    "typecheck": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" typecheck",
-    "lint": "bun run --filter \"ai-*\" --filter \"!ai-*-web\" lint",
+    "build": "bun tools/run.ts build",
+    "typecheck": "bun tools/run.ts typecheck",
+    "lint": "bun tools/run.ts lint",
     "format": "prettier --write ."
   },
   "devDependencies": {

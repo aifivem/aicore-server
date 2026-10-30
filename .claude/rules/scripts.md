@@ -35,10 +35,13 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Settings a server owner tunes | `AdminPanel` + `schema.ts` (`admin-panel.md`); client reads `AdminWorld` | config files, convars, constants |
 | Server commands / key binds | `addCommand` / `Keybind` | `RegisterCommand`, `RegisterKeyMapping` |
 | Player-facing text | `Locale("KEY")` from `locales/en.json` | literals |
+| A full-screen UI (inventory, bank, shop, editor) | `hud.hide("<screen>")` on open, `hud.show("<screen>")` on close | hiding the HUD or the radar by hand |
 | Notifications, progress, menus, inputs | lib `notify`, `progress`, `menu`, `input` | own NUI for them |
 | Logs | `aiLog` | `console.log` for events, webhooks |
 | Waiting and loading | `waitFor`, `sleep`, `requestModel`, `requestAnimDict`, `requestPtfxAsset` | `while (!x) await sleep()` |
 | Per-frame work | `TickLoop` (on only while needed) | idle `setTick` |
+| Disabled controls (cuffed, seat belt, menus) | lib `controls.disable(reason, list)` / `enable(reason)` | a `TickLoop` or tick per feature calling `DisableControlAction` |
+| The vehicle near the player | lib `nearestVehicle` (client), `nearestVehicleTo` (server) | own pool loops, `GetClosestVehicle` |
 | Areas without an interaction | `Zones` | distance loops |
 | Another resource's exports | one top-level `resourceExport("x")` / `optionalExport` per call for optional ones | `resourceExport("x").Fn()` inside functions |
 | Database | `db` (typed tables) / `mysql` | oxmysql exports, raw string SQL with values |
