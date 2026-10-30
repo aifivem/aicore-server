@@ -58,6 +58,9 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - `ClearVehicleCustomPrimaryColour` does not always restore the factory colour: keep the original indices from `GetVehicleColours` and set them again.
 - Model checks: `IsModelInCdimage` is enough (true also for streamed models not downloaded yet); `IsModelValid` rejects those. Load with a long timeout and re-request about every second.
 - Cosmetic entities (previews, lightbar props, offline bodies) are local per client, driven by state bags; networked spawns pile up hidden entities and slow clients.
+- `GetClosestObjectOfType` finds objects only, never vehicles: points on vehicle models (boats) scan the vehicle pool (lib model point `vehicles: true`).
+- Ped config flag 429 stops the ped starting a vehicle's engine by accelerating; without it a key system that only switches the engine off shows it starting and stalling while W is held.
+- Server `SetPedIntoVehicle` right after `CreateVehicleServerSetter` can miss while the entity has no owner yet: retry until `GetPedInVehicleSeat` answers the ped (lib `spawnVehicle` does, every 150 ms up to 2 s).
 
 ## Peds, animation, NPCs
 
@@ -69,6 +72,8 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 - Without a framework players are friendly to each other: every spawn `NetworkSetFriendlyFireOption(true)` + `SetCanAttackFriendly(PlayerPedId(), true, false)`.
 - Ground height at a far, unloaded point: hold the ped there while the screen is dark and cast from `GetHeightmapTopZForPosition(x, y) + 50`; `GetGroundZFor_3dCoord` alone usually fails.
 - Scenario props (BBQ spatula, cups) are held as the ped's weapon object and fall when the task is cleared: delete attached non-mission objects before `ClearPedTasks`.
+- "Plays any animation" has no native: ask the running tasks, `GetIsTaskActive(ped, 134)` (TaskPlayAnim), `135` (synchronized scene), `118` (scenario); a gesture key (hands up) does not start over them.
+- The pointing move network (`task_mp_pointing`, `anim@mp_point`) wants the camera's relative heading in radians for its blocked-capsule spot; stop it when the player aims, falls, melees or ragdolls, or the arm stays up.
 
 ## Input, NUI focus, raycasts
 

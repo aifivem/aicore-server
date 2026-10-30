@@ -23,13 +23,13 @@ Every script follows https://github.com/overextended/fivem-ts, adapted in `templ
 - `data/`: panel-edited content (`data/*.json`), server-side only unless the resource lists it in `files`.
 - `sql/main.sql`: the resource's tables, installed by `createDatabaseTables` at start.
 - `web/`: NUI (Vite), output `dist/web`, `ui_page` added automatically.
-- `scripts/`: build helper (`postBuild.ts`, the same file in every resource and the template).
+- `scripts/`: build helper (`postBuild.ts`, the same file in every resource and the template). tsdown loads it with Node through the config: it imports only Node built-ins and npm packages, never `@aicore-fivem/lib` (its TypeScript source does not resolve there and every build fails).
 - `LICENSE` (GPL-3.0), `CLAUDE.md`, `.gitignore`: every resource is its own git repo.
 
 ## Build and manifest
 
 - `fxmanifest.lua` is generated from `package.json` (name, author, version, license, description, `fxDependencies` → `dependencies`, files). Never edit it; a manifest addition changes `scripts/postBuild.ts`.
-- `fxDependencies` may hold runtime constraints (`/onesync`, `/server:<build>`). `fxProvide` writes `provide` lines, `fxFiles` adds files outside `public/`, `fxVersion` overrides the manifest version (a stand-in reporting the version it mirrors). A side without `resource/<side>/index.ts` builds nothing: no `resource/client/index.ts` = server-only (no `client_script`), no `resource/server/index.ts` = client-only (no `server_script`; drop that side from the `typecheck` script). Never keep an empty index file for a side.
+- `fxDependencies` may hold runtime constraints (`/onesync`, `/server:<build>`). `fxProvide` writes `provide` lines, `fxFiles` adds files outside `public/`, `fxVersion` overrides the manifest version (a stand-in reporting the version it mirrors), `fxImport: true` builds bundles other resources load (`@<name>/dist/client.js`, listed in `files`) and runs no script in the resource itself (ai-lib). A side without `resource/<side>/index.ts` builds nothing: no `resource/client/index.ts` = server-only (no `client_script`), no `resource/server/index.ts` = client-only (no `server_script`; drop that side from the `typecheck` script). Never keep an empty index file for a side.
 - `package.json` `repository` (`github:TGIANN/<name>`) becomes the manifest's `repository` line; ai-core's update check compares the version with that repository's latest GitHub release (tag `v1.2.3` or `1.2.3`). Publish each release as a GitHub release with the package version as its tag.
 - `package.json` `description` must not contain `'`: it is written into fxmanifest inside single quotes and the resource fails with "Could not parse resource metadata".
 - Commands (in the resource): `bun run build` (tsdown, then the client error wrapper), `bun run typecheck`, `bun run lint`, `bun run dev` (watch). In the server folder the same scripts run for every resource through `tools/run.ts` (a few at a time, each timed, exits when all children exit; `bun run build ai-core ai-fuel` for some): a full build takes about 40 s. Never back to `bun run --filter`: it hangs on a child's stray pipe.
