@@ -9,7 +9,8 @@ paths:
 
 Load the `tgiann-mysql` skill before any SQL work (its oxmysql notes describe the same result types and parameter rules). These are the project-specific rules.
 
-- Our own engine, no oxmysql on the server (owner decision). ai-* resources use `import { mysql } from "@aicore-fivem/mysql"` (`query`, `single`, `scalar`, `insert`, `update`, `prepare`, `rawExecute`, `transaction`, `startTransaction`, `awaitConnection`); each resource runs its own small pool in-process (`ai_mysql_pool_size`, default 5), no export hop per query.
+- Our own engine, no oxmysql on the server (owner decision). ai-* resources use `import { mysql } from "@aicore-fivem/mysql"` (`query`, `single`, `scalar`, `insert`, `update`, `prepare`, `rawExecute`, `transaction`, `startTransaction`, `awaitConnection`); each resource runs its own small pool in-process (`ai_mysql_pool_size`, default 5; ai-core 10 via `ai_core_pool_size`), no export hop per query.
+- Bulk writes are one statement per chunk (500-1000 rows): multi-row `INSERT`, and for updates of many rows `UPDATE t JOIN (SELECT ? AS id, ? AS v UNION ALL SELECT ?, ? ...) v ON t.id = v.id SET ...`; never one statement per row in a loop.
 - Third-party scripts reach the database through `ai-mysql`, which stands in for oxmysql (`provide 'oxmysql'`, oxmysql's exports and `lib/MySQL.lua`). Never install oxmysql next to it.
 - Every ai-* resource that uses the database needs `add_convar_permission <resource> read mysql_connection_string` in `env.cfg` (and `env.example.cfg`); without it the pool cannot read the connection string.
 - While the database cannot be reached, queries wait (as with oxmysql) and the pool retries the connection every 2 s up to 30 s; a resource never has to retry a query itself for that.
