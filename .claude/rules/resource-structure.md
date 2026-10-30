@@ -41,6 +41,8 @@ Every script follows https://github.com/overextended/fivem-ts, adapted in `templ
 - Client bundle `iife` / es2023 (browser platform, no Node API); server `cjs` / Node 22. Every npm package is bundled in.
 - The server bundle starts with the `exports = globalThis.exports;` banner: FXServer wraps server scripts in a CommonJS function whose `exports` parameter shadows FiveM's `exports`. Keep it.
 - Client errors reach the server: `aicore-client-errors dist/client.js` (from `@aicore-fivem/build`) puts a reporter in front of the client bundle and a try/catch around it; ai-core logs them on channel `clientErrors` as `[client error] <resource>: ...` with the player. Nothing to add by hand.
+- A resource with `sql/main.sql` runs `aicore-db-types` in its build before tsdown (typed tables, `database.md`); the generated `resource/server/tables.ts` is committed.
+- A new `bin` in a workspace package (`packages/build`) is not picked up by `bun install` on its own: add it to that package's `bin` block in `bun.lock` too, then `bun install` links it.
 - tsdown `deps` options take RegExp (`alwaysBundle: [/.*/]`); a string `"/.*/"` is read as a package name and dependencies stay external ("No name was provided for external module").
 - `dist/` and `fxmanifest.lua` are committed: servers run without bun. A source change is always committed with its build.
 - Dependencies on our packages use the npm range (`"@aicore-fivem/lib": "^0.1.0"`), never `workspace:*`: the repo must also build outside the workspace. Inside `resources/[ai]` bun links the local package when its version satisfies the range.

@@ -11,7 +11,7 @@ paths:
 |---|---|---|
 | `@aicore-fivem/lib` | Repeated helpers: `/shared` (anywhere, no natives), `/fivem` (natives on both sides, for `resource/common/`), `/server`, `/client` | A helper is about to be written a second time |
 | `@aicore-fivem/shared` | Contracts between resources: types, event/callback names, export types (`CitizenExports`) | Anything one resource uses to talk to another |
-| `@aicore-fivem/mysql` | The database engine (`mysql` API, in-process pool) and the oxmysql-compatible functions `ai-mysql` exports | Every DB access of an ai-* resource |
+| `@aicore-fivem/mysql` | The database engine (`mysql` API, in-process pool, typed `tables<Tables, TableInserts>()`) and the oxmysql-compatible functions `ai-mysql` exports | Every DB access of an ai-* resource |
 | `@aicore-fivem/build` | Build steps (`aicore-client-errors`) | Every resource's `build` script |
 
 - The lib replaces ox_lib in ai-* resources (owner decision): never import ox_lib; what is missing gets added to the lib.
