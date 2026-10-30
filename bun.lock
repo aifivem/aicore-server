@@ -770,6 +770,28 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-pedscale": {
+      "name": "ai-pedscale",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxlint": "^1.66.0",
+        "prettier": "^3.9.10",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-police": {
       "name": "ai-police",
       "version": "0.1.0",
@@ -973,6 +995,28 @@
         "tailwindcss": "^4.2.1",
         "typescript": "^6.0.3",
         "vite": "^7.3.1",
+      },
+    },
+    "resources/[ai]/ai-sirens": {
+      "name": "ai-sirens",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxlint": "^1.66.0",
+        "prettier": "^3.9.10",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
       },
     },
     "resources/[ai]/ai-smallresources": {
@@ -1788,6 +1832,8 @@
 
     "ai-pawnshop": ["ai-pawnshop@workspace:resources/[ai]/ai-pawnshop"],
 
+    "ai-pedscale": ["ai-pedscale@workspace:resources/[ai]/ai-pedscale"],
+
     "ai-police": ["ai-police@workspace:resources/[ai]/ai-police"],
 
     "ai-properties": ["ai-properties@workspace:resources/[ai]/ai-properties"],
@@ -1803,6 +1849,8 @@
     "ai-scoreboard": ["ai-scoreboard@workspace:resources/[ai]/ai-scoreboard"],
 
     "ai-scoreboard-web": ["ai-scoreboard-web@workspace:resources/[ai]/ai-scoreboard/web"],
+
+    "ai-sirens": ["ai-sirens@workspace:resources/[ai]/ai-sirens"],
 
     "ai-smallresources": ["ai-smallresources@workspace:resources/[ai]/ai-smallresources"],
 

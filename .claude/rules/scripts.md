@@ -30,6 +30,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Character, money, jobs, gangs, duty | ai-core exports through one top-level `const core = resourceExport("ai-core")`; `online` for lookups across players | own tables or copies, `GetLoadedSources()` + an export per player in a loop |
 | Players near someone | `playersNear` / `playersNearEntity` | walking every player, own scope handlers |
 | State bags | `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` | `Entity().state`, `GlobalState`, `LocalPlayer.state`, `AddStateBagChangeHandler`; client writes of any kind |
+| A player's phone (number, mail, text, notification) | lib `phone` | a phone script's exports |
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
 | A death | ai-core `CORE.playerDiedEvent` | health polling |
 | Engine happenings | `gameEventTriggered`, `entityDamaged`, server entity events (`aicore-fivem` `events.md`) | polling for them |
