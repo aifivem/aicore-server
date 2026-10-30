@@ -31,6 +31,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Players near someone | `playersNear` / `playersNearEntity` | walking every player, own scope handlers |
 | State bags | `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` | `Entity().state`, `GlobalState`, `LocalPlayer.state`, `AddStateBagChangeHandler`; client writes of any kind |
 | A player's phone (number, mail, text, notification) | lib `phone` | a phone script's exports |
+| Hands up / pointing of the local player | lib `gestures` (client) | an emote script's exports |
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
 | A death | ai-core `CORE.playerDiedEvent` | health polling |
 | Engine happenings | `gameEventTriggered`, `entityDamaged`, server entity events (`aicore-fivem` `events.md`) | polling for them |
