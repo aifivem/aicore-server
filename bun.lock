@@ -740,6 +740,28 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-properties": {
+      "name": "ai-properties",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/mysql": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-radialmenu": {
       "name": "ai-radialmenu",
       "version": "0.1.0",
@@ -1712,6 +1734,8 @@
     "ai-pawnshop": ["ai-pawnshop@workspace:resources/[ai]/ai-pawnshop"],
 
     "ai-police": ["ai-police@workspace:resources/[ai]/ai-police"],
+
+    "ai-properties": ["ai-properties@workspace:resources/[ai]/ai-properties"],
 
     "ai-radialmenu": ["ai-radialmenu@workspace:resources/[ai]/ai-radialmenu"],
 
