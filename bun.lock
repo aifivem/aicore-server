@@ -848,6 +848,27 @@
         "vite": "^7.3.1",
       },
     },
+    "resources/[ai]/ai-rental": {
+      "name": "ai-rental",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@aicore-fivem/shared": "^0.1.0",
+      },
+      "devDependencies": {
+        "@aicore-fivem/build": "^0.1.0",
+        "@citizenfx/client": "latest",
+        "@citizenfx/server": "latest",
+        "@overextended/core": "^0.3.1",
+        "@types/bun": "latest",
+        "@types/node": "^22",
+        "fast-glob": "^3.3.3",
+        "oxfmt": "^0.51.0",
+        "oxlint": "^1.66.0",
+        "tsdown": "^0.22.0",
+        "typescript": "^6.0.3",
+      },
+    },
     "resources/[ai]/ai-robberies": {
       "name": "ai-robberies",
       "version": "0.1.0",
@@ -1777,6 +1798,8 @@
     "ai-radialmenu": ["ai-radialmenu@workspace:resources/[ai]/ai-radialmenu"],
 
     "ai-radialmenu-web": ["ai-radialmenu-web@workspace:resources/[ai]/ai-radialmenu/web"],
+
+    "ai-rental": ["ai-rental@workspace:resources/[ai]/ai-rental"],
 
     "ai-robberies": ["ai-robberies@workspace:resources/[ai]/ai-robberies"],
 
