@@ -36,7 +36,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 
 - Language and text: everything in the repos is English (code, comments, docs, commit messages). Player-facing text comes from lang files only (`locales/en.json` is the complete base; other languages are added on top).
 - License GPL-3.0-only in every repo. Code taken from GPL frameworks (ESX, QBCore, Qbox, ND) is allowed.
-- No obfuscation; build output is readable.
+- No obfuscation. Client bundles are minified with hidden source maps (never downloadable; ai-core maps client error positions back to the source); server bundles drop comments but keep names and lines so console errors stay readable (owner decision).
 - Jobs and gangs: several per character (switchable in the panel, `maxJobs` / `maxGangs`), at most one on-duty job and one active gang at a time, salary only from the on-duty job. No generic group system. Details: `resources/[ai]/ai-core/resource/server/jobs/CLAUDE.md`.
 - Data: panel-edited content in each resource's `data/*.json`, panel-edited secrets (webhooks, API keys) in its git-ignored `data/secrets.json`, player data in the DB, server memory is the source of truth (`.claude/rules/data-and-sync.md`). `env.cfg` holds only what the server needs to start (license, database connection, RCON).
 - Scale first (owner decision): every system is planned and written as if it holds millions of records (what does this do at 100,000 and 1,000,000?). Code in `packages/` and ai-core is benchmarked at 100k and 1M with natives stubbed (`packages/lib/bench/`) before it counts as done, and the numbers go into the report.
@@ -74,6 +74,8 @@ Before finishing, write down anything reusable:
 Write current truth in imperative form, no history ("used to be X"). Fix a wrong note instead of adding a second one. No file or function lists that reading the code shows.
 
 ## Process
+
+- Writing or changing a script: `.claude/rules/scripts.md` is the hard checklist (which lib helper for which job, what is never written by hand).
 
 - After a TS change, in the resource: `bun run typecheck`, `bun run lint`, `bun run build`. The game only reads `dist/` and the generated `fxmanifest.lua`.
 - Server commands go through RCON: `bun tools/rcon.ts --log <txData profile>/logs/fxserver.log --wait 3 "ensure ai-core"`. After a build, `ensure`/`restart` the resource and search the log for `Failed to load script`, `SCRIPT ERROR`, `[client error]`, not only for "Started". `bun tools/rcon.ts "aicore_db slow"` shows database statistics of every resource. A new resource or a changed `fxmanifest.lua` needs `refresh` first.

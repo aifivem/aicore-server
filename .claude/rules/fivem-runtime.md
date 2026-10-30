@@ -11,7 +11,7 @@ Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `
 ## Security model (enforced by security.cfg)
 
 - `sv_entityLockdown strict`: networked entities are created on the server only. Vehicles: server `CreateVehicleServerSetter`, peds/objects: server `CreatePed` / `CreateObjectNoOffset`; persistent ones get `SetEntityOrphanMode(entity, 2)`. Clients create only `isNetwork = false` local entities (cosmetic, previews, single-player props).
-- `sv_stateBagStrictMode true`: only the server writes replicated state bags. A client asks through a validated callback; the server writes; clients read with `AddStateBagChangeHandler`.
+- `sv_stateBagStrictMode true`: only the server writes state bags, through the lib's server state classes (`set`). A client never sets a state bag (not even a local one): it asks through a validated callback; the server sets; clients read the lib mirror.
 - `sv_filterRequestControl 4`: no `NetworkRequestControlOfEntity`. Work on another entity uses a server native or an event to the owner found with `NetworkGetEntityOwner`.
 - The server is authoritative: every client argument is checked for type, range, ownership and distance (server-side `GetEntityCoords(GetPlayerPed(src))`). Money, item, reward and permission decisions never happen on the client.
 - The server listens to clients only through the lib's gate (owner decision, never a bare `onNet`): `onClientEvent` for net events, `onClientCallback` for requests. Each runs, in order: real player check (a local emit is dropped), per-player rate (events 10/s, callbacks 20/s by default), `guards` (`isAdmin()`, `hasCharacter()`, `near(point, metres)`, or any `(source) => true | false | reason`), the `args` parser, optional `lock` (one call at a time per player). Refusals with a reason are logged with the player.
@@ -25,8 +25,8 @@ Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `
 - Exports and cross-resource events copy their data. No export returns a whole object; hot paths never call another resource's export; a consumer mirrors what it needs and updates it from delta events.
 - Exports stay synchronous; no promise crosses a resource boundary.
 - Static data ships as files and is read locally, never sent through events or exports.
-- State bag reads are expensive (every get deserializes the whole value): loops read a local mirror updated by the change handler. Only direct assignment replicates (`state.x.y = v` does not); granular keys are flat (`state['x:y']`). A removed value is `false`, never `null`.
-- Per-entity data goes into the entity's state bag; shared runtime state into per-key `GlobalState` with a subscribe helper; never broadcast whole configs.
+- State bags only through lib `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` (`lib.md` "State bags"): never `Entity(e).state`, `Player(p).state`, `GlobalState`, `LocalPlayer.state` or `AddStateBagChangeHandler` in a script. A raw read builds proxies, calls natives, copies under engine locks and decodes msgpack every time (it stalls server ticks under load); a raw change handler runs before the value is stored; a set is deferred when any handler exists. Reasons and numbers: `aicore-fivem` `references/statebags.md`.
+- Per-entity data goes into the entity's state bag; shared runtime state into one `GlobalGroup` key per item; never broadcast whole configs. Values are flat (one key per value, `state.x.y = v` does not replicate).
 - A client waits for a server-created entity with `waitFor(() => NetworkDoesEntityExistWithNetworkId(netId))`, then `NetToVeh/NetToPed/NetToObj`. entity↔netId conversion goes through one helper. Never send entity handles or player indices between machines.
 - `GetEntityArchetypeName` does not exist on the server: validate a model with `GetHashKey(model) === GetEntityModel(entity)`.
 

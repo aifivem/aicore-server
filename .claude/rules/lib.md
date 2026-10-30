@@ -30,10 +30,18 @@ paths:
 ## Interaction points, peds, blips (client)
 
 - Every place a player uses (counter, shop, door, NPC, return spot) is one `Points` entry: `points.add(id, { coords, label, icon?, radius?, height?, targetRadius?, canShow?, onPressed, onEnter?, onExit?, ped?, blip? })` (`height` makes it a cylinder; `targetRadius` sizes the aim spot of a room-sized point in target mode). Never hand-made `Zones` + `showPrompt` + `onPromptPressed` + blip code. The point shows as ai-core's prompt or as a target option (ai-core panel, Interaction; target needs a resource with the ox_target API) and runs the same `onPressed`; an `onPressed` promise blocks the resource's other points until it settles (no own `busy` flag). `canShow` holds the conditions (job, duty, in a vehicle, has a rental); a text that follows a state is a function `label: () => ...` (one point, not one per state); call `points.refresh()` when what they read changes (inside a state bag change handler in a `setTimeout`: the new value is not readable yet). Rebuild with `points.clear()` + `add` when panel data changes.
+- A point on world objects of some models (ATMs, vending machines) is `points.addModel(id, { models, label, icon?, radius?, canShow?, onPressed: (entity) => ... })`: a target option on the models, or a prompt near the closest one (one scan timer per resource, 500 ms, only while model points exist). Never a script's own `addModel` call.
 - `Zones` stays for areas without an interaction (entering a district, a marker that only draws).
 - An NPC at a point is the point's `ped: { model, scenario? | anim? }` (a `LocalPed`: created near the player, frozen, invincible, removed when far; targets go on the ped). A ped on its own: `new LocalPed({ model, coords, ... })`.
 - Blips: `blip: { sprite, color, scale, label }` on a point (`label` = the place's map name, not the prompt text; without it the game's default sprite name), or `Blips` (`add(id, opts)`, `remove`, `clear`) / `createBlip(opts)` for blips without a point. The panel's `blip` widget value spreads straight in. Never `AddBlipForCoord` + `BeginTextCommandSetBlipName` by hand.
 - The local ped: `cache.ped` / `player` (`player.teleport(to, { heading, ground, fade, keepVehicle })` behind a fade with collision loading, `player.playAnim(dict, clip, opts)`, `player.coords()`), never `PlayerPedId()` outside ai-core's watcher and right after a model change (`cache.ped` lags a model swap up to 100 ms; `player`'s actions read the ped fresh, its reads use the cache).
+
+## State bags
+
+- Every state bag key a resource reads or writes is one module-level instance: `new EntityState("fuel", stateNumber)`, `new PlayerState(PLAYER_BAGS.dead, stateBoolean)`, `new GlobalKey(KEY, parse)`, `new GlobalGroup("door:", stateBoolean)` (keys `<prefix><id>`). Client classes read (`get`, `onChange`); the server classes add `set`. Shared key names live in `@aicore-fivem/shared` (`VEHICLE_BAGS`, `PLAYER_BAGS`) or the resource's `common/`.
+- `get` is a memory read (safe in loops and ticks); `onChange((id, value, old) => ...)` sees the new value (no `setTimeout`); entity listeners get the network id (the entity may not exist yet on a client: wait with `waitFor` or resolve on use).
+- Parse with `stateNumber` / `stateBoolean` / `stateString` or a `(v) => T | undefined` from the resource's parsers; a removed value is `undefined`, set `undefined` to remove.
+- Only the lib touches `Entity().state`, `GlobalState` and `AddStateBagChangeHandler` (and `spawnVehicle`'s bags at creation).
 
 ## Vehicles (server)
 
