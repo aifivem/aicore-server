@@ -13,7 +13,9 @@ AI Core is released under the GNU GPL v3 (`LICENSE` in every repository), which 
 | [Qbox](https://github.com/Qbox-project/qbx_core) | Qbox Project | GPL-3.0 | API of the `qbx_core` bridge, multi-job and group ideas, many qbx_* scripts listed below |
 | [ox_core](https://github.com/overextended/ox_core) | Overextended | LGPL-3.0 | Data model and server-authoritative design ideas |
 | [ND Core](https://github.com/ND-Framework/ND_Core) | ND Framework | GPL-3.0 | Framework comparison |
-| [vRP](https://github.com/ImagicTheCat/vRP) | ImagicTheCat | MIT | Framework comparison |
+| [vRP](https://github.com/vRP-framework/vRP) | ImagicTheCat | MIT | API of the `vrp` bridge (vRP 1, 2 and 0.5 call style); ai-core ships vRP's `lib/` (Proxy and Tunnel wire format, utils, Luaoop, IDManager, Tools, Lang, Luang), `vRPShared.lua`, `client/vRP.lua` and `cfg/lang/en.lua` with the MIT notice kept |
+| [vRP 3](https://github.com/vRP-framework/vRP3-Dev) | vRP Framework | MIT | vRP 3 differences of the `vrp` bridge (`formatNumber`, events) |
+| [htmlEntities-for-lua](https://github.com/TiagoDanin/htmlEntities-for-lua) | Tiago Danin | MIT | `lib/htmlEntities.lua` as vRP ships it |
 
 ## Libraries and tooling
 
@@ -37,6 +39,7 @@ AI Core is released under the GNU GPL v3 (`LICENSE` in every repository), which 
 | [qb-inventory](https://github.com/qbcore-framework/qb-inventory) | QBCore Framework | GPL-3.0 | API `ai-inventory` answers, item pictures |
 | [qb-* scripts](https://github.com/qbcore-framework) (cityhall, mechanicjob, ambulancejob, shops, vehiclesales, streetraces, weathersync, spawn and others) | QBCore Framework | GPL-3.0 | Features and default places of the matching ai-* scripts |
 | [qbx_* scripts](https://github.com/Qbox-project) (smallresources, garages, vehicles, vehiclekeys, vehicleshop, medical, ambulancejob, bankrobbery, houserobbery, jewelery, storerobbery, truckrobbery, pawnshop, scrapyard, carwash, mechanicjob, newsjob, towjob, diving, fireworks, binoculars, seatbelt) | Qbox Project | GPL-3.0 | Features and default places of the matching ai-* scripts |
+| [Discord-Rich-Presence-FiveM](https://github.com/Hjuiihu/Discord-Rich-Presence-FiveM) | Hjuiihu | MIT | Discord Rich Presence setup of `ai-smallresources` (no code taken) |
 | [ars_ambulancejob](https://github.com/Arius-Scripts/ars_ambulancejob) | Arius Scripts | Apache-2.0 | Medical layer adapter |
 | [pma-voice](https://github.com/AvarianKnight/pma-voice) | AvarianKnight | MIT | API `ai-voice` answers |
 | [community_bridge](https://github.com/TheOrderFivem/community_bridge) | The Order | GPL-3.0 | Banking script exports for the banking layer adapters |

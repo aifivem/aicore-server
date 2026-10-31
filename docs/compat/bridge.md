@@ -2,6 +2,8 @@
 
 ai-core presents itself as `es_extended`, `qb-core` and `qbx_core` (manifest `provide`) and answers their exports, core objects and events from Lua in `resources/[ai]/ai-core/bridge/`. Every call goes to ai-core; the player mirror follows ai-core's local events. Status: written and checked on the dev server with a test resource after a full server restart (resource states, exports, legacy events, Shared tables, item definitions; the three framework file includes from a resource that includes them like an ESX / QB script); not yet tested with a real ESX / QB script. Prepared for that test: esx_joblisting 1.14.1 (ESX-Legacy-Addons, needs only es_extended) and qb-cityhall (its server part needs only qb-core), cloned under `ai-core-research/bridgetest` and `ai-core-research/jobs`; running downloaded third-party code on the dev server needs the owner's go-ahead, so it was not started.
 
+vRP (1.0, 0.5 call style, 2, 3) is answered too (`provide 'vrp'`, `bridge/vrp/`): its coverage and limits are in `docs/compat/vrp.md`.
+
 ## Detection
 
 | Style | Status |

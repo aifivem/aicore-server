@@ -104,6 +104,10 @@ Engine behaviour, native pitfalls and network patterns found while building ai-c
 
 - FiveM has 40 audio submix slots (`kSubmixCount` in NuiAudioSink.cpp), shared with the game's own audio. Past the limit `CreateAudioSubmix` returns -1 ("Exceeded maximum number of audio submixes"); older builds overwrote memory (the "voice bugs out" reports). A submix is cached by name for the game session and can never be deleted: create each once, reuse by name (ai-voice's submix registry), and a disabled submix frees its slot only after the player restarts the game.
 
+## Discord Rich Presence
+
+- From FiveM's `code/components/discord/src/DiscordPresence.cpp` (client natives only): every setter just marks the presence dirty, the next game frame sends it, so call them on change, never on a timer. `SetRichPresence(text)` splits at the first `\n`: the part before is Discord's `state` (shown second), the rest `details` (shown first); `""` gives FiveM's own text back. The elapsed timer starts at the connection and no native resets it. `SetDiscordAppId` reconnects to Discord only when the id differs. A null string argument (JS `null` reaches the native as a null pointer) puts an app id or asset back to FiveM's default. `SetDiscordRichPresenceAction(index 0 | 1, label, url)` ignores a url not starting with `https://` or `fivem://connect/`; no native removes a button, but a button with an empty label is left out of what is sent (citizenfx/discord-rpc `serialization.cpp`). Discord limits: lines and hover texts 128 characters, button label 32, url 512.
+
 ## DUI
 
 - `DestroyDui` does not free everything: create a DUI once and keep it for the resource's lifetime; destroy only in `onResourceStop`.

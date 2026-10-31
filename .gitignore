@@ -12,6 +12,7 @@ imgui.ini
 /resources/\[standalone\]/
 # Third-party scripts used only to test compatibility on this machine
 /resources/\[test\]/
+/resources/\[test-vrp\]/
 
 # Every ai-* resource and the shared packages are their own git repos ("[" is a pattern character, so escaped)
 /resources/\[ai\]/
