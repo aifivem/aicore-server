@@ -272,6 +272,34 @@
         "typescript": "^6.0.3",
       },
     },
+    "resources/[ai]/ai-cityhall/web": {
+      "name": "ai-cityhall-web",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aicore-fivem/lib": "^0.1.0",
+        "@fontsource/inter": "^5.2.8",
+        "@fontsource/unbounded": "^5.3.0",
+        "@fortawesome/fontawesome-svg-core": "^7.2.0",
+        "@fortawesome/free-solid-svg-icons": "^7.2.0",
+        "@fortawesome/react-fontawesome": "^3.2.0",
+        "fivem-nui-react": "^1.2.0",
+        "motion": "^12.34.3",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0",
+      },
+      "devDependencies": {
+        "@csstools/postcss-color-mix-function": "^4.0.2",
+        "@csstools/postcss-oklab-function": "^5.0.2",
+        "@tailwindcss/vite": "^4.2.1",
+        "@types/react": "^19.2.7",
+        "@types/react-dom": "^19.2.3",
+        "@vitejs/plugin-react": "^5.1.1",
+        "postcss-color-functional-notation": "^8.0.2",
+        "tailwindcss": "^4.2.1",
+        "typescript": "^6.0.3",
+        "vite": "^7.3.1",
+      },
+    },
     "resources/[ai]/ai-core": {
       "name": "ai-core",
       "version": "0.1.0",
@@ -2039,6 +2067,8 @@
     "ai-chat-web": ["ai-chat-web@workspace:resources/[ai]/ai-chat/web"],
 
     "ai-cityhall": ["ai-cityhall@workspace:resources/[ai]/ai-cityhall"],
+
+    "ai-cityhall-web": ["ai-cityhall-web@workspace:resources/[ai]/ai-cityhall/web"],
 
     "ai-core": ["ai-core@workspace:resources/[ai]/ai-core"],
 

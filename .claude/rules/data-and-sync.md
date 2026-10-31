@@ -35,6 +35,7 @@ Data without a class is a design bug. Players can download everything in `files`
 
 ## Sending (snapshot + delta, HARD RULE)
 
+- A change reaches clients as the changed piece only, and a client updates only what that piece drew (owner rule): one panel record edited = one record patch = that record's points, blips, peds and zones rebuilt (lib `RecordObjects`), never the whole file resent or every record's objects rebuilt. Plan for 10k places: editing one costs one, on the network and on every client. The same holds for server memory (one record re-read, `panel.records`) and for any list a script streams (`AreaStream`, `put` / `remove`).
 - One full snapshot per session or screen, then only changes: `xSet` for a value, `put` (upsert) / `remove` (id) for lists.
 - Only to who needs it: personal data to its owner, group data to members, screen data to watchers (snapshot callback subscribes, screen close unsubscribes, `playerDropped` and leaving prune). `-1` only for data that concerns everyone.
 - The push lives inside the mutator, once; callers never push.

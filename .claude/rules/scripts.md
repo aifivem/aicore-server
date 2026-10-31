@@ -53,6 +53,11 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | A separate world (instanced interior, robbery house) | lib `buckets.acquire(tag)` / `release(id)` (server) | own bucket numbers (`base + n`) |
 | Engine happenings | `gameEventTriggered`, `entityDamaged`, server entity events (`aicore-fivem` `events.md`) | polling for them |
 | Settings a server owner tunes | `AdminPanel` + `schema.ts` (`admin-panel.md`); client reads `AdminWorld` | config files, convars, constants |
+| Points, blips, peds of panel records | `RecordObjects` (one record's objects rebuilt per edit) | `points.clear()` + add everything on a change |
+| Who may use a place (jobs, gangs, grades, on duty) | the record's access fields: `ACCESS_FIELDS` / `accessFields()`, `readAccess`, `online.allows` (server), `allows` (client) | own jobs / gangs / grade checks, a client check that differs from the server's |
+| Entries other resources register through your exports | `ByResource` / `Reasons` / `caller()` | own maps keyed by `GetInvokingResource()` and `onResourceStop` cleanup |
+| A plate as a key | `plateOf` / `normalizePlate` | raw `GetVehicleNumberPlateText`, own trim / upper |
+| A scripted camera | `ScriptCamera` | `CreateCam` / `RenderScriptCams` / `DestroyCam` by hand |
 | Server commands / key binds | `addCommand` / `Keybind` | `RegisterCommand`, `RegisterKeyMapping` |
 | Player-facing text | `Locale("KEY")` from `locales/en.json` | literals |
 | A full-screen UI (inventory, bank, shop, editor) | `NuiScreen` (it calls `hud.hide` / `hud.show`); `hud.hide("<screen>")` by hand only for a screen without a NUI page | hiding the HUD or the radar by hand |
