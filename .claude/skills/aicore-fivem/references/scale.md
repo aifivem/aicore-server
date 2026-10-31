@@ -65,6 +65,8 @@ Per-player stores and panel views (natives stubbed; a server holds at most 2,048
 
 `onCharacter` replay of 10,000 loaded players after a restart: 23 ms including the `online` mirror start. The gate's refusal line for a ~10 MB argument list: `previewJson` 0.35 ms instead of 14 ms for `JSON.stringify` (and no 10 MB string).
 
+`AreaStream` (`bun bench/area.bench.ts` in packages/lib; items over 8 x 8 km, 64 m cells, 3x3 areas, 2048 followers): 1M items load 0.6 s at ~84 B per item, `set` / `delete` with followers around 4 / 3 µs, 2048 snapshots 132 ms, all 2048 followers changing cell at once 119 ms (`followAll`), 0.7 ms when nobody moved. In the scripts: ai-inventory 100k drops (7x7 areas) 2048 players changing cell 85 ms; ai-exitsleeping 1M bodies ~90 MB, 2048 fresh snapshots 340 ms, 2048 cell changes 190 ms.
+
 Admin player search (`bun bench/playerSearch.ts` in ai-core, MariaDB 11.4, own database, median of 7; 60 first x 100 last names, 2% soft-deleted):
 
 | Search | 100k characters | 1M characters |

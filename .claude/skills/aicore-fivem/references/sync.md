@@ -94,6 +94,10 @@ For data that is pushed on an interval (member positions for map blips, moving o
 - Constant per-stream data (style, colour, label) goes once at subscribe and again only when it changes.
 - Send nothing when nothing changed. Filter by what the receiver can actually use (same routing bucket, same group, within range).
 
+## 6b2. World objects around a player: grid streaming
+
+Items that live at a place (ground drops, plants, sleeping bodies, placed props) go to the players around them through lib `AreaStream` (server) and `AreaFollower` (client): items filed by grid cell, followers by their own cell; a follower gets the items of the `(2r+1)^2` cells around its cell once, then puts and removes. Who has an item is computed from the cells (followers whose area covers the item's cell, plus an optional `alsoTo` player such as a carrier), so nothing is stored per follower and item; a cell change sends only the cells that came into or left the area. Followers either report their cell (client job every 2 s, checked within one cell of the ped on the server) or the server reads positions on a timer (`followAll`). Long lists go as small ordinary events in chunks: a latent event could overtake the puts and removes sent after it.
+
 ## 6c. Batching and dirty tracking
 
 - Bursty sources (purchases, many joins) collect dirty ids and flush once per short window (1-2 s) instead of one send per event.

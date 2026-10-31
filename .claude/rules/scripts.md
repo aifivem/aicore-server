@@ -20,7 +20,11 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Client -> server request / event | `triggerServerCallback` / `onClientCallback`, `onClientEvent` (with `args` parser and guards) | bare `onNet` on the server, hand-made request/response pairs |
 | A player action with a refusal (buy, use, open) | server answers `ActionResult`, refuses with `fail("KEY")`; client `callAction(name, args, { fallback })` | own `fail`, `errorText`, `isObj`, notifying the error by hand |
 | A token or net id from a client | `{ args: oneArg(readId) }`, `vehicleFromNet` / `pedFromNet` / `entityFromNet` / `vehicleNearPlayer` | `typeof x === "number"`, `NetworkGetEntityFromNetworkId` checks by hand |
-| A timed action the client runs (progress, dialog) | `PendingActions` (server) | own token map, counter, time check and drop cleanup |
+| A timed action the server checks (use, repair, rob, plant) | `await progressFor(source, { label, duration, anim, face })` (server) | a start event + client `progress` + finish callback with a token, own time checks |
+| A dialog the server waits for (a note's text) | `PendingActions` with `minRatio: 0` (server) | own token map, counter and drop cleanup |
+| A minigame (lockpick, skill check) | lib `lockpick` / `skillCheck` (client), the server still decides | own minigame NUI, a third-party minigame's exports |
+| World objects players see around them (drops, plants, bodies, props) | `AreaStream` (server) + `AreaFollower` (client) | own cell grids, watcher sets, snapshot / delta code |
+| A full-screen NUI | `NuiScreen` (client: focus, HUD, close message, `close` callback, typed `send`, parsed `on`) | `SetNuiFocus` + `hud.hide` + `RegisterNuiCallback("close")` by hand |
 | Per-player server state, cooldowns, character load / unload | `PlayerMap`, `Cooldowns` (per connection), `KeyedCooldowns` (by character id, survives a reconnect), `onCharacter` | `on("playerDropped")` per map, own `Map<id, deadline>`, load listener + restart replay by hand |
 | Server -> client | `onServerEvent` (with `args`), `triggerClientCallback` / `onServerCallback` | bare `onNet` on the client |
 | A place the player uses (shop, counter, door, NPC, ATM) | `Points` (label, `canShow` with `hasJob` / `inGang` / `onDutyIn` for locked places, `onPressed`, `ped`, `blip`, `models` for model targets) | `Zones` + `showPrompt` + `onPromptPressed` by hand, target exports, help text, `IsControlJustPressed` loops |
@@ -51,7 +55,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Settings a server owner tunes | `AdminPanel` + `schema.ts` (`admin-panel.md`); client reads `AdminWorld` | config files, convars, constants |
 | Server commands / key binds | `addCommand` / `Keybind` | `RegisterCommand`, `RegisterKeyMapping` |
 | Player-facing text | `Locale("KEY")` from `locales/en.json` | literals |
-| A full-screen UI (inventory, bank, shop, editor) | `hud.hide("<screen>")` on open, `hud.show("<screen>")` on close | hiding the HUD or the radar by hand |
+| A full-screen UI (inventory, bank, shop, editor) | `NuiScreen` (it calls `hud.hide` / `hud.show`); `hud.hide("<screen>")` by hand only for a screen without a NUI page | hiding the HUD or the radar by hand |
 | A key the player should know (open keys, tool controls) | `Keybind` `hint`, lib `keyHints.show` / `hide` for temporary ones | own on-screen key help |
 | Notifications, progress, menus, inputs | lib `notify`, `progress`, `menu`, `input` | own NUI for them |
 | Logs | `aiLog` | `console.log` for events, webhooks |
