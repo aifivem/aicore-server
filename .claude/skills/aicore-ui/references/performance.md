@@ -60,4 +60,5 @@ Typical values: push 0.45/0, sheet and modal 0.5/0, alert 0.3/0, menu 0.35/0.2, 
 
 ## Headless screenshots
 
+- With `--virtual-time-budget`, work started from a `requestAnimationFrame` callback can be left uncommitted in the shot (React state set inside rAF, CSS keyframe animations): an overlay that projects markers in rAF shows its rings but no prompt or crosshair. Capture in real time instead: start Edge with `--headless=new --remote-debugging-port=<port>`, open the page through the DevTools protocol (`PUT /json/new?<url>`, `Page.navigate`), wait a second or two, then `Page.captureScreenshot` (Bun's built-in `WebSocket` is enough, no package needed).
 - Headless Edge (`--headless=new --virtual-time-budget=<ms> --screenshot`) can freeze `motion` animations that start after a `delay` (or late on a slow first dev-server compile): the element stays at `opacity: 0` in the shot. Check with `--dump-dom` before judging a blank picture; a production build opened from `file://` captures reliably (ai-loading), the vite dev server of a large page (the admin panel) often does not within the budget.
