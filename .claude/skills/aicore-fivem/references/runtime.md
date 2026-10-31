@@ -51,7 +51,7 @@
 
 | Convar | Effect | In code |
 |---|---|---|
-| `sv_entityLockdown strict` | Networked entities are created only on the server | Vehicles: server `CreateVehicleServerSetter`; clients create only `isNetwork=false` local entities |
+| `sv_entityLockdown relaxed` | Script entities are created only on the server (ambient peds and traffic still come from clients) | Vehicles: server `CreateVehicleServerSetter`; clients create only `isNetwork=false` local entities |
 | `sv_stateBagStrictMode true` | Only the server writes replicated state bags | Clients request changes through a validated callback |
 | `sv_filterRequestControl 4` | Clients cannot take control of other entities | No `NetworkRequestControlOfEntity`; the server sends an event to the owner |
 | `sv_enableNetworkedScriptEntityStates false`, `sv_enableNetworkedSounds false`, `sv_scriptHookAllowed false` | Narrow what a client can affect over the network | |

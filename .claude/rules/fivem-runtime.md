@@ -10,7 +10,7 @@ Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `
 
 ## Security model (enforced by security.cfg)
 
-- `sv_entityLockdown strict`: networked entities are created on the server only. Vehicles: server `CreateVehicleServerSetter`, peds/objects: server `CreatePed` / `CreateObjectNoOffset`; persistent ones get `SetEntityOrphanMode(entity, 2)`. Clients create only `isNetwork = false` local entities (cosmetic, previews, single-player props).
+- `sv_entityLockdown relaxed` (owner decision: the game's ambient peds and traffic need it; the one exception to never loosening `security.cfg`): script entities are created on the server only, a client script's networked entity is blocked. Ambient NPCs and traffic are client-created and may be on any client: treat them as untrusted (an NPC a client says it sold to is checked on the server). Vehicles: server `CreateVehicleServerSetter`, peds/objects: server `CreatePed` / `CreateObjectNoOffset`; persistent ones get `SetEntityOrphanMode(entity, 2)`. Clients create only `isNetwork = false` local entities (cosmetic, previews, single-player props).
 - `sv_stateBagStrictMode true`: only the server writes state bags, through the lib's server state classes (`set`). A client never sets a state bag (not even a local one): it asks through a validated callback; the server sets; clients read the lib mirror.
 - `sv_filterRequestControl 4`: no `NetworkRequestControlOfEntity`. Work on another entity uses a server native or an event to the owner found with `NetworkGetEntityOwner`.
 - The server is authoritative: every client argument is checked for type, range, ownership and distance (server-side `GetEntityCoords(GetPlayerPed(src))`). Money, item, reward and permission decisions never happen on the client.
