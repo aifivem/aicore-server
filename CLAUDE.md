@@ -90,4 +90,5 @@ Write current truth in imperative form, no history ("used to be X"). Fix a wrong
 - In Git Bash, `git -C "<path with [ai]>"` fails (path conversion); `cd` into the folder first.
 - Git Bash also rewrites arguments that look like paths (`/c` becomes `C:/`): set `MSYS_NO_PATHCONV=1` before a tool that takes slash text (typed chat commands in a browser test).
 - In PowerShell, `[ai]` in a path is a wildcard: use `-LiteralPath` (`Test-Path -LiteralPath`, `Get-ChildItem -LiteralPath`), or a check reports a missing file that exists.
+- Releases only when the owner says so (owner decision): never merge a release-please pull request, push a tag or create a GitHub release on your own. When the owner asks for a release, pick the version yourself from what changed since the last one (SemVer: a breaking change bumps major, `feat` minor, only fixes patch; before 1.0.0 a breaking change bumps minor), set it with a `Release-As: x.y.z` commit footer when release-please would pick another, and say which version and why.
 - Commit or push only when the owner asks. Secrets live in `env.cfg` (not in git); a new secret also gets an empty line in `env.example.cfg`.
