@@ -4,7 +4,7 @@ How many medics are free and distress calls of downed players go through ai-core
 
 - Server: lib `ems.available(jobs)`, `ems.distress(source, { jobs, message? })`, `provider()` (exports `GetAvailableMedics`, `SendDistress`, `GetEmsSystem`; `resources/[ai]/ai-core/resource/server/ems/`). Lua `aiLib.ems`.
 - Picked by the panel setting `ems` (General, Medics): `auto` = the first running script of `EMS_SCRIPTS`, then ai-core's own part (`ai-core`). What the active script does not answer, ai-core answers: on-duty members of the jobs from its duty counts, the distress call as a `10-52` alert to the jobs through the dispatch layer.
-- Users: ai-death's check-in treatment (works only while at most `treatMaxEms` medics are free).
+- Users: ai-death's check-in treatment (works only while at most `treatMaxEms` medics are free), its down screen (free medics shown once, the "Call a doctor" key sends `distress`).
 
 | Script | Free medics | Distress | Status |
 |---|---|---|---|

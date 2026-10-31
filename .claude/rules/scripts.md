@@ -59,7 +59,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
 | A death | ai-core `CORE.playerDiedEvent` | health polling |
 | Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server), `medical.isDead()` / `onChange` (client) | a death script's exports or state bags (ai-death included), `IsEntityDead(cache.ped)` for "is the player down" (death scripts keep a downed ped alive) |
-| Bill a player (fines, service fees, a player's invoice) | lib `billing.send({ to, amount, label, from?, job? })` (server); `billing.unpaid` / `pay` | a billing script's exports or events, a forced `money.transfer` from the target |
+| Bill a player (fines, service fees, a player's invoice) | lib `billing.send({ to | toCitizenid, amount, label, from?, job? })` (server; `toCitizenid` also reaches an offline character); `billing.unpaid` / `pay` | a billing script's exports or events, a forced `money.transfer` from the target |
 | A police record (fine, warrant, arrest, jail) or opening the MDT | lib `mdt.record(...)` (server), `mdt.open()` (client) | an MDT's exports or events |
 | How many medics are free, a distress call | lib `ems.available(jobs)` / `ems.distress(source, { jobs })` (server) | `online.countOnDuty` for that rule, an ambulance or alert script's exports |
 | Open a bank screen, a banking script's own society balance | lib `banking.open(source)` / `societyBalance(job)` (server) | a banking script's exports; moving job money anywhere but ai-core (`money`) |

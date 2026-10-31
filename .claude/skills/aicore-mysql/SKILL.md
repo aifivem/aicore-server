@@ -39,6 +39,7 @@ Project rules first: `.claude/rules/database.md` (engine API, typed access, resu
 - Keyset pagination for growing lists (`WHERE id < ? ORDER BY id DESC LIMIT 20`); `OFFSET` only on small tables.
 - No N+1: one query with `IN (?)` (return early on an empty list) or a JOIN.
 - Atomic changes: `UPDATE t SET x = x - ? WHERE id = ? AND x >= ?` and check `affectedRows`, never read-modify-write.
+- Capped insert (at most N rows per owner, also for an owner not in memory): one statement, `INSERT INTO t (...) SELECT o.id, ?, ... FROM owners o WHERE o.key = ? AND (SELECT COUNT(*) FROM t WHERE t.owner_id = o.id) < ?` (MySQL and MariaDB allow the target table in the SELECT; index `t.owner_id`); insert id 0 = refused. Two concurrent inserts can both pass, so use it for soft caps only.
 - Upserts with `INSERT ... ON DUPLICATE KEY UPDATE c = VALUES(c)` on a real unique key.
 - Bulk writes: one statement per 500-1000 rows. Multi-row `INSERT`; updates of many rows as `UPDATE t JOIN (SELECT ? AS id, ? AS v UNION ALL SELECT ?, ? ...) v ON t.id = v.id SET t.x = v.v`. Never one statement per row in a loop.
 - `NOT EXISTS` over `NOT IN (subquery)`; `UNION ALL` over `UNION` when duplicates cannot occur.
