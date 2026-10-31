@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.2](https://github.com/aifivem/aicore-server/compare/v0.1.1...v0.1.2) (2026-10-31)
+
+
+### Documentation
+
+* ai-* adapters carry no tested version ([9f3d357](https://github.com/aifivem/aicore-server/commit/9f3d357eb7c41189423bb4fbf2f84dae3afcb80e))
+* git rules for commits, pushes and releases ([c4f0f47](https://github.com/aifivem/aicore-server/commit/c4f0f4728d62784c1ed2886b6ac195171fe9508f))
+* needs refill, vRP test results, lib dependency note ([a9d5592](https://github.com/aifivem/aicore-server/commit/a9d55922dc680566d5a1b75eafc4b3c79d3b6dae))
+* vRP compat note, Discord presence engine notes, credits ([818e9fe](https://github.com/aifivem/aicore-server/commit/818e9feb0e24db9d38786d55aae79372be1ec594))
+
 ## [0.1.1](https://github.com/aifivem/aicore-server/compare/v0.1.0...v0.1.1) (2026-10-31)
 
 
