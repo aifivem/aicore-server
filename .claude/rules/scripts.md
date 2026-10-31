@@ -29,15 +29,19 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Server -> client | `onServerEvent` (with `args`), `triggerClientCallback` / `onServerCallback` | bare `onNet` on the client |
 | A place the player uses (shop, counter, door, NPC, ATM) | `Points` (label, `canShow` with `hasJob` / `inGang` / `onDutyIn` for locked places, `onPressed`, `ped`, `blip`, `models` for model targets) | `Zones` + `showPrompt` + `onPromptPressed` by hand, target exports, help text, `IsControlJustPressed` loops |
 | An NPC | `ped` on a point or `LocalPed` | client `CreatePed` by hand |
-| A map blip | `blip` on a point, `Blips`, `createBlip` | `AddBlipForCoord` + `BeginTextCommandSetBlipName` |
-| The local ped, its vehicle, seat, weapon | `cache` / `onCache`, `player` | `PlayerPedId()` (except right after a model change), polling `GetVehiclePedIsIn` |
+| A map blip | `blip` on a point, `Blips`, `createBlip` (`route` for a GPS route) | `AddBlipForCoord` + `BeginTextCommandSetBlipName`, `SetBlipRoute` by hand |
+| A prop in a ped's hand | `attachProp(model, { ped?, bone, offset?, rotation? })` | `CreateObject` + `AttachEntityToEntity` by hand |
+| An animation kept playing (carrying, cuffed) | `player.holdAnim(dict, clip, opts)` | a job re-checking `IsEntityPlayingAnim` |
+| A showroom preview vehicle | `PreviewVehicle` | `CreateVehicle` + token + freeze by hand |
+| The local ped, its vehicle, seat, weapon | `cache` / `onCache`, `player`, `drivenVehicle()` (driver seat) | `PlayerPedId()` (except right after a model change), polling `GetVehiclePedIsIn`, `cache.seat === -1` checks |
+| Another player's ped by server id (client) | `playerPed(serverId)` (0 out of scope) | `GetPlayerPed(GetPlayerFromServerId(id))` (-1 gives the local ped) |
 | Teleport, animation, freeze | `player.teleport` / `playAnim` / `freeze`, `fadeOut` / `fadeIn` | fade + coords + collision code by hand, a bare `DoScreenFadeIn` |
 | A vehicle created by the server | `spawnVehicle` (with key `purpose`), `vehicleType` | `CreateVehicleServerSetter` + waits + plate + bags by hand, own `vehicleType` callbacks |
 | Vehicle keys | `vehicleKeys.give(source, vehicle, purpose)` / `remove` / `has` | a key script's exports |
 | Items, stashes, usable items | lib `inventory` | an inventory's exports |
 | Character, money, jobs, gangs, duty | ai-core exports through one top-level `const core = resourceExport("ai-core")`; `online` for lookups across players (`jobGrade`, `jobMembers`, `onDutyFor`) | own tables or copies, `GetLoadedSources()` + an export per player in a loop, `core.GetJobs` for a grade check |
 | Players near someone | `playersNear` / `playersNearEntity`; the closest one `nearestPlayer` (client) / `nearestPlayerTo` (server) | walking every player, own scope handlers, `GetActivePlayers` loops |
-| A position or distance on the server | `coordsOf`, `entityCoords`, `isNear`, `distance` | own `pos` / `distance` helpers |
+| A position or distance on the server | `coordsOf`, `entityCoords`, `isNear`, `distance`, `flatDistance` (ground plane), `vehicleOf(source, { driver? })` | own `pos` / `distance` helpers, `GetVehiclePedIsIn(GetPlayerPed(...))` |
 | The local ped fired a shot | lib `onShot` (client) | sampling `IsPedShooting` on a timer |
 | State bags | `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` | `Entity().state`, `GlobalState`, `LocalPlayer.state`, `AddStateBagChangeHandler`; client writes of any kind |
 | A player's phone (number, mail, text, notification) | lib `phone` | a phone script's exports |
@@ -48,7 +52,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Jail a player, release, time left | lib `prison` (server) | a prison script's exports or events (ai-prison included) |
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
 | A death | ai-core `CORE.playerDiedEvent` | health polling |
-| Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server) | a death script's exports (ai-death included) |
+| Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server), `medical.isDead()` / `onChange` (client) | a death script's exports or state bags (ai-death included), `IsEntityDead(cache.ped)` for "is the player down" (death scripts keep a downed ped alive) |
 | Money from one account to another (bank transfer, deposit, society) | lib `money.transfer(from, to, amount, reason, fee?)` (one transaction) | a `RemoveMoney` + `AddMoney` pair |
 | A separate world (instanced interior, robbery house) | lib `buckets.acquire(tag)` / `release(id)` (server) | own bucket numbers (`base + n`) |
 | Engine happenings | `gameEventTriggered`, `entityDamaged`, server entity events (`aicore-fivem` `events.md`) | polling for them |
@@ -56,6 +60,10 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Points, blips, peds of panel records | `RecordObjects` (one record's objects rebuilt per edit) | `points.clear()` + add everything on a change |
 | Who may use a place (jobs, gangs, grades, on duty) | the record's access fields: `ACCESS_FIELDS` / `accessFields()`, `readAccess`, `online.allows` (server), `allows` (client) | own jobs / gangs / grade checks, a client check that differs from the server's |
 | Entries other resources register through your exports | `ByResource` / `Reasons` / `caller()` | own maps keyed by `GetInvokingResource()` and `onResourceStop` cleanup |
+| Cleanup when this resource stops | `onStop(fn)` | `on("onResourceStop", (r) => r === ResourceName && ...)` |
+| Players who get one key's deltas (a lot, an open character) | `KeyWatchers` (server) | own `Map<key, Set>` + reverse map + drop cleanup |
+| A countdown or growth on the server's clock (client) | `ServerClock` | own `offset` fields |
+| Random numbers, picks, chances | `randomInt` / `pickRandom` / `rollChance` | `Math.floor(Math.random() * ...)` copies |
 | A plate as a key | `plateOf` / `normalizePlate` | raw `GetVehicleNumberPlateText`, own trim / upper |
 | A scripted camera | `ScriptCamera` | `CreateCam` / `RenderScriptCams` / `DestroyCam` by hand |
 | Server commands / key binds | `addCommand` / `Keybind` | `RegisterCommand`, `RegisterKeyMapping` |
@@ -68,7 +76,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Periodic work (per frame or every N ms) | lib `every(ms, fn)` (0 = every frame; switched with `set(active)` while needed), `TickLoop` for an on / off per-frame job | `setInterval`, `setTick`, a self-rearming `setTimeout`, idle jobs |
 | Disabled controls (cuffed, seat belt, menus) | lib `controls.disable(reason, list)` / `controls.disableAll(reason, except?)` / `enable(reason)` | a `TickLoop` or tick per feature calling `DisableControlAction` / `DisableAllControlActions` |
 | The vehicle near the player or a point | lib `nearestVehicle` (client, `filter` for a condition), `nearestVehicleTo` / `nearestVehicleAt` (server) | own pool loops, `GetClosestVehicle` |
-| A server entity on the client by net id | lib `waitForEntity(netId)` | `waitFor(() => NetworkDoesEntityExistWithNetworkId(...))` + `NetToVeh` by hand |
+| A server entity on the client by net id | lib `waitForEntity(netId)` (waits), `entityFromNetId(netId, type?)` (now or 0) | `NetworkDoesEntityExistWithNetworkId(...)` + `NetToVeh` by hand |
 | A line of sight / surface probe (client) | lib `raycast(from, to, options)` | `StartExpensiveSynchronousShapeTestLosProbe` + `GetShapeTestResult` by hand |
 | A NUI page's lang texts (web) | `web/src/lib/lang.ts` wrapping lib `LangTexts` | own text store or placeholder code |
 | Areas without an interaction | `Zones` | distance loops |
