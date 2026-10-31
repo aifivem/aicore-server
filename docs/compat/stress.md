@@ -9,6 +9,8 @@ Scripts that stress or calm a player (a robbery, shooting, a drug sale, a joint)
 | ps-hud 2.1.2 | the same events | written from its source (server.lua) |
 | ai-hud | server export `AddNeed(source, "stress", amount)` | ours, last in the order |
 
+Hunger and thirst to full (admin revive): lib `needs.refill(source)` (export `RefillNeeds`) through the same HUD: ai-hud `SetNeed`; the QB-style HUDs get QB's way (qb-ambulancejob's revive): metadata `hunger` / `thirst` 100 and `hud:client:UpdateNeeds (100, 100)` to the player; without any HUD only the metadata.
+
 QB's events take the player from the event's source, so ai-core sends `CORE.stressRelayEvent (amount)` to that player and ai-core's client sends the HUD's event (`resource/client/stress.ts`); the HUD applies its own rules (the TGIANN HUDs skip police with their `config.DisablePoliceStress` and send a QB notification).
 
 Limits: the TGIANN HUDs answer these events only with tgiann-core's `config.framework = "qb"` and their `config.stressActive`; on ai-core tgiann-core may pick its ESX part, and then stress changes do nothing. Not added: codem HUDs and 0r-hud (no stress export or event found in a source or docs). No ai-* script changes stress by hand yet besides ai-hud's own sources (speed, shots).

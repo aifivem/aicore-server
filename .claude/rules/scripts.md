@@ -50,6 +50,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Hands up / pointing of the local player, playing or stopping an emote | lib `gestures` (`playEmote(name)`, `cancelEmote()`) (client) | an emote script's exports or `e` command |
 | The seat belt state | lib `seatbelt.isOn()` / `onChange` (client) | a seat belt or HUD script's exports, ai-smallresources' event |
 | Stress up or down | lib `stress.gain` / `relieve` (server) | `hud:server:GainStress` events, ai-hud's `AddNeed` |
+| Hunger and thirst to full (revive, hospital) | lib `needs.refill(source)` (server) | ai-hud's `SetNeed`, setting metadata `hunger` / `thirst` by hand |
 | Where notifications show | ai-core panel setting `notify` (ai-lib's cards to another UI) | calling a notification script's exports from a script |
 | A radial menu entry (job menu, vehicle action) | lib `radial.add({ id, label, icon, parent?, canShow, onPressed })` once at start (client); `radial.refresh()` when what `canShow` reads changes | a radial script's exports (ai-radialmenu included), re-adding on a radial's start |
 | Jail a player, release, time left | lib `prison` (server) | a prison script's exports or events (ai-prison included) |
