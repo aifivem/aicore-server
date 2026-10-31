@@ -213,11 +213,6 @@ tasks:
     dest: ./resources/[ai]/ai-exitsleeping
 
   - action: download_github
-    src: https://github.com/aifivem/ai-lapraces
-    ref: main
-    dest: ./resources/[ai]/ai-lapraces
-
-  - action: download_github
     src: https://github.com/aifivem/ai-streetraces
     ref: main
     dest: ./resources/[ai]/ai-streetraces

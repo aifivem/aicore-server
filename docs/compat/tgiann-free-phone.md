@@ -12,7 +12,6 @@ The phone of choice (owner decision): ai-* scripts do not write their own phone.
 | ai-death | EMS calls when down | revive by medics nearby, hospital respawn |
 | ai-mechanic | invoices from mechanics to customers | job account pays, no invoice |
 | ai-drugs | delivery missions by message | street sales from the radial menu |
-| ai-lapraces | race invites and results by message | start line menu, best times menu |
 | ai-robberies | armored truck job by message | the job giver point |
 | ai-properties | house keys and doorbell messages | keys from the property menu |
 
