@@ -23,7 +23,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 - Shared code: our own `@aicore-fivem/lib` (callbacks, locale, waitFor, streaming, keybinds, rate limits, DB tables...), **no ox_lib in ai-* resources** (owner decision). Anything used twice goes into the lib (`.claude/rules/lib.md`).
 - DB: our own engine `@aicore-fivem/mysql` (owner decision): every ai-* resource runs a small pool in-process; `ai-mysql` stands in for oxmysql for third-party scripts (`.claude/rules/database.md`). Never guess a signature: read the source or `.d.ts` in `node_modules`.
 - NUI: the `aicore-ui` stack: React 19 + Vite + TypeScript, Tailwind v4, shadcn/ui (Radix), TanStack Router / Virtual / Pacer, Redux Toolkit, `motion`, `fivem-nui-react` (`.claude/rules/nui.md`).
-- Third-party resources: none (voice is ai-voice, which stands in for pma-voice). No ox_lib on the server (owner decision): a third-party script that needs it (many ESX/QB/Qbox scripts) is installed by the server owner together with that script. No oxmysql: `ai-mysql` provides it. Ask before adding another resource or npm package.
+- Third-party resources: only bob74_ipl (owner decision: GTA Online interiors the ai-* places use); voice is ai-voice, which stands in for pma-voice. No ox_lib on the server (owner decision): a third-party script that needs it (many ESX/QB/Qbox scripts) is installed by the server owner together with that script. No oxmysql: `ai-mysql` provides it. Ask before adding another resource or npm package.
 
 ## Structure
 
