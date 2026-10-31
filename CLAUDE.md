@@ -28,7 +28,7 @@ When they conflict, the higher one wins. A skill rule that does not apply here g
 ## Structure
 
 - This folder (`txData/ai-core.base`) is the server data folder, the server repo and the bun workspace root: cfg files, docs, rules, tools, `template/`. Its `node_modules` stays outside `resources/` so FXServer never scans it.
-- `resources/[standalone]/`: third-party resources, not in git (the txAdmin recipe installs them).
+- `resources/[standalone]/`: third-party resources the server ships with (bob74_ipl), not in git; the txAdmin recipe downloads each one listed in `STANDALONE` in `tools/recipe.ts`.
 - `resources/[ai]/`: **every `ai-*` resource is its own git repo**. `packages/` is one more repo: the npm packages `@aicore-fivem/build`, `@aicore-fivem/lib`, `@aicore-fivem/mysql`, `@aicore-fivem/shared`; bun links the local copies inside the workspace. The server repo ignores both.
 - New resource: `bun run new <name> "<description>"` in this folder (creates `resources/[ai]/ai-<name>` from `template/resource`), then `bun install`, `bun run build` in the new folder, `git init`, and `ensure ai-<name>` in `server.cfg`.
 

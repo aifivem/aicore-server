@@ -46,6 +46,12 @@ tasks:
       - ./server.cfg
       - ./env.cfg
 
+  # Third-party resources the server uses
+  - action: download_github
+    src: https://github.com/Bob74/bob74_ipl
+    ref: master
+    dest: ./resources/[standalone]/bob74_ipl
+
   # ai-core and its scripts: each is its own repository with its build committed (no build tools needed)
   - action: download_github
     src: https://github.com/aifivem/ai-mysql

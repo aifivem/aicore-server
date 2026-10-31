@@ -1,7 +1,8 @@
 /**
  * Writes the txAdmin recipe (`recipe/`) from this server's files: `recipe/server.cfg` (server.cfg with the recipe's
  * server name), `recipe/env.cfg` (env.example.cfg with txAdmin's variables) and `recipe/ai-core.yaml` (the server
- * files plus one `download_github` per `ensure ai-*` line of server.cfg). Run after changing server.cfg or
+ * files, one `download_github` per `ensure ai-*` line of server.cfg and one per third-party resource of
+ * `STANDALONE` that server.cfg ensures). Run after changing server.cfg or
  * env.example.cfg: `bun tools/recipe.ts`.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -9,6 +10,10 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 const OWNER = "aifivem";
 const SERVER_REPO = `https://github.com/${OWNER}/aicore-server`;
 const SHARED = ["security.cfg", "misc.cfg", "permission.cfg"];
+/** Third-party resources the server ships with (`resources/[standalone]`, not in git): repository and branch. */
+const STANDALONE: Record<string, { src: string; ref: string }> = {
+  bob74_ipl: { src: "https://github.com/Bob74/bob74_ipl", ref: "master" },
+};
 
 function replaceOnce(text: string, from: string, to: string): string {
   if (!text.includes(from)) throw new Error(`recipe: "${from}" not found`);
@@ -20,6 +25,9 @@ const read = (file: string) =>
   readFileSync(file, "utf8").split("\r\n").join("\n");
 const cfg = read("server.cfg");
 const ensures = [...cfg.matchAll(/^ensure (ai-[\w-]+)/gm)].map((m) => m[1]);
+const standalone = Object.entries(STANDALONE).filter(([name]) =>
+  new RegExp(`^ensure ${name}\\b`, "m").test(cfg),
+);
 
 mkdirSync("recipe", { recursive: true });
 writeFileSync(
@@ -75,6 +83,11 @@ const yaml = [
   move("./tmp/server/env.example.cfg", "./env.example.cfg"),
   "  # License, slots, endpoints, the database and the server name into the cfg files",
   "  - action: replace_string\n    mode: all_vars\n    file:\n      - ./server.cfg\n      - ./env.cfg\n",
+  "  # Third-party resources the server uses",
+  ...standalone.map(
+    ([name, repo]) =>
+      `  - action: download_github\n    src: ${repo.src}\n    ref: ${repo.ref}\n    dest: ./resources/[standalone]/${name}\n`,
+  ),
   "  # ai-core and its scripts: each is its own repository with its build committed (no build tools needed)",
   ...ensures.map(
     (r) =>
@@ -84,4 +97,6 @@ const yaml = [
   "  - action: remove_path\n    path: ./tmp\n",
 ].join("\n");
 writeFileSync("recipe/ai-core.yaml", yaml);
-console.log(`recipe: ${ensures.length} ai-* resources`);
+console.log(
+  `recipe: ${ensures.length} ai-* resources, ${standalone.length} third-party`,
+);
