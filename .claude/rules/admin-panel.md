@@ -41,3 +41,4 @@ Every setting a server owner tunes lives in ai-core's one admin panel (F10 or `/
 - Runtime state the panel only shows (a live list, never saved) is a `memory: true` file filled with `commit`; the panel cannot edit it.
 - One runtime value shown next to settings (which source is active) is an optional top-level section with a read-only `info` widget, written with `panel.commit("settings", undefined, { ...panel.get("settings"), key: value })` only when it changes, and first in a `setImmediate` (the commit calls ai-core's export); ai-core `jobs/primeTime/`.
 - A read-only list of records is a tab with `table: { columns, sort }` and `cards: []` (one searchable, virtualized table); a column's `values` maps stored values to lang keys, `empty` names the text for an empty value (same on `info`).
+- A `list` widget's rows support only `text`, `number`, `switch` and `point` widgets: access fields (`accessFields()`) go on the record, never in a list row.
