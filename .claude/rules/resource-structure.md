@@ -47,7 +47,7 @@ Every script follows https://github.com/overextended/fivem-ts, adapted in `templ
 - A new `bin` in a workspace package (`packages/build`) is not picked up by `bun install` on its own: add it to that package's `bin` block in `bun.lock` too, then `bun install` links it.
 - tsdown `deps` options take RegExp (`alwaysBundle: [/.*/]`); a string `"/.*/"` is read as a package name and dependencies stay external ("No name was provided for external module").
 - `dist/` and `fxmanifest.lua` are committed: servers run without bun. A source change is always committed with its build.
-- Dependencies on our packages use the npm range (`"@aicore-fivem/lib": "^0.1.0"`), never `workspace:*`: the repo must also build outside the workspace. Inside `resources/[ai]` bun links the local package when its version satisfies the range.
+- Dependencies on our packages are `"@aicore-fivem/lib": "workspace:*"` in every resource and the template: the packages are not on npm, so a resource builds only inside a workspace (the server folder, or the release workflow's `packages/*` + resource workspace), and an npm range breaks as soon as aicore-packages releases a minor (`^0.1.0` does not take 0.2.0; bun then asks npm and fails with 404). Inside aicore-packages the packages keep npm ranges, release-please bumps them together.
 
 ## public/ reaches clients
 
