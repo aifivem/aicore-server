@@ -7,10 +7,24 @@ ai-core picks the clothing script with the panel setting `appearance` (General, 
 | Script | Read (server) | Apply / read (client) | Status |
 |---|---|---|---|
 | tgiann-clothing 4.x | `tgiann_skin` (`model` hash, `skin` JSON) by the character's citizenid (tgiann-core's `getCid` on ai-core's ESX and QB bridges) | `SetPedAppearance(ped, skin)`, `GetPedSkinData(ped)` | written from its source; replaces ai-appearance (conflict rule) |
+| illenium-appearance 5.7.0 | `playerskins.skin` (`active = 1`, the `model` name inside) by citizenid | `setPedAppearance(ped, appearance)`, `getPedAppearance(ped)` | written from its source; needs a patch (below) |
+| qb-clothing 1.2.0 | `playerskins` (`model` hash as text, `skin` JSON, `active = 1`) by citizenid | local event `qb-clothing:client:loadPlayerClothing (skin, ped)`; no read | written from its source |
+| crm-appearance (no version published) | `playerskins` (`model`, `skin`, `active = 1`), as tgiann-multichar reads it | `crm_set_ped_appearance(ped, skin)`, `crm_get_ped_appearance(ped)` | written from tgiann-multichar 2.2.1 and p_bridge 1.2.5 sources (no public docs) |
+| rcore_clothing (no version published) | export `getSkinByIdentifier(citizenid)` -> `{ ped_model, skin }` | `setPedSkin(ped, skin)`; no read (`getPlayerSkin` reads only the local player) | written from tgiann-multichar 2.2.1's source (no public docs) |
+| bl_appearance 1.3.5 | `appearance` (`id` = bl_bridge's player id = citizenid; `skin` with the `model` hash, `clothes`, `tattoos`, merged) | `SetPedAppearance(ped, appearance)`; no read (its `GetPedAppearance` answers a promise) | written from its source |
 | ai-appearance | `ai_appearance_characters` (`model` name, `data` = its `Appearance` JSON) | `ApplyAppearance(ped, appearance)`, `GetPedAppearance(ped)` (only the local player's) | ours, last in the order |
 
-Not supported yet (no source checked): illenium-appearance, fivem-appearance, qb-clothing, esx_skin / skinchanger, rcore_clothing, crm-appearance. tgiann-clothing `provide`s illenium-appearance, fivem-appearance, qb-clothing, skinchanger and esx_skin, so scripts written for those work while it runs.
+tgiann-clothing `provide`s illenium-appearance, fivem-appearance, qb-clothing, skinchanger and esx_skin, so scripts written for those work while it runs; it comes first in the order for that reason. Every clothing adapter makes ai-appearance unneeded (built-in conflict rule from the registry).
 
-A new clothing script: one server adapter (`load(charId)` -> `{ model, data }` from its table or exports) and one client adapter (`apply(ped, data)`, optional `read(ped)`), a line in both lists; when it replaces ai-appearance, a `STAND_INS` line in `resource/server/connection/conflicts.ts`.
+Limits:
+- Stored looks are read straight from the script's table by the character's citizenid (ai-core's ESX identifier and QB citizenid). A missing table (the script never started) logs an error and gives no look.
+- illenium-appearance picks its framework with `GetResourceState(...) ~= "missing"`; ai-core provides both `qb-core` and `es_extended`, so its ESX file (loaded last) wins and saves to `users.skin`, which ai-core has no table for. Patch `shared/framework/framework.lua` so `Framework.ESX()` returns false (QB mode, `playerskins`).
+- crm-appearance on ESX is not covered (only its QB table is known).
+
+Not added: fivem-appearance 1.3.1 (stores nothing itself), esx_skin / skinchanger (store in ESX `users.skin`, which ai-core has no table for), qs-appearance, codem-appearance, 17mov_CharacterSystem (storage and ped exports not found in a source or docs).
+
+TGIANN scripts the other way round: tgiann-multichar 2.2.1 reads looks of tgiann-clothing, illenium-appearance, rcore_clothing, crm-appearance and qb-clothing itself (its `editable.lua`); tgiann-core's clothing helpers open tgiann-clothing / illenium-appearance / qb-clothing menus and reload the skin through tgiann-clothing, illenium-appearance, esx_skin, qb-clothing or fivem-appearance; tgiann-naked and tgiann-shop do the same by resource name.
+
+A new clothing script: one server adapter (`load(charId)` -> `{ model, data }` from its table or exports) and one client adapter (`apply(ped, data)`, optional `read(ped)`), a line in both lists (the conflict rule against ai-appearance follows the server list; citizenid and model readers in `resource/server/appearance/citizen.ts`).
 
 Applying a look to the player's own ped changes what they wear now; whether that is saved is the clothing script's rule (tgiann-clothing saves it, ai-appearance does not).

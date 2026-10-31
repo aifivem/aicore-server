@@ -31,6 +31,8 @@ Functions cross resources as references; ai-core drops a resource's items when i
 | ai-radialmenu (default) | `AddItem(item)` / `RemoveItem(id, parent)` / `Refresh()` | none |
 | tgiann-radialmenu-target | `AddMenuItem(entry, parentId)` / `RemoveMenuItem(id, parentId)` / `RefreshMenu()` (written from its source) | none (`canInteract`, `onSelect`, `shouldClose`, `whileDead` map 1:1) |
 | qb-radialmenu | `AddOption(option, id)` / `RemoveOption(id)` (`action` function) | no conditions: the item always shows and a press runs only while `canShow` holds; no `parent` (goes to the main wheel); untested |
+| tgiann-radialmenu 1.0.0 (non-target) | `AddMenuItem(entry)` / `RemoveMenuItem(id)` (written from its source; wheel built on each open, nothing to refresh) | no `parent` (goes to the main wheel), no `whileDead`; it `provide`s `codem-supreme-radialmenu`, so it comes before that adapter |
+| codem-supreme-radialmenu | `AddMenuItem(item)` / `RemoveMenuItem(id)` (written from its docs): `canOpen` = `canShow`, a leaf runs the local event `ai-core:radial:<id>`, which calls `onPressed` | no function action (hence the event), no `parent`, no `whileDead`; untested |
 | ox_lib | `addRadialItem(item, parentMenuId)` / `removeRadialItem` / `registerRadial` for sub items | same as qb (no conditions); `parent` only into an ai-core item with sub items; untested |
 
 ## APIs ai-radialmenu answers (scripts written for another radial)
@@ -49,7 +51,7 @@ Not answerable. ox_lib's `init.lua` turns `lib.addRadialItem(...)` in another re
 
 ## Conflicts
 
-`qb-radialmenu` and `tgiann-radialmenu-target` installed next to ai-radialmenu are reported by ai-core's conflict check (`STAND_INS` in `resource/server/connection/conflicts.ts`): two wheels fight over the key, and ai-radialmenu `provide`s their names. A new `provide` line reports `missing` in `GetResourceState` until the next full server start.
+`qb-radialmenu` and `tgiann-radialmenu-target` installed next to ai-radialmenu are reported by ai-core's conflict check (tgiann-radialmenu and codem-supreme-radialmenu are not: `RADIALS` is not read by the conflict rules) (`STAND_INS` in `resource/server/connection/conflicts.ts`): two wheels fight over the key, and ai-radialmenu `provide`s their names. A new `provide` line reports `missing` in `GetResourceState` until the next full server start.
 
 ## Adding a radial menu
 

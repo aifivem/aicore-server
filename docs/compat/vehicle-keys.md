@@ -18,9 +18,9 @@ API facts come from each system's docs and from other bridges that support them 
 | System | Side | Give / remove | Has |
 |---|---|---|---|
 | ai-vehiclekeys (default, `provide`s qbx_vehiclekeys) | server | `GiveKeys` / `RemoveKeys` (source, plate) | yes |
-| qbx_vehiclekeys | server | `GiveKeys` / `RemoveKeys` (source, vehicle) | no |
+| qbx_vehiclekeys (1.0.3 source) | server | `GiveKeys` / `RemoveKeys` (source, vehicle) | `HasKeys(source, vehicle)`; a plate alone counts as held |
 | qb-vehiclekeys | server | `GiveKeys` / `RemoveKeys` (source, plate) | no |
-| wasabi_carlock | server | `GiveKey` / `RemoveKey` (source, plate) | no |
+| wasabi_carlock | server | `GiveKey` / `RemoveKey` (source, plate) | `HasKey(source, plate)` |
 | Renewed-Vehiclekeys | server | `addKey` / `removeKey` (source, plate) | no |
 | MrNewbVehicleKeys | server | `GiveKeysByPlate` / `RemoveKeysByPlate` (source, plate) | no |
 | vehicles_keys (Jaksam) | server | `giveVehicleKeysToPlayerId(source, plate, "temporary")` / `removeKeysFromPlayerId` | no |
@@ -39,6 +39,7 @@ API facts come from each system's docs and from other bridges that support them 
 | mm_carkeys | client | `GiveKeyItem(plate, vehicle)` / `RemoveKeyItem(plate)` | no |
 | p_carkeys | client | server events `p_carkeys:CreateKeys` / `RemoveKeys` (plate) | no |
 | rd_vehiclekeys | client | server events `rd_vehiclekeys:server:GiveKeys` / `RemoveKeys` (plate) | no |
+| t1ger_keys | client | `GiveTemporaryKeys(plate, vehicle name, "")` (its docs) / none (temporary keys cannot be taken back; owned keys need ESX `owned_vehicles`) | no |
 
 ### tgiann-hotwire by purpose
 
@@ -51,7 +52,9 @@ Keys are `car_key` items (metadata `plate` + `keyId`); a key can sit in the igni
 | `job`, `rental`, `temporary` | `SetNonRemoveableIgnition(netId, vehicle, true)` | a key fixed in the ignition, nothing in an inventory |
 | any, plate only | `GiveKeyPlate(source, plate, false)` | a key item with the plate's current key id |
 
-Sources disagree on wasabi_carlock's server argument order (`(plate, source)` in one bridge); the adapter follows the order its documentation link gives, `(source, plate)`.
+Sources disagree on wasabi_carlock's server argument order (`(plate, source)` in one bridge); the adapter follows its documentation (docs.wasabiscripts.com, advanced-series wasabi-carlock exports), `(source, plate)`. community_bridge reaches Renewed-Vehiclekeys (`addKey(plate)` / `removeKey(plate)`) and MrNewbVehicleKeys (`GiveKeysByPlate(plate)` / `RemoveKeysByPlate(plate)`) through client exports; their server signatures used here are not confirmed by a doc.
+
+TGIANN scripts that only use keys (tgiann-garage, tgiann-vehiclecontrol, tgiann-core's `GiveVehicleKey`) are callers of tgiann-hotwire / qb-vehiclekeys, not key systems: nothing to adapt.
 
 ## Adding a key system
 
