@@ -15,13 +15,21 @@ ai-core knows each job's prime time: the busy hours of the day. The paycheck can
 
 | What | Where |
 |---|---|
-| `IsPrimeTime(jobName?)` server export, `true` inside the job's window (`config.primeTime[jobName]` or `.default`) | `server/editable.lua` (open) |
+| global `isPrimeTime(jobName?)`, `true` inside the job's window (`config.primeTime[jobName]` or `.default`); **not exported** in stock 2.9 / 2.10 | `server/editable.lua` (open) |
 | `config.primeTime = { default = { start = 18, finish = 1 }, police = {...} }` | `configs/config.lua` |
 | Personal list "prime hour working time": while an officer is on duty inside prime hours, the time adds up in its UI (`workingHours` column of `tgiann_police_alert_personal_list`) | escrowed, not readable |
 
 Its formula `hour >= start or hour < finish` only works for windows past midnight (a same-day window like 10-18 is always prime there); ai-core reads same-day windows correctly in its own hours, but while tgiann-policealert is the source its own formula decides.
 
-Status: written from tgiann-policealert 2.9.0's open `editable.lua`, untested on ai-core. The adapter warns once in the console when another version runs.
+Status: needs a patch to its open `server/editable.lua`. Stock 2.9.0 and 2.10.0 keep `isPrimeTime` as a global function and export nothing, so ai-core's call fails (console error, ai-core's hours used). Add one line under the function:
+
+```lua
+exports("IsPrimeTime", isPrimeTime)
+```
+
+Written from tgiann-policealert 2.10.0's `editable.lua` (same function as 2.9.0), untested on ai-core. The adapter warns once in the console when another version runs.
+
+Other scripts with their own prime hours: none found (searched the local TGIANN servers' resources; no public dispatch, MDT or job script found with a prime time API).
 
 ## Adding a script with its own prime hours
 

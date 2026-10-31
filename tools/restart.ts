@@ -19,7 +19,7 @@ const { values } = parseArgs({
       type: "string",
       default: join(serverRoot, "..", "default", "logs", "fxserver.log"),
     },
-    tries: { type: "string", default: "3" },
+    tries: { type: "string", default: "5" },
   },
 });
 
@@ -59,7 +59,8 @@ for (let attempt = 1; attempt <= Number(values.tries); attempt++) {
     (r) => r !== values.from || attempt > 1,
   )) {
     await send(`ensure ${resource}`);
-    await Bun.sleep(150);
+    // Faster bursts lose commands over UDP.
+    await Bun.sleep(250);
   }
   await Bun.sleep(3000);
   const log = logSince();
