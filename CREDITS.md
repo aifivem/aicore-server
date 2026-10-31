@@ -30,12 +30,16 @@ AI Core is released under the GNU GPL v3 (`LICENSE` in every repository), which 
 |---|---|---|---|
 | [ox_inventory](https://github.com/overextended/ox_inventory) | Overextended | GPL-3.0 | API `ai-inventory` answers, item and stash model |
 | [ox_target](https://github.com/overextended/ox_target) | Overextended | MIT | API `ai-target` answers |
+| [qb-target](https://github.com/qbcore-framework/qb-target) | QBCore Framework | GPL-3.0 | Target adapter of lib `Points` (its API, no code taken) |
+| [sleepless_interact](https://github.com/Sleepless-Development/sleepless_interact) | Sleepless Development | GPL-3.0 | Target adapter of lib `Points` (its API, no code taken) |
+| [interact](https://github.com/darktrovx/interact) | darktrovx and contributors | CC BY-NC-SA 4.0 | Target adapter of lib `Points` (its API, no code taken) |
 | [ox_fuel](https://github.com/overextended/ox_fuel) | Overextended | GPL-3.0 | `ai-fuel` |
 | [qb-inventory](https://github.com/qbcore-framework/qb-inventory) | QBCore Framework | GPL-3.0 | API `ai-inventory` answers, item pictures |
 | [qb-* scripts](https://github.com/qbcore-framework) (cityhall, mechanicjob, ambulancejob, shops, vehiclesales, streetraces, weathersync, spawn and others) | QBCore Framework | GPL-3.0 | Features and default places of the matching ai-* scripts |
 | [qbx_* scripts](https://github.com/Qbox-project) (smallresources, garages, vehicles, vehiclekeys, vehicleshop, medical, ambulancejob, bankrobbery, houserobbery, jewelery, storerobbery, truckrobbery, pawnshop, scrapyard, carwash, mechanicjob, newsjob, towjob, diving, fireworks, binoculars, seatbelt) | Qbox Project | GPL-3.0 | Features and default places of the matching ai-* scripts |
 | [ars_ambulancejob](https://github.com/Arius-Scripts/ars_ambulancejob) | Arius Scripts | Apache-2.0 | Medical layer adapter |
 | [pma-voice](https://github.com/AvarianKnight/pma-voice) | AvarianKnight | MIT | API `ai-voice` answers |
+| [community_bridge](https://github.com/TheOrderFivem/community_bridge) | The Order | GPL-3.0 | Banking script exports for the banking layer adapters |
 | [bob74_ipl](https://github.com/Bob74/bob74_ipl) | Bob74 | MIT | Shipped as is: GTA Online interiors |
 
 Missing someone, or want a line changed? Open an issue or a pull request on [aifivem/aicore-server](https://github.com/aifivem/aicore-server).

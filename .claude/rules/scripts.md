@@ -38,7 +38,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Teleport, animation, freeze | `player.teleport` / `playAnim` / `freeze`, `fadeOut` / `fadeIn` | fade + coords + collision code by hand, a bare `DoScreenFadeIn` |
 | A vehicle created by the server | `spawnVehicle` (with key `purpose`), `vehicleType` | `CreateVehicleServerSetter` + waits + plate + bags by hand, own `vehicleType` callbacks |
 | Vehicle keys | `vehicleKeys.give(source, vehicle, purpose)` / `remove` / `has` | a key script's exports |
-| Items, stashes, usable items | lib `inventory` | an inventory's exports |
+| Items, stashes, usable items, script shops | lib `inventory` (`registerShop` / `openShop` for a shop the script opens) | an inventory's exports, an own shop NUI |
 | Character, money, jobs, gangs, duty | ai-core exports through one top-level `const core = resourceExport("ai-core")`; `online` for lookups across players (`jobGrade`, `jobMembers`, `onDutyFor`) | own tables or copies, `GetLoadedSources()` + an export per player in a loop, `core.GetJobs` for a grade check |
 | Players near someone | `playersNear` / `playersNearEntity`; the closest one `nearestPlayer` (client) / `nearestPlayerTo` (server) | walking every player, own scope handlers, `GetActivePlayers` loops |
 | A position or distance on the server | `coordsOf`, `entityCoords`, `isNear`, `distance`, `flatDistance` (ground plane), `vehicleOf(source, { driver? })` | own `pos` / `distance` helpers, `GetVehiclePedIsIn(GetPlayerPed(...))` |
@@ -46,13 +46,23 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | State bags | `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` | `Entity().state`, `GlobalState`, `LocalPlayer.state`, `AddStateBagChangeHandler`; client writes of any kind |
 | A player's phone (number, mail, text, notification) | lib `phone` | a phone script's exports |
 | Police (job) alerts | lib `dispatch.alert({ title, code, coords, source, ... })` (server) | an alert script's exports or events, ai-policealert's exports, own blips and notifications for officers |
-| A character's saved look, dressing a ped, the player's clothes | lib `appearance.get(charId)` (server), `appearance.apply(ped, look)` / `read(ped)` (client) | a clothing script's exports or tables (ai-appearance included) |
-| Hands up / pointing of the local player | lib `gestures` (client) | an emote script's exports |
+| A character's saved look, dressing a ped, the player's clothes, clothing / barber / outfit menus, job uniforms | lib `appearance.get(charId)` (server), `appearance.apply(ped, look)` / `read(ped)`, `openMenu(menu)`, `wearOutfit(outfit)` / `reloadSkin()` (client) | a clothing script's exports, events or tables (ai-appearance included), `SetPedComponentVariation` uniforms by hand |
+| Hands up / pointing of the local player, playing or stopping an emote | lib `gestures` (`playEmote(name)`, `cancelEmote()`) (client) | an emote script's exports or `e` command |
+| The seat belt state | lib `seatbelt.isOn()` / `onChange` (client) | a seat belt or HUD script's exports, ai-smallresources' event |
+| Stress up or down | lib `stress.gain` / `relieve` (server) | `hud:server:GainStress` events, ai-hud's `AddNeed` |
+| Where notifications show | ai-core panel setting `notify` (ai-lib's cards to another UI) | calling a notification script's exports from a script |
 | A radial menu entry (job menu, vehicle action) | lib `radial.add({ id, label, icon, parent?, canShow, onPressed })` once at start (client); `radial.refresh()` when what `canShow` reads changes | a radial script's exports (ai-radialmenu included), re-adding on a radial's start |
 | Jail a player, release, time left | lib `prison` (server) | a prison script's exports or events (ai-prison included) |
+| A vehicle's fuel (read, set, spawn with) | lib `fuel.get` / `set` (server), `fuel.get(vehicle)` (client), `spawnVehicle({ fuel })` | the `fuel` state bag, a fuel script's exports or decorators (ai-fuel included), `GetVehicleFuelLevel` |
+| Lock / unlock a door from a script | lib `doors.setLocked(id, locked, by?)` / `isLocked` (server) | a door lock script's exports or events (ai-doorlock included) |
+| Impound, store a vehicle, open a garage menu, a player's garaged vehicles | lib `garages.impound` / `store` / `open` / `stored` (server) | a garage script's exports or events (ai-garages included), ai-vehicles' `StoreVehicle` for an impound |
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
 | A death | ai-core `CORE.playerDiedEvent` | health polling |
 | Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server), `medical.isDead()` / `onChange` (client) | a death script's exports or state bags (ai-death included), `IsEntityDead(cache.ped)` for "is the player down" (death scripts keep a downed ped alive) |
+| Bill a player (fines, service fees, a player's invoice) | lib `billing.send({ to, amount, label, from?, job? })` (server); `billing.unpaid` / `pay` | a billing script's exports or events, a forced `money.transfer` from the target |
+| A police record (fine, warrant, arrest, jail) or opening the MDT | lib `mdt.record(...)` (server), `mdt.open()` (client) | an MDT's exports or events |
+| How many medics are free, a distress call | lib `ems.available(jobs)` / `ems.distress(source, { jobs })` (server) | `online.countOnDuty` for that rule, an ambulance or alert script's exports |
+| Open a bank screen, a banking script's own society balance | lib `banking.open(source)` / `societyBalance(job)` (server) | a banking script's exports; moving job money anywhere but ai-core (`money`) |
 | Money from one account to another (bank transfer, deposit, society) | lib `money.transfer(from, to, amount, reason, fee?)` (one transaction) | a `RemoveMoney` + `AddMoney` pair |
 | A separate world (instanced interior, robbery house) | lib `buckets.acquire(tag)` / `release(id)` (server) | own bucket numbers (`base + n`) |
 | Engine happenings | `gameEventTriggered`, `entityDamaged`, server entity events (`aicore-fivem` `events.md`) | polling for them |
