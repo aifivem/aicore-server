@@ -4,7 +4,7 @@ The owner gives nothing: find what is outdated, download it from GitHub, carry t
 
 ## 1. Find outdated scripts
 
-Every ai-* resource's `package.json` has `version` and `repository` (`github:TGIANN/<name>`; the build writes both into `fxmanifest.lua`). ai-core's update check (`resources/[ai]/ai-core/resource/server/versions.ts`) compares them with `releases/latest` on GitHub and prints `<name> <current> is outdated: <latest> is out (<url>)` in the console (also on the admin dashboard, export `GetUpdates`). It only sees started resources and skips those in the panel's `updates.ignore` (ai-core `data/settings.json`), so check every folder yourself:
+Every ai-* resource's `package.json` has `version` and `repository` (`github:aifivem/<name>`; the build writes both into `fxmanifest.lua`). ai-core's update check (`resources/[ai]/ai-core/resource/server/versions.ts`) compares them with `releases/latest` on GitHub and prints `<name> <current> is outdated: <latest> is out (<url>)` in the console (also on the admin dashboard, export `GetUpdates`). It only sees started resources and skips those in the panel's `updates.ignore` (ai-core `data/settings.json`), so check every folder yourself:
 
 ```bash
 cd "resources/[ai]"

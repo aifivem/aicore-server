@@ -9,7 +9,7 @@ Take each script to its new version as shipped, then carry the server's own stat
 
 | Script | New version comes from | Flow |
 |---|---|---|
-| `ai-*` resources in `resources/[ai]/` (ai-core, ai-lib, ai-mysql included) and `packages/` | Their GitHub releases: each `package.json` has `repository` (`github:TGIANN/<name>`); the owner gives nothing | `references/ai-scripts.md` |
+| `ai-*` resources in `resources/[ai]/` (ai-core, ai-lib, ai-mysql included) and `packages/` | Their GitHub releases: each `package.json` has `repository` (`github:aifivem/<name>`); the owner gives nothing | `references/ai-scripts.md` |
 | Any other resource (usually `resources/[standalone]/`) | A folder or zip the owner provides | `references/third-party.md` |
 
 Read the matching reference before changing anything. Both use the same three-way model below.
