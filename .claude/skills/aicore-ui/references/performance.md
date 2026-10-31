@@ -57,3 +57,7 @@ Typical values: push 0.45/0, sheet and modal 0.5/0, alert 0.3/0, menu 0.35/0.2, 
 - DOM reads that follow an animation run in Motion's read phase for a short window; never an endless rAF loop.
 - WebGL loops: no `gl.finish()`, cap fps, stop when hidden, cancel on unmount.
 - Images: `decoding="async"`, `loading="lazy"` off screen, sized close to their display size.
+
+## Headless screenshots
+
+- Headless Edge (`--headless=new --virtual-time-budget=<ms> --screenshot`) can freeze `motion` animations that start after a `delay` (or late on a slow first dev-server compile): the element stays at `opacity: 0` in the shot. Check with `--dump-dom` before judging a blank picture; a production build opened from `file://` captures reliably (ai-loading), the vite dev server of a large page (the admin panel) often does not within the budget.

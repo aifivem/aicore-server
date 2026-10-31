@@ -72,3 +72,9 @@ Bridge note: some ready-made ESX/QB scripts create networked vehicles on the cli
 - Many JS resources: https://forum.cfx.re/t/performance-of-multiple-js-resources/5255191
 - Cross-resource data hitches: https://forum.cfx.re/t/be-aware-hitches-from-sending-a-lot-of-data-between-resources-server-side/1274077
 - Resmon targets: https://forum.cfx.re/t/resource-monitor-and-good-values-to-aim-below-at/1568408
+
+## Loading screen
+
+- A `loadscreen` page gets server data only through the connection handover: in `playerConnecting`, `deferrals.handover({ key: value })` (several resources' handovers merge), read in the page as `window.nuiHandoverData`. Other resources' files are not downloaded while it shows, so its pictures ship in the same resource.
+- Progress arrives as plain window messages with an `eventName` (`loadProgress` with `loadFraction`, which starts again at 0 per stage; `onDataFileEntry` / `initFunctionInvoking` with a `name`), not NUI actions.
+- With `loadscreen_manual_shutdown 'yes'` the page stays until a client script calls `ShutdownLoadingScreenNui()` (ai-core's character scene does), so the empty world never shows.
