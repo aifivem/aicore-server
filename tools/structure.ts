@@ -165,7 +165,7 @@ for (const unit of units()) {
       const stem = basename(file).replace(/\.(ts|tsx)$/, "");
       const folders = relative(root.dir, dirname(file)).split(/[\\/]/);
       // shadcn/ui's generator imports `cn` from `@/lib/utils`: that one file keeps its name.
-      const shadcn = /web[\/]src[\/]lib[\/]utils\.ts$/.test(file);
+      const shadcn = /web[\\/]src[\\/]lib[\\/]utils\.ts$/.test(file);
       if (!shadcn && (BANNED.has(stem) || folders.some((f) => BANNED.has(f))))
         lines.push(`  name     ${rel}`);
       const isEntry = /resource[\\/](client|server)[\\/]index\.ts$/.test(file);
