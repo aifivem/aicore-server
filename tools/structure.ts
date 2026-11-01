@@ -149,6 +149,60 @@ function entryLogic(text: string): number {
   return withoutImports.split("\n").filter((line) => line.trim() !== "").length;
 }
 
+/** Lua roots the rules cover (`lua-bridges.md` "Files and folders (Lua)"); `bridge/lib` is ai-lib's copy, `data/` holds tables. */
+const LUA_ROOTS = ["bridge", "lua"];
+const LUA_SKIP = new Set(["node_modules", "lib", "data"]);
+
+function luaFiles(dir: string, out: string[]): void {
+  for (const entry of readdirSync(dir)) {
+    const path = join(dir, entry);
+    if (statSync(path).isDirectory()) {
+      if (!LUA_SKIP.has(entry)) luaFiles(path, out);
+    } else if (entry.endsWith(".lua")) out.push(path);
+  }
+}
+
+/** Size, grab-bag names and global tables created in more than one file, for one resource's Lua. */
+function luaFindings(resource: string): string[] {
+  const out: string[] = [];
+  const creators = new Map<string, string[]>();
+  for (const sub of LUA_ROOTS) {
+    const dir = join(aiRoot, resource, sub);
+    if (!existsSync(dir)) continue;
+    const files: string[] = [];
+    luaFiles(dir, files);
+    for (const file of files) {
+      const text = readFileSync(file, "utf8");
+      const rel = relative(base, file).replace(/\\/g, "/");
+      const count = text.split("\n").length;
+      if (count > LIMIT) out.push(`  size     ${rel} (${count} lines)`);
+      const stem = basename(file, ".lua");
+      const folders = relative(dir, dirname(file)).split(/[\\/]/);
+      if (BANNED.has(stem) || folders.some((f) => BANNED.has(f)))
+        out.push(`  name     ${rel}`);
+      for (const match of text.matchAll(/^([A-Za-z_][\w]*)\s*=\s*\{/gm)) {
+        const name = match[1];
+        if (!name) continue;
+        const list = creators.get(name) ?? [];
+        list.push(rel);
+        creators.set(name, list);
+      }
+    }
+  }
+  // Client and server are separate Lua states: a table created once per side is fine; a shared file counts for both.
+  const sideOf = (rel: string): "client" | "server" | "shared" =>
+    /client/i.test(rel) ? "client" : /server/i.test(rel) ? "server" : "shared";
+  for (const [name, list] of creators) {
+    const sides = list.map(sideOf);
+    const clash =
+      sides.filter((s) => s === "client").length > 1 ||
+      sides.filter((s) => s === "server").length > 1 ||
+      (sides.includes("shared") && list.length > 1);
+    if (clash) out.push(`  global   ${name} created in ${list.join(", ")}`);
+  }
+  return out;
+}
+
 let problems = 0;
 const summary: string[] = [];
 for (const unit of units()) {
@@ -187,6 +241,7 @@ for (const unit of units()) {
     lines.push(
       `  cycle    ${scc.map((f) => relative(base, f).replace(/\\/g, "/")).join(" <-> ")}`,
     );
+  if (unit.name !== "packages") lines.push(...luaFindings(unit.name));
   problems += lines.length;
   summary.push(`${unit.name.padEnd(20)} ${lines.length}`);
   if (lines.length) console.log(`${unit.name}\n${lines.join("\n")}`);
