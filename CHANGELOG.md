@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.5](https://github.com/aifivem/aicore-server/compare/v0.1.4...v0.1.5) (2026-11-01)
+
+
+### Documentation
+
+* **inventory:** client item list and item count events ([5b514b5](https://github.com/aifivem/aicore-server/commit/5b514b55574e14a0dcc320c39d6c7ddb5fef5ace))
+* lib money, jobs and character search; bridge bucket bookkeeping ([0299b03](https://github.com/aifivem/aicore-server/commit/0299b033f0c32bbdd5c0ac6ad0efd568759716db))
+* **lib:** needs.add ([102be4f](https://github.com/aifivem/aicore-server/commit/102be4fb912399a41646eb52eec68dec798f24fe))
+* **lib:** online and inventory helpers ([201495c](https://github.com/aifivem/aicore-server/commit/201495c5d1f28b9a1965e963fc7d4188136e9680))
+
 ## [0.1.4](https://github.com/aifivem/aicore-server/compare/v0.1.3...v0.1.4) (2026-11-01)
 
 
