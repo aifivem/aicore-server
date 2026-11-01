@@ -1,6 +1,6 @@
 # Inventory layer (ai-core)
 
-Every script reaches items through ai-core: ai-* scripts with `@aicore-fivem/lib` `inventory` (server: `addItem`, `removeItem`, `getItemCount`, `hasItem`, `canCarryItem`, `getItems`, `clearInventory`, `registerStash`, `openInventory`, `registerUsableItem`, `getItemDefinition`, `registerShop`, `openShop`; client: `openInventory`, `hasItem`), ESX / QB / Qbox scripts through ai-core's bridge (`xPlayer.addInventoryItem`, `Player.Functions.AddItem`, `ESX.RegisterUsableItem`, `QBCore.Functions.CreateUseableItem`...), any other script through ai-core's exports of the same names (`exports['ai-core']:AddItem(source, 'bread', 2)`). ai-core forwards each call to the active inventory through its adapter, so changing the inventory changes it for every script at once.
+Every script reaches items through ai-core: ai-* scripts with `@aicore-fivem/lib` `inventory` (server: `addItem`, `removeItem`, `getItemCount`, `hasItem`, `canCarryItem`, `getItems`, `clearInventory`, `registerStash`, `openInventory`, `registerUsableItem`, `getItemDefinition`, `registerShop`, `openShop`, `setItemMetadata`, `setMaxWeight`, `usableItems`; client: `openInventory`, `hasItem`, `itemCount`, `itemDefinition`), ESX / QB / Qbox scripts through ai-core's bridge (`xPlayer.addInventoryItem`, `Player.Functions.AddItem`, `ESX.RegisterUsableItem`, `QBCore.Functions.CreateUseableItem`...), any other script through ai-core's exports of the same names (`exports['ai-core']:AddItem(source, 'bread', 2)`). ai-core forwards each call to the active inventory through its adapter, so changing the inventory changes it for every script at once.
 
 Contract: `@aicore-fivem/shared` `inventory.ts`. Code: `resources/[ai]/ai-core/resource/server/inventory/` (layer, registry, one adapter file per inventory) and `resource/client/inventory/`.
 
@@ -13,6 +13,26 @@ Contract: `@aicore-fivem/shared` `inventory.ts`. Code: `resources/[ai]/ai-core/r
 - **Clients** follow the server's pick through GlobalState `ai:inventory` (the active resource name); ai-core's client exports `OpenInventory()` / `HasItem(item, count)` forward to the client adapter.
 - **Item use event:** ai-core emits `ai-core:itemUsed (source, name, status)`; `status` (hunger / thirst / stress) comes only from ai-inventory.
 - **Bridge item cache:** the bridge caches item definitions per name and drops the cache on `ai-core:inventoryChanged`.
+- **Item definitions on clients:** ai-core's client keeps the active inventory's definitions (client exports `GetItemDefinitions()` / `GetItemDefinition(name)`, lib client `inventory.itemDefinition`): one snapshot per client at start, then the server broadcasts only definitions that changed when another inventory becomes active or the active one reports a change (ai-inventory on a panel item edit). Third-party inventories report none: their definitions are read again when they (re)start. Local client event `ai-core:client:itemDefinitionsChanged (changes)` for the bridge (`QBCore.Shared.Items`).
+- **Usable items:** `GetUsableItems()` lists every item a handler is registered for (ESX `GetUsableItems`).
+- **Item counts on the client:** `GetItemCount(item)` asks the active inventory's own client export (its client state, no server round trip); null for an inventory without one.
+
+## Metadata, weight limit, client count
+
+`SetItemMetadata(inv, slot, metadata)` replaces a stack's metadata (ESX weapon ammo, components, tint: the bridge reads the stack, changes it, sets it back); `SetMaxWeight(source, grams)` sets a player's weight limit until the inventory loads it again (ESX `setMaxWeight`). "Answers nothing" below means the inventory's export returns no result, so ai-core answers true once the call went through (after a slot check where one exists).
+
+| Inventory | `SetItemMetadata` | `SetMaxWeight` | Client `GetItemCount` |
+|---|---|---|---|
+| ai-inventory | own `SetMetadata(inv, slot, metadata)` (players and loaded stashes; false for an empty slot) | own `SetMaxWeight(inv, grams)`: open screens get the new limit; the panel's next change of that kind's limit or a reload resets it | own `GetItemCount(item)` |
+| tgiann-inventory 2.4.1 | `SetMetadata(inv, slot, metadata)` (answers nothing; a player's slot checked with `GetItemBySlot`) | `SetMaxWeight(inv, weight)` (answers nothing) | `GetItemCount(item)` |
+| ox_inventory 2.48.1 | `SetMetadata(inv, slot, metadata)` (answers nothing; slot checked with `GetSlot`) | `SetMaxWeight(inv, weight)` (answers nothing; inventory checked with `GetInventory`) | `GetItemCount(item)` |
+| qb-inventory 2.2.3 | players only: `SetItemData(source, item, "info", metadata, slot)` with the name from `GetItemBySlot` | no export: false | none: null (items live in qb-core's `PlayerData.items`) |
+| qs-inventory | players only: `SetItemMetadata(source, slot, metadata)` (its docs; answers nothing) | no export known: false | `Search(item)` |
+| codem-inventory | players only: `SetItemMetadata(source, slot, metadata)` (bl_bridge and community_bridge; answers nothing) | no export known: false | sum of `getUserInventory` |
+| core_inventory | `setMetadata(inventory, slot, metadata)` (its docs; players and `stash-<name>`; answers nothing) | none (docs list only `updateInventorySize` for slots and rows): false | `getItemCount(item)` (its docs) |
+| origen_inventory | players only: `setMetadata(source, slot, metadata)` (bl_bridge and community_bridge; answers nothing) | no export known: false | `Search("count", item)` |
+| jaksam_inventory | no source shows one: false | no source shows one: false | `getTotalItemAmount(item)` |
+
 
 ## Adapters
 

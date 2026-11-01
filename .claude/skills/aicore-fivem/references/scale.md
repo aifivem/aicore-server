@@ -54,6 +54,18 @@ A job channel message or a boss menu walks only the job's members (`online.jobMe
 
 `playersNear` / `nearestPlayerTo` cost one `GetPlayersInScope` export call (a copy of the scope list) plus one coordinate read per candidate; ai-core keeps the scope sets, so there is no seed in the resource.
 
+`playersNearCoords(coords, radius, bucket?)` has no player to take a scope from, so it walks every loaded player (`online.sources()`): JS-side 150-170 µs at 2,048 and 10k with natives stubbed, but on a server the cost is the natives, two per loaded player (`GetPlayerPed` + `GetEntityCoords`, the bucket read only for those in range): about 4,100 native calls at 2,048 online, a few ms per call. For actions and commands, never ticks; around a player use `playersNear`.
+
+Client pool walks (`packages/lib/bench/entities.bench.ts`, natives stubbed; GTA's pools: CPed 256, CVehicle 300, CObject ~2,300, raised gameconfigs up to ~10,000 objects), one `GetGamePool` + one `GetEntityCoords` per entity:
+
+| Pool size | `nearestEntity` | `nearestVehicle({ from })` | `entitiesInArea` | `isSpawnClear` (free spot, whole pool) |
+|---|---|---|---|---|
+| 300 | 30-47 µs | 19-23 µs | 15-17 µs | 17 µs |
+| 2,500 | 220-285 µs | 91-151 µs | 46-80 µs | 43-98 µs |
+| 10,000 | 0.85-1.75 ms | 0.35-0.47 ms | 0.21-0.22 ms | 0.18-0.20 ms |
+
+In game the native per entity dominates (one `GetEntityCoords` each): a full object pool walk is a few ms, so these run on an action, never in a tick.
+
 Per-player stores and panel views (natives stubbed; a server holds at most 2,048 entries per store):
 
 | Size | `PendingActions` start / take | `Cooldowns.ready` | One `playerDropped` (every store of the resource) | Records view: load / one record edit |

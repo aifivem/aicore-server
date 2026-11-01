@@ -86,7 +86,9 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Waiting and loading | `waitFor`, `sleep`, `requestModel`, `requestAnimDict`, `requestAnimSet`, `requestPtfxAsset` | `while (!x) await sleep()` |
 | Periodic work (per frame or every N ms) | lib `every(ms, fn)` (0 = every frame; switched with `set(active)` while needed), `TickLoop` for an on / off per-frame job | `setInterval`, `setTick`, a self-rearming `setTimeout`, idle jobs |
 | Disabled controls (cuffed, seat belt, menus) | lib `controls.disable(reason, list)` / `controls.disableAll(reason, except?)` / `enable(reason)` | a `TickLoop` or tick per feature calling `DisableControlAction` / `DisableAllControlActions` |
-| The vehicle near the player or a point | lib `nearestVehicle` (client, `filter` for a condition), `nearestVehicleTo` / `nearestVehicleAt` (server) | own pool loops, `GetClosestVehicle` |
+| The vehicle near the player or a point | lib `nearestVehicle` (client, `filter` for a condition, `from` for a point), `nearestVehicleTo` / `nearestVehicleAt` (server) | own pool loops, `GetClosestVehicle` |
+| The closest ped / object, entities in an area, a free spawn spot (client); players near a point (server) | lib `nearestEntity(kind, from?, max?, { filter, ignoreLocal })`, `entitiesInArea(kind, coords, radius)`, `isSpawnClear(coords, radius)`; `playersNearCoords(coords, radius, bucket?)` | own `GetGamePool` / `GetPlayers` loops |
+| A scaleform movie | lib `requestScaleformMovie(name, timeoutMs?)` (handle or 0) | `RequestScaleformMovie` + a wait loop |
 | A server entity on the client by net id | lib `waitForEntity(netId)` (waits), `entityFromNetId(netId, type?)` (now or 0) | `NetworkDoesEntityExistWithNetworkId(...)` + `NetToVeh` by hand |
 | A line of sight / surface probe (client) | lib `raycast(from, to, options)` | `StartExpensiveSynchronousShapeTestLosProbe` + `GetShapeTestResult` by hand |
 | A NUI page's lang texts (web) | `web/src/lib/lang.ts` wrapping lib `LangTexts` | own text store or placeholder code |

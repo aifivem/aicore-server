@@ -21,6 +21,8 @@ What this means for us:
 2. **Integrations** (adapters): ai-core and `ai-*` scripts need things other scripts provide (inventory, target, notify, progress bar, phone, dispatch, fuel, vehicle keys, garage, door lock, clothing/appearance, banking, billing, MDT, EMS, housing, death/ambulance, voice). Each category has one interface in `@aicore-fivem/shared`; each supported script is one adapter file implementing it; ai-core auto-detects the installed one (priority list) and the admin panel can override the choice per category. Adding support for a new script = copy the category's adapter template, fill in its calls, add one line to the registry.
 3. **Per-script compatibility notes** (`docs/compat/<script>.md`, one per tested third-party script): tested version, status (works out of the box / needs a config value / needs a patch to its open bridge file), the exact config or patch, and known limits. The notes in this folder are the public compatibility list.
 
+Character screens are a fourth case: ai-core's own screen steps aside for an installed multichar script, which logs players in through the bridge and reads ai-core-made ESX / QB tables (`multichar.md`: supported scripts, login exports, tables, what the bridge must call).
+
 ## Rules for the code
 
 - No third-party script name is hardcoded outside its own adapter file or compat note. Core code calls the category interface only.
