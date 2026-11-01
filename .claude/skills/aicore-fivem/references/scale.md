@@ -52,6 +52,15 @@ Memory helpers (natives stubbed):
 
 A job channel message or a boss menu walks only the job's members (`online.jobMembers`), and a grade check (`online.jobGrade`) is a memory read instead of a `GetJobs` export copy.
 
+Job counts and the job change event (2026-11-02, for tgiann-core's job count and other scripts' police counts):
+
+| Online | `countMembers` over 2 jobs (each player once) | On duty over 2 jobs | `membersOf` over 2 jobs | One `jobsChanged` with an `onJobState` listener |
+|---|---|---|---|---|
+| 2,048 | 8 µs | 0.3 µs | 26 µs | 0.7 µs |
+| 10,000 | 22 µs | 0.2 µs | 115 µs | 1.1 µs |
+
+The Lua mirror in ai-lib (`lua/server/online.lua`: `jobCount`, `jobPlayers`, `onJobState`) keeps the same sets plus the players with more than one job, so a count over several jobs costs O(jobs + multi-job players). Measured under fengari (a JS Lua VM, much slower than the server's Lua, so only the ratios count): `jobCount` over 2 jobs 17 µs at 2,048 and 12 µs at 10k (flat), on duty 7 µs, one job change with a listener 12 µs; `jobPlayers` builds a list (0.7 ms / 3.7 ms there).
+
 `playersNear` / `nearestPlayerTo` cost one `GetPlayersInScope` export call (a copy of the scope list) plus one coordinate read per candidate; ai-core keeps the scope sets, so there is no seed in the resource.
 
 `playersNearCoords(coords, radius, bucket?)` has no player to take a scope from, so it walks every loaded player (`online.sources()`): JS-side 150-170 µs at 2,048 and 10k with natives stubbed, but on a server the cost is the natives, two per loaded player (`GetPlayerPed` + `GetEntityCoords`, the bucket read only for those in range): about 4,100 native calls at 2,048 online, a few ms per call. For actions and commands, never ticks; around a player use `playersNear`.
