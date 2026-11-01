@@ -8,9 +8,9 @@ AI Core is released under the GNU GPL v3 (`LICENSE` in every repository), which 
 
 | Project | Authors | License | What AI Core takes from it |
 |---|---|---|---|
-| [ESX Legacy](https://github.com/esx-framework/esx_core) | ESX Framework | GPL-3.0 | API of the `es_extended` bridge (xPlayer, events, callbacks), job and account model |
-| [QBCore](https://github.com/qbcore-framework/qb-core) | QBCore Framework | GPL-3.0 | API of the `qb-core` bridge (Player object, metadata, events, commands), shared items, jobs, gangs, default places |
-| [Qbox](https://github.com/Qbox-project/qbx_core) | Qbox Project | GPL-3.0 | API of the `qbx_core` bridge, multi-job and group ideas, many qbx_* scripts listed below |
+| [ESX Legacy](https://github.com/esx-framework/esx_core) | ESX Framework | GPL-3.0 | API of the `es_extended` bridge (xPlayer, events, callbacks), job and account model; its weapon table (`bridge/esx/weapons.lua`), OneSync, scaleform, account operation and `imports.lua` code copied into the bridge |
+| [QBCore](https://github.com/qbcore-framework/qb-core) | QBCore Framework | GPL-3.0 | API of the `qb-core` bridge (Player object, metadata, events, commands), shared items, jobs, gangs, default places; its Shared helpers, starter items, locations and config copied into the bridge |
+| [Qbox](https://github.com/Qbox-project/qbx_core) | Qbox Project | GPL-3.0 | API of the `qbx_core` bridge, multi-job and group ideas, many qbx_* scripts listed below; `modules/lib.lua`, `hooks.lua`, `logger.lua`, `shared/vehicles.lua` and `shared/weapons.lua` copied unchanged into ai-core for scripts that include them |
 | [ox_core](https://github.com/overextended/ox_core) | Overextended | LGPL-3.0 | Data model and server-authoritative design ideas |
 | [ND Core](https://github.com/ND-Framework/ND_Core) | ND Framework | GPL-3.0 | Framework comparison |
 | [vRP](https://github.com/vRP-framework/vRP) | ImagicTheCat | MIT | API of the `vrp` bridge (vRP 1, 2 and 0.5 call style); ai-core ships vRP's `lib/` (Proxy and Tunnel wire format, utils, Luaoop, IDManager, Tools, Lang, Luang), `vRPShared.lua`, `client/vRP.lua` and `cfg/lang/en.lua` with the MIT notice kept |
@@ -21,7 +21,7 @@ AI Core is released under the GNU GPL v3 (`LICENSE` in every repository), which 
 
 | Project | Authors | License | What AI Core takes from it |
 |---|---|---|---|
-| [ox_lib](https://github.com/overextended/ox_lib) | Overextended | LGPL-3.0 | The shape of `@aicore-fivem/lib` (callbacks, points, zones, cache, skill check, progress, menus), written again in TypeScript |
+| [ox_lib](https://github.com/overextended/ox_lib) | Overextended | LGPL-3.0 | The shape of `@aicore-fivem/lib` (callbacks, points, zones, cache, skill check, progress, menus), written again in TypeScript; its vehicle properties code (`bridge/core/vehicleprops.lua`) and `require` loader (ESX `imports.lua` without ox_lib) copied into the bridge |
 | [oxmysql](https://github.com/overextended/oxmysql) | Overextended | LGPL-3.0 | The API and return shapes `ai-mysql` answers |
 | [fivem-ts](https://github.com/overextended/fivem-ts) | Overextended | Unlicense | Resource layout and build setup of every ai-* script |
 | [cfx-server-data](https://github.com/citizenfx/cfx-server-data) | Cfx.re | MIT | The `chat` resource API `ai-chat` answers |
