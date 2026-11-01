@@ -22,5 +22,5 @@ paths:
 - No condition-wait loops (`while (!x) await sleep()`): `waitFor(check, timeoutMs?)` from `@aicore-fivem/lib/shared`.
 - One-off delay `setTimeout`. Every periodic job (a watcher every N ms, per-frame drawing and control reads) is lib `every(ms, fn)` on the resource's one scheduler tick, switched off when not needed (`lib.md` "Periodic work"); never `setInterval` / `setTick`.
 - No object/array/closure allocation inside ticks or frequent events.
-- Files stay under ~200 lines; split past 150.
+- Files stay under ~200 lines; split past 150. Where files and helpers go: `resource-structure.md` "Files and folders" (`bun tools/structure.ts`).
 - Comments are English and short, and carry only the constraint the code cannot show. Reasons and history go into the script's `CLAUDE.md`.

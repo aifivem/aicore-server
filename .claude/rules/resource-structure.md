@@ -26,6 +26,20 @@ Every script follows https://github.com/overextended/fivem-ts, adapted in `templ
 - `scripts/`: build helper (`postBuild.ts`, the same file in every resource and the template). tsdown loads it with Node through the config: it imports only Node built-ins and npm packages, never `@aicore-fivem/lib` (its TypeScript source does not resolve there and every build fails).
 - `LICENSE` (GPL-3.0), `CLAUDE.md`, `.gitignore`: every resource is its own git repo.
 
+## Files and folders (owner decision: filing comes first in a project this size)
+
+Feature first and colocated: everything of one feature sits in one folder, a helper lives next to the code that uses it, shared code is small and named by purpose. `bun tools/structure.ts [resource ...]` checks every rule below that a tool can see; a change leaves the files it touches clean.
+
+- `resource/<side>/index.ts` is the side's entry and only imports the feature modules (side-effect imports, in start order); no handlers, state or helpers (`web/src/main.tsx` only mounts the app).
+- A feature with more than one file gets its folder: `server/<feature>/`, `client/<feature>/` (`server/race/`, `client/customs/`). Its `index.ts` registers the feature (events, callbacks, exports, panel `onChange`) and calls into the files beside it: state classes, logic, database access (`repo.ts`), parsers (`parse.ts`). A one-file feature stays a file at the side root (`server/pvp.ts`) until it grows a second file.
+- One concept per file, named by what it holds (`cooldowns.ts`, `payout.ts`, `spawnPoint.ts`); never `utils`, `helpers`, `misc`, `functions`, `stuff`, `common` files or folders inside a side (the one exception: `web/src/lib/utils.ts`, where shadcn/ui's generator expects `cn`).
+- Where shared code goes: used by one feature → inside it; by two features of one side → a purpose-named file at the side root (`server/money.ts`); by both sides → `common/<purpose>.ts`; by two resources → `@aicore-fivem/lib` (`lib.md`); a contract between resources → `@aicore-fivem/shared`.
+- `common/` holds the resource's contracts: the constants file (event / callback / NUI names), the shared types with their parsers per domain (`common/<domain>.ts`), `locale.ts`, `resource.ts`.
+- Admin panel schema: `server/schema.ts` while under the size limit, else `server/schema/` with one file per panel section and `schema/index.ts` putting them together.
+- No barrel files that only re-export (the packages' public `src/index.ts` and lib side indexes are the exception); import the file that defines a thing. No import cycles; a feature imports another feature's entry-free files (types, `repo.ts`), never through a chain back to itself.
+- About 200 lines per file at most (split past 150 along concepts, not into arbitrary halves). Exceptions the checker skips: generated files (`tables.ts`, `*.d.ts`), data tables, copied third-party files, `bench/`, `web/src/dev/` mocks.
+- `web/src/`: `features/<screen>/` (components, slice, actions of one screen), `components/` (UI pieces used by several screens), `lib/` (cross-screen helpers named by purpose), `store/`, `dev/` (browser mocks).
+
 ## Build and manifest
 
 - `fxmanifest.lua` is generated from `package.json` (name, author, version, license, description, `fxDependencies` → `dependencies`, files). Never edit it; a manifest addition changes `scripts/postBuild.ts`.
