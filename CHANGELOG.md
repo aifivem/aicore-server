@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/aifivem/aicore-server/compare/v0.1.3...v0.1.4) (2026-11-01)
+
+
+### Documentation
+
+* **rules:** manifests after a release build ([e8da14b](https://github.com/aifivem/aicore-server/commit/e8da14bec1982a41fce031a6027f322412c1844c))
+
 ## [0.1.3](https://github.com/aifivem/aicore-server/compare/v0.1.2...v0.1.3) (2026-11-01)
 
 
