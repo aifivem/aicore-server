@@ -14,6 +14,7 @@ Contract: `@aicore-fivem/shared` `inventory.ts`. Code: `resources/[ai]/ai-core/r
 - **Item use event:** ai-core emits `ai-core:itemUsed (source, name, status)`; `status` (hunger / thirst / stress) comes only from ai-inventory.
 - **Bridge item cache:** the bridge caches item definitions per name and drops the cache on `ai-core:inventoryChanged`.
 - **Item definitions on clients:** ai-core's client keeps the active inventory's definitions (client exports `GetItemDefinitions()` / `GetItemDefinition(name)`, lib client `inventory.itemDefinition`): one snapshot per client at start, then the server broadcasts only definitions that changed when another inventory becomes active or the active one reports a change (ai-inventory on a panel item edit). Third-party inventories report none: their definitions are read again when they (re)start. Local client event `ai-core:client:itemDefinitionsChanged (changes)` for the bridge (`QBCore.Shared.Items`).
+- **Inventories that own their item list** (tgiann-inventory, ox_inventory, ai-inventory, origen: their `Items()` export): every item view of ai-core and its bridge reads that list through the adapter (`QBCore.Shared.Items` server and client, `ESX.Items`, ai-core's client definitions); nothing is copied into ai-core's files. The bridge keeps the converted list and reads it again when another inventory becomes active, the active one restarts (its item files may have changed) or reports an edited definition.
 - **Usable items:** `GetUsableItems()` lists every item a handler is registered for (ESX `GetUsableItems`).
 - **Item counts on the client:** `GetItemCount(item)` asks the active inventory's own client export (its client state, no server round trip); null for an inventory without one.
 
@@ -70,7 +71,7 @@ Server lib `inventory.registerShop(name, label, [{ name, price }])` once at star
 | tgiann-inventory 2.4.1 | `RegisterShop(name, products, { label })` (products `{ name, price, type = "item" }`), `OpenShop(src, name)` | written from its source (server/exports.lua) |
 | ox_inventory 2.48.1 | `RegisterShop(name, { name = label, inventory })` without locations; opened with its client net event `ox_inventory:openInventory ('shop', { type = name })` (its server `forceOpenInventory` has no shop branch) | written from its source (modules/shops/server.lua, client.lua) |
 
-Not added: qb-inventory 2.2.3 (`CreateShop` / `OpenShop` exist, but its shop rows come from `QBCore.Shared.Items`, which ai-core's bridge does not fill, so every product would drop), qs-inventory, codem-inventory, core_inventory, origen_inventory, jaksam_inventory (no shop export found in a source or docs; the docs of qs are not readable without a browser). Crafting is not part of the layer: no ai-* script opens a bench by hand (ai-inventory's benches are panel places).
+Not added yet: qb-inventory 2.2.3 (`CreateShop` / `OpenShop` exist; its shop rows come from `QBCore.Shared.Items`, which the bridge fills from the active inventory's `Items()`), qs-inventory, codem-inventory, core_inventory, origen_inventory, jaksam_inventory (no shop export found in a source or docs; the docs of qs are not readable without a browser). Crafting is not part of the layer: no ai-* script opens a bench by hand (ai-inventory's benches are panel places).
 
 ## Adding an inventory
 
