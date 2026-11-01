@@ -173,6 +173,13 @@ function luaFindings(resource: string): string[] {
     luaFiles(dir, files);
     for (const file of files) {
       const text = readFileSync(file, "utf8");
+      // A copied third-party file carries a whole-file `---@diagnostic disable` near its top and stays unchanged.
+      if (
+        /^---@diagnostic disable\s*$/m.test(
+          text.split("\n").slice(0, 12).join("\n"),
+        )
+      )
+        continue;
       const rel = relative(base, file).replace(/\\/g, "/");
       const count = text.split("\n").length;
       if (count > LIMIT) out.push(`  size     ${rel} (${count} lines)`);
