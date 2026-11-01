@@ -99,7 +99,7 @@ paths:
 - Register usable items and stashes once at the script's start; ai-core keeps them for inventories that start later or restart, so no `onServerResourceStart` re-registration.
 - Vehicle keys go through lib `vehicleKeys` (server), never a key script's own exports (ai-vehiclekeys included); ai-core forwards to the active key system (`docs/compat/vehicle-keys.md`).
 - Item effects (hunger, thirst, stress) arrive on ai-core's `CORE.itemUsedEvent`, not an inventory's own event.
-- A player's death: listen to ai-core's server event `CORE.playerDiedEvent (src, killer, weaponHash)` (FXServer's `onPedDeath`; ai-core requires FXServer 38039+); never poll health.
+- A player's death: listen to ai-core's server event `CORE.playerDiedEvent (src, killer, weaponHash, info)` (FXServer's `onPedDeath`; ai-core requires FXServer 38039+); `info` is a `DeathInfo` (`@aicore-fivem/shared`): `killedBy` (player / npc / self / world), `cause` (firearm, melee, explosion, fire, vehicle, fall, drown, animal, other), victim and killer coords, distance, in-vehicle flags, all built on the server (a player who runs someone over is the killer). Never poll health, never trust a client's death report.
 
 ## Commands and keybinds
 

@@ -58,7 +58,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | Lock / unlock a door from a script | lib `doors.setLocked(id, locked, by?)` / `isLocked` (server) | a door lock script's exports or events (ai-doorlock included) |
 | Impound, store a vehicle, open a garage menu, a player's garaged vehicles | lib `garages.impound` / `store` / `open` / `stored` (server) | a garage script's exports or events (ai-garages included), ai-vehicles' `StoreVehicle` for an impound |
 | Time and weather | lib `world` (server get / set, client `pauseSync` / `resumeSync`) | a weather script's exports or events |
-| A death | ai-core `CORE.playerDiedEvent` | health polling |
+| A death, who killed whom and how | ai-core `CORE.playerDiedEvent` (4th argument `DeathInfo`) | health polling, a client's own death report |
 | Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server), `medical.isDead()` / `onChange` (client) | a death script's exports or state bags (ai-death included), `IsEntityDead(cache.ped)` for "is the player down" (death scripts keep a downed ped alive) |
 | Bill a player (fines, service fees, a player's invoice) | lib `billing.send({ to | toCitizenid, amount, label, from?, job? })` (server; `toCitizenid` also reaches an offline character); `billing.unpaid` / `pay` | a billing script's exports or events, a forced `money.transfer` from the target |
 | A police record (fine, warrant, arrest, jail) or opening the MDT | lib `mdt.record(...)` (server), `mdt.open()` (client) | an MDT's exports or events |
