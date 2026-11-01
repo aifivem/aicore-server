@@ -91,6 +91,8 @@ Admin player search (`bun bench/playerSearch.ts` in ai-core, MariaDB 11.4, own d
 
 A one-word name runs two keyset branches (first name, last name: `id < cursor ORDER BY id DESC LIMIT 26`) merged in the app; with a common prefix the optimizer walks the primary key backwards until 26 rows match, with a rare one it takes the `(deleted_at, name, ...)` index range and sorts the covered ids. Never `OFFSET`, never `LIKE '%x%'`.
 
+Admin ban lists (`bun bench/banSearch.ts` in ai-core, same setup; a fifth permanent, two fifths running, a fifth ended, a fifth lifted): every page of 50 (all by id, lifted by `revoked_at`, ended by `expires_at`, each first page and one in the middle), a name prefix with or without a state filter, a ban id / fivem / discord number, a license, an ip and a 4-identifier history answer in 0.4-1.9 ms at 100k and 1M; the slowest case is a name prefix whose rows never match the state filter (8 ms at 1M: the primary key walk finds nothing to stop at). Active bans without a search page from memory (`BanStore.before`, binary search on an id-sorted array): 0.0-0.5 ms per page at 1M against 38-50 ms for the old copy-and-slice `page()`; lifting half of 1M one by one 1.0 s (dead entries compacted once more than half are dead), adding stays 5 s per 1M at start (`bench/bans.bench.ts`).
+
 ## Known limits
 
 - A crash loses at most the last 50 ms of money changes plus the flush in flight (before: the writes in flight).
