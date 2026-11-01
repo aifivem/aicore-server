@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.1.3](https://github.com/aifivem/aicore-server/compare/v0.1.2...v0.1.3) (2026-11-01)
+
+
+### Bug Fixes
+
+* **tools:** structure checker matches Windows paths for the shadcn exception ([47df1af](https://github.com/aifivem/aicore-server/commit/47df1afb6d9490d9e815d79a6a8677ddf4115b67))
+
+
+### Documentation
+
+* ban management in the lib and scale notes ([6e06215](https://github.com/aifivem/aicore-server/commit/6e06215cf63dc78d2a2964c42845491a91f36de3))
+* **compat:** ESX player function overrides and forked framework exports ([f1fe2de](https://github.com/aifivem/aicore-server/commit/f1fe2dee89aa33d4e95f82caf045c67ca1656174))
+* **compat:** full ESX, QBCore and Qbox bridge coverage and limits ([9829b69](https://github.com/aifivem/aicore-server/commit/9829b69910f471cc6059a9ccd85152f8ab773a42))
+* **compat:** how inventories that own their item list feed the bridge ([57cfee8](https://github.com/aifivem/aicore-server/commit/57cfee840741fc175560b981a52d3fdd9ad43a2a))
+* **compat:** multichar layer, item metadata, client key checks, full bridge coverage; lib and bridge rules ([65a65bd](https://github.com/aifivem/aicore-server/commit/65a65bd34743d195f6774b8569112b08dec7d63d))
+* file and folder standard for TypeScript and Lua, paths after the restructure ([72b8008](https://github.com/aifivem/aicore-server/commit/72b8008752e944d309e17cc42b07ea2668263d86))
+* **rules:** DeathInfo on the death event ([0ef0ab1](https://github.com/aifivem/aicore-server/commit/0ef0ab16642f37e914e9a249d0983f414fcaa216))
+* **rules:** panel schema folder layout and the common entry exception ([5783fed](https://github.com/aifivem/aicore-server/commit/5783fedcaa50a24014d54ba4e7ece6a3f30a144e))
+* **rules:** run the benches after moving or splitting files ([3a1e83a](https://github.com/aifivem/aicore-server/commit/3a1e83a5746a7ee060f9fc24664539f81b773c1f))
+
+
+### Miscellaneous Chores
+
+* **tools:** Lua file rules in the structure checker ([823e319](https://github.com/aifivem/aicore-server/commit/823e319039976a82c05960b42e961db4bcfe446e))
+* **tools:** structure checker for the file and folder rules ([a4923e0](https://github.com/aifivem/aicore-server/commit/a4923e0276d6cc889e6e04b7e5cde76fc649f126))
+* **tools:** structure checker skips copied Lua files ([87317ed](https://github.com/aifivem/aicore-server/commit/87317edc7c380353eac0e5d20c0f84024f7e2e55))
+
 ## [0.1.2](https://github.com/aifivem/aicore-server/compare/v0.1.1...v0.1.2) (2026-10-31)
 
 
