@@ -1,6 +1,6 @@
 # ox_inventory (answered by ai-inventory)
 
-ai-inventory `provide`s `ox_inventory` and answers its exports, so scripts written for ox_inventory 2.44 run without changes. Code: `resources/[ai]/ai-inventory/resource/server/compat/ox.ts`, client part in `client/exports.ts`.
+ai-inventory `provide`s `ox_inventory` and answers its exports, so scripts written for ox_inventory 2.44 run without changes. Code: `resources/[ai]/ai-inventory/resource/server/compat/ox/` (`items.ts`, `inventories.ts`), client part in `client/exports.ts`.
 
 ## Status
 

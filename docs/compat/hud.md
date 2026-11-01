@@ -24,7 +24,7 @@ The radial menu's HUD entry (and any script) opens the running HUD's own setting
 - tgiann-carhud (resource `tgiann-hud`), qb-hud and ps-hud have no API another script can hide them with; they hide only on the pause menu (qb/ps). ai-core toggles the minimap for qb-hud and ps-hud, which set it again on their own ticks.
 - jg-hud's settings open through the command name of its config; a server that renames `Config.OpenSettingsCommand` loses the radial's HUD entry.
 - wais-hudv6 keeps its minimap while hidden (its separate `hideRadar` event is not called: showing would force the minimap on foot).
-- Running two HUDs is not reported by ai-core's conflict check (HUDs are not in `connection/conflicts.ts`).
+- Running two HUDs is not reported by ai-core's conflict check (HUDs are not in `connection/rules.ts`).
 
 ## Adding a HUD
 

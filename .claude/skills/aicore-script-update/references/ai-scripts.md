@@ -65,7 +65,7 @@ Run the three-way model of `SKILL.md` over old / ours / new, writing the result 
 The release ships default panel content; the server's files are its live, panel-edited content. Never replace them with the shipped ones.
 
 - Schema unchanged (the new `schema.ts` / loader reads the same fields): keep ours as is. Files the new version adds: take the shipped file.
-- Schema changed: look for the resource's own start-time migration (release notes, a `migrate.ts` called from the server entry, as ai-rental's `migrateLocations`). If one exists, leave ours in place; it converts on start. If none exists, convert by hand following the new loader and `schema.ts`: same field names, types and id format as the shipped file, every value kept, new fields at the shipped default, removed fields dropped and reported. Validate that each file parses.
+- Schema changed: look for the resource's own start-time migration (release notes, a `migrate.ts` called at the server's start, as ai-rental's `migrateLocations` in `server/content.ts`). If one exists, leave ours in place; it converts on start. If none exists, convert by hand following the new loader and `schema.ts` (or `schema/`): same field names, types and id format as the shipped file, every value kept, new fields at the shipped default, removed fields dropped and reported. Validate that each file parses.
 - After the start, check the console for panel load or validation errors of that resource and open its panel tab in the report's test list.
 
 ### Database

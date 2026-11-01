@@ -51,7 +51,7 @@ Not answerable. ox_lib's `init.lua` turns `lib.addRadialItem(...)` in another re
 
 ## Conflicts
 
-`qb-radialmenu` and `tgiann-radialmenu-target` installed next to ai-radialmenu are reported by ai-core's conflict check (tgiann-radialmenu and codem-supreme-radialmenu are not: `RADIALS` is not read by the conflict rules) (`STAND_INS` in `resource/server/connection/conflicts.ts`): two wheels fight over the key, and ai-radialmenu `provide`s their names. A new `provide` line reports `missing` in `GetResourceState` until the next full server start.
+`qb-radialmenu` and `tgiann-radialmenu-target` installed next to ai-radialmenu are reported by ai-core's conflict check (tgiann-radialmenu and codem-supreme-radialmenu are not: `RADIALS` is not read by the conflict rules) (`STAND_INS` in `resource/server/connection/rules.ts`): two wheels fight over the key, and ai-radialmenu `provide`s their names. A new `provide` line reports `missing` in `GetResourceState` until the next full server start.
 
 ## Adding a radial menu
 

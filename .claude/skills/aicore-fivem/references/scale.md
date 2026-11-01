@@ -23,11 +23,11 @@ How ai-core behaves with a database that has seen 1,000,000 players and 10,000 o
 | Change | Where |
 |---|---|
 | Money writes batched: changes of 50 ms go out as one transaction (summed balance delta per account with `UPDATE ... JOIN`, multi-row ledger insert, 1000 rows per statement), flushes in order | `money/writer.ts`, `money/account.ts` |
-| Character save as one `UPDATE ... JOIN` per 500 characters | `characters/repo.ts` `saveCharacters`, `persistence.ts` |
+| Character save as one `UPDATE ... JOIN` per 500 characters | `characters/save.ts` `saveCharacters`, `persistence.ts` |
 | Account rows read first, only missing types inserted | `money/book.ts` `loadAccounts` |
 | ai-core pool 10 connections (`ai_core_pool_size`), other resources keep 5 | `database.ts` |
 | Ped death lookup by entity owner (O(1)) | `player/deaths.ts` |
-| lib `online`: each resource's mirror of loaded players (character, job and gang memberships with grades, member sets per job and gang, duty, on-duty sets per job) from ai-core's events | `packages/lib/src/server/online.ts` |
+| lib `online`: each resource's mirror of loaded players (character, job and gang memberships with grades, member sets per job and gang, duty, on-duty sets per job) from ai-core's events | `packages/lib/src/server/online/` (`mirror.ts` keeps it, `online.ts` reads it) |
 | lib `playersNear(source, radius)` / `playersNearEntity(entity, radius)`: candidates from OneSync scope events instead of everyone online | `packages/lib/src/server/proximity.ts` |
 | chat, police, scoreboard, management, cityhall, death, robberies truck, smallresources AFK moved to them | those resources' `resource/server` |
 

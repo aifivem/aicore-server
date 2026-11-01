@@ -20,7 +20,7 @@ A vehicle's fuel (0-100) goes through ai-core, so scripts never read a fuel scri
 | x-fuel (Codem xFuel) | client `GetFuel` | client `SetFuel` | written from its docs |
 | qs-fuelstations | client `GetFuel` | client `SetFuel` | written from its docs |
 
-A new fuel script: a server adapter (`FuelAdapter`; `bagFuel` for a server bag script) or one line in `CLIENT_FUEL_SYSTEMS` plus its client adapter (`FuelClientAdapter`, usually `exportFuel`), in the order it should win. Every third-party script of the list makes ai-fuel unneeded (`connection/conflicts.ts`).
+A new fuel script: a server adapter (`FuelAdapter`; `bagFuel` for a server bag script) or one line in `CLIENT_FUEL_SYSTEMS` plus its client adapter (`FuelClientAdapter`, usually `exportFuel`), in the order it should win. Every third-party script of the list makes ai-fuel unneeded (`connection/rules.ts`).
 
 ## Limits
 

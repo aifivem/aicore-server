@@ -28,5 +28,5 @@ A new death script: one server adapter (`MedicalAdapter`) and one client adapter
 - brutal_ambulancejob in ESX mode (`Config.Core = "ESX"`) keeps no down marker the server can read: server `isDead` answers false (the client half still works through its export). Its revive event is documented as a client trigger; servers call it with `TriggerClientEvent` (other scripts' integrations).
 - osp_ambulance and brutal_ambulancejob: the client half reads their export one tick after their down / up events (they fire the event before storing the state).
 - osp_ambulance's `BodyDamage` state is set by its escrowed code; if its client writes it, ai-core's `sv_stateBagStrictMode` drops the write and only the `isDead` state (set by its server when `Config.MutePlayerOnDeath` / `MutePlayerOnLastStand` is on) marks a downed player on the server. Untested on ai-core.
-- ai-death next to another death script is not a built-in conflict rule (`connection/conflicts.ts` builds rules from the inventory and key registries only).
+- ai-death next to another death script is not a built-in conflict rule (`connection/rules.ts` builds rules from the inventory and key registries only).
 

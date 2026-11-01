@@ -13,7 +13,7 @@ Scripts lock and unlock doors through ai-core, so they never call a door lock sc
 | cd_doorlock | client event `cd_doorlock:SetDoorState_uniqueid (state, uniqueId)` to one player | none (client exports only) | written from its docs |
 | rcore_doorlock | export `changeDoorState(doorId, 1 / 0)` | none | written from its docs |
 
-A new door lock script: one adapter file (`DoorlockAdapter`) and one line in `DOORLOCK_SYSTEMS`. Every third-party script of the list makes ai-doorlock unneeded (`connection/conflicts.ts`).
+A new door lock script: one adapter file (`DoorlockAdapter`) and one line in `DOORLOCK_SYSTEMS`. Every third-party script of the list makes ai-doorlock unneeded (`connection/rules.ts`).
 
 ## Limits
 

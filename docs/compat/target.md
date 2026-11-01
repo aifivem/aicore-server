@@ -4,7 +4,7 @@ Every ai-* place, NPC, model and vehicle option is a lib `Points` entry (`.claud
 
 ## Why it lives in the lib, not in ai-core
 
-Every target ties an option's functions to the resource that called it and drops them when that resource stops. A call through ai-core would make ai-core the owner (options left behind by stopped scripts, functions that never reach the script). So the adapters run inside each resource: `packages/lib/src/client/targets.ts` (TypeScript) and `resources/[ai]/ai-lib/lua/client/targets.lua` (Lua), the same list and order on both sides.
+Every target ties an option's functions to the resource that called it and drops them when that resource stops. A call through ai-core would make ai-core the owner (options left behind by stopped scripts, functions that never reach the script). So the adapters run inside each resource: `packages/lib/src/client/points/targets/` (TypeScript, one file per adapter) and `resources/[ai]/ai-lib/lua/client/targets.lua` with its adapters in `targets/adapters.lua` (Lua), the same list and order on both sides.
 
 ## Pick
 
@@ -35,6 +35,6 @@ Scripts that `provide` `ox_target` or `qb-target` and answer their exports throu
 
 ## Adding a target
 
-1. An adapter object in `targets.ts` (`TargetAdapter`: `coords`, `addSphere` / `removeZone`, `addLocalEntity` / `removeLocalEntity`, `addModels` / `removeModels`, `addGlobalVehicle` / `removeGlobalVehicle`) calling the script with lib `callExport`, and the same table in `targets.lua`.
-2. One line in `TARGETS` / `LIST` in win order (before any name the script `provide`s).
+1. An adapter object in its own file in `packages/lib/src/client/points/targets/`, listed in `targets.ts` (`TargetAdapter`: `coords`, `addSphere` / `removeZone`, `addLocalEntity` / `removeLocalEntity`, `addModels` / `removeModels`, `addGlobalVehicle` / `removeGlobalVehicle`) calling the script with lib `callExport`, and the same table in `lua/client/targets/adapters.lua`.
+2. One line in `TARGETS` / `LIST` (`targets/adapters.lua`) in win order (before any name the script `provide`s).
 3. A row above.

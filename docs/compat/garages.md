@@ -14,7 +14,7 @@ Impounding, storing, opening a garage menu and listing a player's garaged vehicl
 | jg-advancedgarages | client `showImpoundForm()` for `by` | client `storeVehicle(garageId)` for `by` (the vehicle `by` sits in) | client `openGarage(garageId)` | none | written from its docs |
 | cd_garage | client event `cd_garage:ImpoundVehicle (vehicle)` for `by` (its impound form) | none | none | none | written from its docs |
 
-A new garage script: one adapter file (`GarageAdapter`), or a `clientGarage(resource, actions)` line plus its client adapter (`GarageClientAdapter`), in `GARAGE_SYSTEMS`. Every third-party script of the list makes ai-garages unneeded unless its adapter is `besideOurs` (`connection/conflicts.ts`).
+A new garage script: one adapter file (`GarageAdapter`), or a `clientGarage(resource, actions)` line plus its client adapter (`GarageClientAdapter`), in `GARAGE_SYSTEMS`. Every third-party script of the list makes ai-garages unneeded unless its adapter is `besideOurs` (`connection/rules.ts`).
 
 ## Limits
 
