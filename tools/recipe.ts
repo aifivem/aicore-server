@@ -114,7 +114,8 @@ const yaml = [
   `  # ai-core and its ${ensures.length} scripts in one zip: each one's latest release, built and ready (no build tools needed), with its source`,
   `  - action: download_file\n    url: ${BUNDLE}\n    path: ./tmp/ai-scripts.zip\n    timeoutSeconds: 600\n`,
   "  - action: ensure_dir\n    path: ./resources\n",
-  "  - action: unzip\n    src: ./tmp/ai-scripts.zip\n    dest: ./resources\n",
+  // ~5500 files: txAdmin's 180 s unzip default runs out on Windows (each file written and scanned on its own).
+  "  - action: unzip\n    src: ./tmp/ai-scripts.zip\n    dest: ./resources\n    timeoutSeconds: 900\n",
   "  # Clean up",
   "  - action: remove_path\n    path: ./tmp\n",
 ].join("\n");
