@@ -44,7 +44,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | A position or distance on the server | `coordsOf`, `entityCoords`, `isNear`, `distance`, `flatDistance` (ground plane), `vehicleOf(source, { driver? })` | own `pos` / `distance` helpers, `GetVehiclePedIsIn(GetPlayerPed(...))` |
 | The local ped fired a shot | lib `onShot` (client) | sampling `IsPedShooting` on a timer |
 | State bags | `EntityState` / `PlayerState` / `GlobalKey` / `GlobalGroup` | `Entity().state`, `GlobalState`, `LocalPlayer.state`, `AddStateBagChangeHandler`; client writes of any kind |
-| A player's phone (number, mail, text, notification) | lib `phone` | a phone script's exports |
+| A player's phone (number, mail, text, notification, "the player opened the phone") | lib `phone` (`onUsed` on both sides) | a phone script's exports, events or state bags |
 | Police (job) alerts | lib `dispatch.alert({ title, code, coords, source, ... })` (server) | an alert script's exports or events, ai-policealert's exports, own blips and notifications for officers |
 | A character's saved look, dressing a ped, the player's clothes, clothing / barber / outfit menus, job uniforms | lib `appearance.get(charId)` (server), `appearance.apply(ped, look)` / `read(ped)`, `openMenu(menu)`, `wearOutfit(outfit)` / `reloadSkin()` (client) | a clothing script's exports, events or tables (ai-appearance included), `SetPedComponentVariation` uniforms by hand |
 | Hands up / pointing of the local player, playing or stopping an emote | lib `gestures` (`playEmote(name)`, `cancelEmote()`) (client) | an emote script's exports or `e` command |
