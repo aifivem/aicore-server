@@ -39,6 +39,28 @@ tasks:
     src: ./tmp/server/env.example.cfg
     dest: ./env.example.cfg
 
+
+  # Files for working on the server with an AI agent (skills, rules, tools, compatibility notes)
+  - action: move_path
+    src: ./tmp/server/.claude
+    dest: ./.claude
+
+  - action: move_path
+    src: ./tmp/server/tools
+    dest: ./tools
+
+  - action: move_path
+    src: ./tmp/server/docs/compat
+    dest: ./docs/compat
+
+  - action: move_path
+    src: ./tmp/server/CLAUDE.md
+    dest: ./CLAUDE.md
+
+  - action: move_path
+    src: ./tmp/server/AGENTS.md
+    dest: ./AGENTS.md
+
   # License, slots, endpoints, the database and the server name into the cfg files
   - action: replace_string
     mode: all_vars

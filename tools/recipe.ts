@@ -10,6 +10,17 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 const OWNER = "aifivem";
 const SERVER_REPO = `https://github.com/${OWNER}/aicore-server`;
 const SHARED = ["security.cfg", "misc.cfg", "permission.cfg"];
+/**
+ * What an AI agent working on the installed server needs (the script update skill and the others, the rules, the
+ * `bun tools/*` commands, the adapters' compatibility notes): the same files a hand install has.
+ */
+const AGENT_FILES = [
+  ".claude",
+  "tools",
+  "docs/compat",
+  "CLAUDE.md",
+  "AGENTS.md",
+];
 /** Third-party resources the server ships with (`resources/[standalone]`, not in git): repository and branch. */
 const STANDALONE: Record<string, { src: string; ref: string }> = {
   bob74_ipl: { src: "https://github.com/Bob74/bob74_ipl", ref: "master" },
@@ -81,6 +92,9 @@ const yaml = [
   move("./tmp/server/recipe/server.cfg", "./server.cfg"),
   move("./tmp/server/recipe/env.cfg", "./env.cfg"),
   move("./tmp/server/env.example.cfg", "./env.example.cfg"),
+  "",
+  "  # Files for working on the server with an AI agent (skills, rules, tools, compatibility notes)",
+  ...AGENT_FILES.map((f) => move(`./tmp/server/${f}`, `./${f}`)),
   "  # License, slots, endpoints, the database and the server name into the cfg files",
   "  - action: replace_string\n    mode: all_vars\n    file:\n      - ./server.cfg\n      - ./env.cfg\n",
   "  # Third-party resources the server uses",
