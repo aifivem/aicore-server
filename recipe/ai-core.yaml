@@ -74,206 +74,289 @@ tasks:
     ref: master
     dest: ./resources/[standalone]/bob74_ipl
 
-  # ai-core and its scripts: each is its own repository with its build committed (no build tools needed)
-  - action: download_github
-    src: https://github.com/aifivem/ai-mysql
-    ref: main
-    dest: ./resources/[ai]/ai-mysql
+  # ai-core and its scripts: each one's latest release zip, built and ready (no build tools needed), with its source
+  - action: ensure_dir
+    path: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-core
-    ref: main
-    dest: ./resources/[ai]/ai-core
+  - action: download_file
+    url: https://github.com/aifivem/ai-mysql/releases/latest/download/ai-mysql.zip
+    path: ./tmp/ai-mysql.zip
+  - action: unzip
+    src: ./tmp/ai-mysql.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-loading
-    ref: main
-    dest: ./resources/[ai]/ai-loading
+  - action: download_file
+    url: https://github.com/aifivem/ai-core/releases/latest/download/ai-core.zip
+    path: ./tmp/ai-core.zip
+  - action: unzip
+    src: ./tmp/ai-core.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-voice
-    ref: main
-    dest: ./resources/[ai]/ai-voice
+  - action: download_file
+    url: https://github.com/aifivem/ai-loading/releases/latest/download/ai-loading.zip
+    path: ./tmp/ai-loading.zip
+  - action: unzip
+    src: ./tmp/ai-loading.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-lib
-    ref: main
-    dest: ./resources/[ai]/ai-lib
+  - action: download_file
+    url: https://github.com/aifivem/ai-voice/releases/latest/download/ai-voice.zip
+    path: ./tmp/ai-voice.zip
+  - action: unzip
+    src: ./tmp/ai-voice.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-appearance
-    ref: main
-    dest: ./resources/[ai]/ai-appearance
+  - action: download_file
+    url: https://github.com/aifivem/ai-lib/releases/latest/download/ai-lib.zip
+    path: ./tmp/ai-lib.zip
+  - action: unzip
+    src: ./tmp/ai-lib.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-inventory
-    ref: main
-    dest: ./resources/[ai]/ai-inventory
+  - action: download_file
+    url: https://github.com/aifivem/ai-appearance/releases/latest/download/ai-appearance.zip
+    path: ./tmp/ai-appearance.zip
+  - action: unzip
+    src: ./tmp/ai-appearance.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-chat
-    ref: main
-    dest: ./resources/[ai]/ai-chat
+  - action: download_file
+    url: https://github.com/aifivem/ai-inventory/releases/latest/download/ai-inventory.zip
+    path: ./tmp/ai-inventory.zip
+  - action: unzip
+    src: ./tmp/ai-inventory.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-hud
-    ref: main
-    dest: ./resources/[ai]/ai-hud
+  - action: download_file
+    url: https://github.com/aifivem/ai-chat/releases/latest/download/ai-chat.zip
+    path: ./tmp/ai-chat.zip
+  - action: unzip
+    src: ./tmp/ai-chat.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-vehicles
-    ref: main
-    dest: ./resources/[ai]/ai-vehicles
+  - action: download_file
+    url: https://github.com/aifivem/ai-hud/releases/latest/download/ai-hud.zip
+    path: ./tmp/ai-hud.zip
+  - action: unzip
+    src: ./tmp/ai-hud.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-vehiclekeys
-    ref: main
-    dest: ./resources/[ai]/ai-vehiclekeys
+  - action: download_file
+    url: https://github.com/aifivem/ai-vehicles/releases/latest/download/ai-vehicles.zip
+    path: ./tmp/ai-vehicles.zip
+  - action: unzip
+    src: ./tmp/ai-vehicles.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-fuel
-    ref: main
-    dest: ./resources/[ai]/ai-fuel
+  - action: download_file
+    url: https://github.com/aifivem/ai-vehiclekeys/releases/latest/download/ai-vehiclekeys.zip
+    path: ./tmp/ai-vehiclekeys.zip
+  - action: unzip
+    src: ./tmp/ai-vehiclekeys.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-garages
-    ref: main
-    dest: ./resources/[ai]/ai-garages
+  - action: download_file
+    url: https://github.com/aifivem/ai-fuel/releases/latest/download/ai-fuel.zip
+    path: ./tmp/ai-fuel.zip
+  - action: unzip
+    src: ./tmp/ai-fuel.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-vehicleshop
-    ref: main
-    dest: ./resources/[ai]/ai-vehicleshop
+  - action: download_file
+    url: https://github.com/aifivem/ai-garages/releases/latest/download/ai-garages.zip
+    path: ./tmp/ai-garages.zip
+  - action: unzip
+    src: ./tmp/ai-garages.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-vehiclesales
-    ref: main
-    dest: ./resources/[ai]/ai-vehiclesales
+  - action: download_file
+    url: https://github.com/aifivem/ai-vehicleshop/releases/latest/download/ai-vehicleshop.zip
+    path: ./tmp/ai-vehicleshop.zip
+  - action: unzip
+    src: ./tmp/ai-vehicleshop.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-banking
-    ref: main
-    dest: ./resources/[ai]/ai-banking
+  - action: download_file
+    url: https://github.com/aifivem/ai-vehiclesales/releases/latest/download/ai-vehiclesales.zip
+    path: ./tmp/ai-vehiclesales.zip
+  - action: unzip
+    src: ./tmp/ai-vehiclesales.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-death
-    ref: main
-    dest: ./resources/[ai]/ai-death
+  - action: download_file
+    url: https://github.com/aifivem/ai-banking/releases/latest/download/ai-banking.zip
+    path: ./tmp/ai-banking.zip
+  - action: unzip
+    src: ./tmp/ai-banking.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-police
-    ref: main
-    dest: ./resources/[ai]/ai-police
+  - action: download_file
+    url: https://github.com/aifivem/ai-death/releases/latest/download/ai-death.zip
+    path: ./tmp/ai-death.zip
+  - action: unzip
+    src: ./tmp/ai-death.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-policealert
-    ref: main
-    dest: ./resources/[ai]/ai-policealert
+  - action: download_file
+    url: https://github.com/aifivem/ai-police/releases/latest/download/ai-police.zip
+    path: ./tmp/ai-police.zip
+  - action: unzip
+    src: ./tmp/ai-police.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-prison
-    ref: main
-    dest: ./resources/[ai]/ai-prison
+  - action: download_file
+    url: https://github.com/aifivem/ai-policealert/releases/latest/download/ai-policealert.zip
+    path: ./tmp/ai-policealert.zip
+  - action: unzip
+    src: ./tmp/ai-policealert.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-doorlock
-    ref: main
-    dest: ./resources/[ai]/ai-doorlock
+  - action: download_file
+    url: https://github.com/aifivem/ai-prison/releases/latest/download/ai-prison.zip
+    path: ./tmp/ai-prison.zip
+  - action: unzip
+    src: ./tmp/ai-prison.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-weathersync
-    ref: main
-    dest: ./resources/[ai]/ai-weathersync
+  - action: download_file
+    url: https://github.com/aifivem/ai-doorlock/releases/latest/download/ai-doorlock.zip
+    path: ./tmp/ai-doorlock.zip
+  - action: unzip
+    src: ./tmp/ai-doorlock.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-radialmenu
-    ref: main
-    dest: ./resources/[ai]/ai-radialmenu
+  - action: download_file
+    url: https://github.com/aifivem/ai-weathersync/releases/latest/download/ai-weathersync.zip
+    path: ./tmp/ai-weathersync.zip
+  - action: unzip
+    src: ./tmp/ai-weathersync.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-scoreboard
-    ref: main
-    dest: ./resources/[ai]/ai-scoreboard
+  - action: download_file
+    url: https://github.com/aifivem/ai-radialmenu/releases/latest/download/ai-radialmenu.zip
+    path: ./tmp/ai-radialmenu.zip
+  - action: unzip
+    src: ./tmp/ai-radialmenu.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-cityhall
-    ref: main
-    dest: ./resources/[ai]/ai-cityhall
+  - action: download_file
+    url: https://github.com/aifivem/ai-scoreboard/releases/latest/download/ai-scoreboard.zip
+    path: ./tmp/ai-scoreboard.zip
+  - action: unzip
+    src: ./tmp/ai-scoreboard.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-management
-    ref: main
-    dest: ./resources/[ai]/ai-management
+  - action: download_file
+    url: https://github.com/aifivem/ai-cityhall/releases/latest/download/ai-cityhall.zip
+    path: ./tmp/ai-cityhall.zip
+  - action: unzip
+    src: ./tmp/ai-cityhall.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-jobs
-    ref: main
-    dest: ./resources/[ai]/ai-jobs
+  - action: download_file
+    url: https://github.com/aifivem/ai-management/releases/latest/download/ai-management.zip
+    path: ./tmp/ai-management.zip
+  - action: unzip
+    src: ./tmp/ai-management.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-mechanic
-    ref: main
-    dest: ./resources/[ai]/ai-mechanic
+  - action: download_file
+    url: https://github.com/aifivem/ai-jobs/releases/latest/download/ai-jobs.zip
+    path: ./tmp/ai-jobs.zip
+  - action: unzip
+    src: ./tmp/ai-jobs.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-robberies
-    ref: main
-    dest: ./resources/[ai]/ai-robberies
+  - action: download_file
+    url: https://github.com/aifivem/ai-mechanic/releases/latest/download/ai-mechanic.zip
+    path: ./tmp/ai-mechanic.zip
+  - action: unzip
+    src: ./tmp/ai-mechanic.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-pawnshop
-    ref: main
-    dest: ./resources/[ai]/ai-pawnshop
+  - action: download_file
+    url: https://github.com/aifivem/ai-robberies/releases/latest/download/ai-robberies.zip
+    path: ./tmp/ai-robberies.zip
+  - action: unzip
+    src: ./tmp/ai-robberies.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-smallresources
-    ref: main
-    dest: ./resources/[ai]/ai-smallresources
+  - action: download_file
+    url: https://github.com/aifivem/ai-pawnshop/releases/latest/download/ai-pawnshop.zip
+    path: ./tmp/ai-pawnshop.zip
+  - action: unzip
+    src: ./tmp/ai-pawnshop.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-drugs
-    ref: main
-    dest: ./resources/[ai]/ai-drugs
+  - action: download_file
+    url: https://github.com/aifivem/ai-smallresources/releases/latest/download/ai-smallresources.zip
+    path: ./tmp/ai-smallresources.zip
+  - action: unzip
+    src: ./tmp/ai-smallresources.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-exitsleeping
-    ref: main
-    dest: ./resources/[ai]/ai-exitsleeping
+  - action: download_file
+    url: https://github.com/aifivem/ai-drugs/releases/latest/download/ai-drugs.zip
+    path: ./tmp/ai-drugs.zip
+  - action: unzip
+    src: ./tmp/ai-drugs.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-streetraces
-    ref: main
-    dest: ./resources/[ai]/ai-streetraces
+  - action: download_file
+    url: https://github.com/aifivem/ai-exitsleeping/releases/latest/download/ai-exitsleeping.zip
+    path: ./tmp/ai-exitsleeping.zip
+  - action: unzip
+    src: ./tmp/ai-exitsleeping.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-properties
-    ref: main
-    dest: ./resources/[ai]/ai-properties
+  - action: download_file
+    url: https://github.com/aifivem/ai-streetraces/releases/latest/download/ai-streetraces.zip
+    path: ./tmp/ai-streetraces.zip
+  - action: unzip
+    src: ./tmp/ai-streetraces.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-target
-    ref: main
-    dest: ./resources/[ai]/ai-target
+  - action: download_file
+    url: https://github.com/aifivem/ai-properties/releases/latest/download/ai-properties.zip
+    path: ./tmp/ai-properties.zip
+  - action: unzip
+    src: ./tmp/ai-properties.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-admin
-    ref: main
-    dest: ./resources/[ai]/ai-admin
+  - action: download_file
+    url: https://github.com/aifivem/ai-target/releases/latest/download/ai-target.zip
+    path: ./tmp/ai-target.zip
+  - action: unzip
+    src: ./tmp/ai-target.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-rental
-    ref: main
-    dest: ./resources/[ai]/ai-rental
+  - action: download_file
+    url: https://github.com/aifivem/ai-admin/releases/latest/download/ai-admin.zip
+    path: ./tmp/ai-admin.zip
+  - action: unzip
+    src: ./tmp/ai-admin.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-pedscale
-    ref: main
-    dest: ./resources/[ai]/ai-pedscale
+  - action: download_file
+    url: https://github.com/aifivem/ai-rental/releases/latest/download/ai-rental.zip
+    path: ./tmp/ai-rental.zip
+  - action: unzip
+    src: ./tmp/ai-rental.zip
+    dest: ./resources/[ai]
 
-  - action: download_github
-    src: https://github.com/aifivem/ai-sirens
-    ref: main
-    dest: ./resources/[ai]/ai-sirens
+  - action: download_file
+    url: https://github.com/aifivem/ai-pedscale/releases/latest/download/ai-pedscale.zip
+    path: ./tmp/ai-pedscale.zip
+  - action: unzip
+    src: ./tmp/ai-pedscale.zip
+    dest: ./resources/[ai]
+
+  - action: download_file
+    url: https://github.com/aifivem/ai-sirens/releases/latest/download/ai-sirens.zip
+    path: ./tmp/ai-sirens.zip
+  - action: unzip
+    src: ./tmp/ai-sirens.zip
+    dest: ./resources/[ai]
 
   # Clean up
   - action: remove_path

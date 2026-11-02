@@ -1,8 +1,8 @@
 /**
  * Writes the txAdmin recipe (`recipe/`) from this server's files: `recipe/server.cfg` (server.cfg with the recipe's
  * server name), `recipe/env.cfg` (env.example.cfg with txAdmin's variables) and `recipe/ai-core.yaml` (the server
- * files, one `download_github` per `ensure ai-*` line of server.cfg and one per third-party resource of
- * `STANDALONE` that server.cfg ensures). Run after changing server.cfg or
+ * files, the latest release zip of each `ensure ai-*` line of server.cfg and one `download_github` per third-party
+ * resource of `STANDALONE` that server.cfg ensures). Run after changing server.cfg or
  * env.example.cfg: `bun tools/recipe.ts`.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -102,10 +102,12 @@ const yaml = [
     ([name, repo]) =>
       `  - action: download_github\n    src: ${repo.src}\n    ref: ${repo.ref}\n    dest: ./resources/[standalone]/${name}\n`,
   ),
-  "  # ai-core and its scripts: each is its own repository with its build committed (no build tools needed)",
+  "  # ai-core and its scripts: each one's latest release zip, built and ready (no build tools needed), with its source",
+  "  - action: ensure_dir\n    path: ./resources/[ai]\n",
   ...ensures.map(
     (r) =>
-      `  - action: download_github\n    src: https://github.com/${OWNER}/${r}\n    ref: main\n    dest: ./resources/[ai]/${r}\n`,
+      `  - action: download_file\n    url: https://github.com/${OWNER}/${r}/releases/latest/download/${r}.zip\n    path: ./tmp/${r}.zip\n` +
+      `  - action: unzip\n    src: ./tmp/${r}.zip\n    dest: ./resources/[ai]\n`,
   ),
   "  # Clean up",
   "  - action: remove_path\n    path: ./tmp\n",
