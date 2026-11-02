@@ -2,7 +2,7 @@
 
 ai-* scripts reach the player's phone through ai-core (lib `phone`): `number(source)`, `sourceOf(number)`, `hasPhone(source)`, `mail(to, { sender, subject, message })`, `message(from, to, text)`, `notify(source, { title, message, app? })`, and `onUsed(fn)` on both sides (below). ai-core forwards to the first running phone (`resources/[ai]/ai-core/resource/server/phone/`, one adapter file each); with none every call answers null / false, so scripts work without a phone.
 
-Detection order (first running wins): tgiann-phone, lb-phone, gksphone, 17mov_Phone, yseries, high-phone, roadphone, qs-smartphone, codem-phone.
+Detection order (first running wins): tgiann-phone, lb-phone, gksphone, 17mov_Phone, yseries, high-phone, roadphone, qs-smartphone.
 
 | Phone | Calls | Status |
 |---|---|---|
@@ -14,7 +14,6 @@ Detection order (first running wins): tgiann-phone, lb-phone, gksphone, 17mov_Ph
 | high-phone | `getPlayerPhoneNumber`, `getPlayerByPhone(number).id`, `getPlayerPhone` (has-phone), `sendMessage({ sender, recipient, content })`, `sendNotification(source, { application = { name }, title, content, duration })`; mail not mapped | written from its docs (docs.high-scripts.com/phone) |
 | roadphone (RoadPhone Pro) | `GetPhoneNumberBySource`, `getSourceFromPhone`, `hasPhone`, `sendMessage(from, to, text)`, `PhoneNotifyPlayer(source, { title, message, app })`; mail not mapped | written from its docs (docs.roadshop.org/roadphonepro) |
 | qs-smartphone (Quasar, current) | `GetCurrentPhoneNumber`, `getPhoneScopeIdentifier` (has-phone), `SendNewMessageFromApp({ targetPhone, appLabel = from, message })` (`{ ok }`), `sendPhoneNotification(source, { appId, title, text })`; number -> player and mail not mapped | written from its docs (quasar-store.com/docs/smartphone) |
-| codem-phone (CodeM mPhone 2.5) | `GetPhoneNumberBySource` (number, has-phone), `GetSourceFromNumber`, `SendMailBySource(source, { sender, title, description })` and `SendMessageFromBySource(from, source, text)` (`ok, result`) to the number's online player, `SendNotify(source, { app, title, message })` (only with an `app`) | written from its docs (codem.gitbook.io, mPhone 2.5, Exports and events, Server Exports) |
 
 Limits:
 
@@ -25,7 +24,6 @@ Limits:
 - yseries: the mail sender name also fills the sender address field. The separate `yphone` / `yflip` resources other bridges call with the same export names are not covered (TeamsGG's docs only describe `yseries`).
 - high-phone `sendMail` mails addresses from a sender set up in its mail config, roadphone mails a framework identifier, qs-smartphone mails a server id or address: `mail` answers false on these three. qs-smartphone has no number -> player export (`sourceOf` null).
 - roadphone: the older RoadPhone (same resource name) has none of these server exports; its calls fail and answer null / false.
-- codem-phone: no has-phone export (a number counts); mails and texts reach only an online player (its exports take a server id); `notify` without an `app` answers false (`SendNotify` refuses it, and its app ids are its own).
 
 ## Phone used
 
@@ -41,7 +39,7 @@ When the local player opens the phone, ai-core fires the client local event `COR
 | high-phone | player state bag `phone:open` of the local player turning true (no open event or export; works only if high-phone writes it from its server, `sv_stateBagStrictMode`) | docs.high-scripts.com/phone/statebags/player |
 | roadphone | client export `isPhoneOpen()`, read once a second (`roadphone:use` opens the phone on an item use, it is not a signal) | docs.roadshop.org/roadphonepro/api/client.md |
 | qs-smartphone | client local `phone:opened ({ mode })`, only `mode` `full` (a `peek` shows a notification) | quasar-store.com/docs/smartphone/commands-and-exports |
-| codem-phone | `codem-phone:client:playerPhoneUsed ()` (listened to as a local and as a server event; its docs also list a client `IsPhoneOpen()`) | the owner's server (qbx_smallresources isWanted listens to it) |
+| codem-phone (signal only, not part of the layer: owner decision) | `codem-phone:client:playerPhoneUsed ()` (listened to as a local and as a server event; its docs also list a client `IsPhoneOpen()`), counted while codem-phone runs whatever phone the layer picked | the owner's server (qbx_smallresources isWanted listens to it) |
 
 Found, not added:
 
@@ -50,6 +48,7 @@ Found, not added:
 | npwd 3.16.0 | its number and player lookups are async exports (`getPlayerData`), the only sync one (`getPhoneNumber`) logs a deprecation error on every call, notifications are client-only, no mail: the phone layer is synchronous (source read: github.com/project-error/npwd) |
 | qs-smartphone-pro | no official docs for its exports; bridges call `GetPhoneNumberFromIdentifier(identifier, false)`, `sendNotification(number, { app, head, msg })`, `sendNewMail(source, {...})` |
 | okokPhone | its docs are a Notion site that cannot be read; API not verified |
+| codem-phone (CodeM mPhone 2.5) | owner decision: only its phone-used signal (Phone used table above), no number / mail / notify calls, so the layer and ai-core's tgiann-phone recommendation stay as they are; its server exports are in codem.gitbook.io (mPhone, Server Exports) |
 | sd-phone, cylex_phone, sky_phone | only seen in other scripts' integrations, no docs read |
 
 A new phone: a file in `server/phone/adapters/` exporting a `PhoneAdapter` (`@aifivem/shared` `phone.ts`) and a line in `server/phone/index.ts`; its open signal a file in `client/phone/adapters/` exporting a `PhoneClientAdapter` (`watch` for an event or state bag, `isOpen` for an export only; neither when none is documented: "Phone used" says none) and a line in `client/phone/index.ts`, in the same order.
