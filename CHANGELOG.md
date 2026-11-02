@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/aifivem/aicore-server/compare/v0.1.6...v0.2.0) (2026-11-02)
+
+
+### New Features
+
+* **recipe:** install the AI agent files: skills, rules, tools and compatibility notes ([624ef59](https://github.com/aifivem/aicore-server/commit/624ef595c188f3148c32d614330e1ec5aff1aa57))
+
+
+### Documentation
+
+* **skills:** script update downloads from aifivem repos, AGENTS.md lists the skill ([948367a](https://github.com/aifivem/aicore-server/commit/948367a4afbeddb319a7e64032834ff89853bc96))
+
 ## [0.1.6](https://github.com/aifivem/aicore-server/compare/v0.1.5...v0.1.6) (2026-11-02)
 
 
