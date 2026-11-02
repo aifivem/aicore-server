@@ -30,13 +30,13 @@ Show the list (name, current -> latest, notes that need action) and wait for the
 Per resource, two new empty directories in the scratchpad (`update/<name>/old`, `update/<name>/new`):
 
 ```bash
-gh release download <tag> --repo TGIANN/<name> --archive zip --dir update/<name>/new   # tag source
-gh release download <tag> --repo TGIANN/<name> --pattern '*.zip' --dir update/<name>/new  # a release asset, when the release has one
+gh release download <tag> --repo aifivem/<name> --archive zip --dir update/<name>/new   # tag source
+gh release download <tag> --repo aifivem/<name> --pattern '*.zip' --dir update/<name>/new  # a release asset, when the release has one
 unzip -q update/<name>/new/*.zip -d update/<name>/new/x
 ```
 
 - Prefer a release asset when the release attaches one (a ready package); otherwise the tag's source (it carries the committed `dist/` and `fxmanifest.lua`). The zipball's top folder is `<owner>-<name>-<sha>/`.
-- **Old upstream** is the tag of the version the server runs (find the tag name style with `gh release list --repo TGIANN/<name>`). It is always downloadable, so the three-way always has its base. A local clone that has the tag can use `git show <tag>:<path>` instead (in Git Bash `cd` into the folder first: `git -C` fails on `[ai]` paths).
+- **Old upstream** is the tag of the version the server runs (find the tag name style with `gh release list --repo aifivem/<name>`). It is always downloadable, so the three-way always has its base. A local clone that has the tag can use `git show <tag>:<path>` instead (in Git Bash `cd` into the folder first: `git -C` fails on `[ai]` paths).
 - Nothing from these folders is run, installed or built in place.
 
 ## 3. Back up
