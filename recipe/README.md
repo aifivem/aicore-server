@@ -17,7 +17,7 @@ The server list name, description, tags, language, banners and Discord link are 
 - `server.cfg`: the resource list (`ensure` lines) and config includes, `sv_hostname` from the name you enter.
 - `env.cfg`: license, slots, endpoints and the database connection (machine-specific, not in git; `env.example.cfg` is the template).
 - `security.cfg`, `misc.cfg`, `permission.cfg`: shared settings. Never loosen `security.cfg`: every ai-* script is written for its strict values.
-- `resources/[ai]/ai-*`: each script from its own repository with its build committed, so no build tools are needed.
+- `resources/[ai]/ai-*`: each script from the latest release zip of its repository (built and ready, with its source), so no build tools are needed.
 - `resources/[standalone]/bob74_ipl`: GTA Online interiors and map fixes (github.com/Bob74/bob74_ipl), which ai-* places use (apartments, offices, banks).
 
 Third-party scripts (ESX / QB / Qbox) go into `resources/` with their dependencies; ai-core presents itself as `es_extended`, `qb-core` and `qbx_core`.
