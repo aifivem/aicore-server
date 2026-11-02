@@ -49,7 +49,7 @@ A typical multi-framework consumer: tgiann-core reaches ESX/QB through this list
 
 Core owns: users and identifiers, characters (multi-character data, create/select/delete, slots), money accounts (per character, per job, per gang) with ledger, jobs and gangs (multi, duty, grades, boss flags, salary/paycheck), permissions (ACE mirror, admin roles), metadata bag, position and basic state persistence, player lookup and offline lookup, callbacks (lib), usable-item registry hook point (the inventory owns items), player/character lifecycle events.
 
-Not in core (separate `ai-*` scripts or adapters): inventory and items, weapons/loadout, appearance/skin, vehicles and garages, needs/status (hunger, thirst, stress), notifications/text UI/progress/menus UI, licenses, invoices/billing, bans and queue (later, maybe core), Discord logging (core log sink, later).
+Not in core (separate `ai-*` scripts or adapters): inventory and items, weapons/loadout, appearance/skin, vehicles and garages, stress (hunger and thirst are in ai-core: `stress.md`), notifications/text UI/progress/menus UI, licenses, invoices/billing, bans and queue (later, maybe core), Discord logging (core log sink, later).
 
 ## How frameworks store data
 
