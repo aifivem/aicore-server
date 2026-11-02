@@ -5,7 +5,9 @@ paths:
 
 # Shared packages
 
-`packages/` in the server folder (outside `resources/`, so FXServer never sees it) is its own git repo with the `@aifivem` packages (not on npm). Resources depend on them with `workspace:*`; bun links the local copies inside the workspace (`resource-structure.md`).
+`packages/` in the server folder (outside `resources/`, so FXServer never sees it) is its own git repo with the `@aifivem` packages, published to npm (account `aifivem`) by its release workflow when a release pull request is merged (trusted publishing, no token). Resources depend on them with `workspace:*`; bun links the local copies inside the workspace (`resource-structure.md`).
+
+- A `bin` path in a package's `package.json` has no `./` prefix (`"aicore-db-types": "dbTypes.ts"`): `npm publish` drops `./`-prefixed `.ts` bins as invalid (`npm publish --dry-run` shows the warning).
 
 | Package | Content | When |
 |---|---|---|
