@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.6](https://github.com/aifivem/aicore-server/compare/v0.1.5...v0.1.6) (2026-11-02)
+
+
+### Documentation
+
+* **lib:** online job counts and onJobState, canCarryItems, unemployed and hasJobMember ([360c04e](https://github.com/aifivem/aicore-server/commit/360c04e007bcdf5d1d58ee1fff956d5b9259c757))
+* **rules:** pull release-please's version commits right before every push ([f5db8b7](https://github.com/aifivem/aicore-server/commit/f5db8b7dbc36c033a0c3465ee828dc8c3c0ac5b1))
+* **scale:** job count and job change numbers of the online mirror ([1b433f9](https://github.com/aifivem/aicore-server/commit/1b433f9b3e14a4efd711c3b46bdf7c50c9428746))
+
 ## [0.1.5](https://github.com/aifivem/aicore-server/compare/v0.1.4...v0.1.5) (2026-11-01)
 
 
