@@ -29,6 +29,7 @@ The owner's standing rules; follow them without being asked.
 
 - Push only when the owner says so ("push", "pushla", "yayınla"); a commit is never pushed on its own.
 - Before pushing: every repo committed and clean; scan the outgoing diff (`git diff @{u}..HEAD`) for secrets (Discord webhook urls, `ghp_` / `github_pat_` tokens, connection strings with passwords).
+- **Pull right before every push, in every repo, every time** (owner rule; skipping it is the mistake that keeps happening): the release-please bot commits to `main` on its own (the merged release pull request bumps `package.json`, `CHANGELOG.md`, `.release-please-manifest.json` and the `version` line of `fxmanifest.lua`), so the local `main` is often behind even when nobody else worked on it. Run `git fetch origin && git pull --rebase origin main` in each repo just before its `git push`; when the pull brought a release commit, build again and drop a CRLF-only `fxmanifest.lua` change (`git checkout -- fxmanifest.lua`) before pushing. Never push with `--force` to get past a rejected push: a rejection means a bot commit is missing locally, pull it.
 - Order: the org repo first (shared workflows the others call), then `packages/`, the server folder, every `ai-*`, the docs, the site.
 
 ## Releases (only when the owner asks)
