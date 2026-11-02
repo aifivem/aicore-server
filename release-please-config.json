@@ -50,7 +50,13 @@
   ],
   "packages": {
     ".": {
-      "package-name": "aicore-server"
+      "package-name": "aicore-server",
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "recipe/ai-core.yaml"
+        }
+      ]
     }
   }
 }
