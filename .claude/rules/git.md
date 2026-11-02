@@ -35,4 +35,5 @@ The owner's standing rules; follow them without being asked.
 ## Releases (only when the owner asks)
 
 - Every push to `main` makes release-please open or update a release pull request per repo. Merging it is the release (tag, GitHub release, server zip, Discord post): only when the owner asks. Version rule: `CLAUDE.md` "Process".
+- Merge aicore-packages' release pull request first and wait for its `npm` job: a resource's release zip pins our packages to the versions in aicore-packages `main` (`^x.y.z`), so they must be on npm before the resources are released.
 - After release pull requests are merged on GitHub, run `git pull --rebase origin main` in every repo before the next commit, then build again (the release commit changed `package.json` versions and the generated manifests). release-please commits `fxmanifest.lua` with CRLF line endings, so after that build every manifest shows as modified with the same bytes (`cmp <(git show HEAD:fxmanifest.lua) fxmanifest.lua`): `git checkout -- fxmanifest.lua`, nothing to commit.
