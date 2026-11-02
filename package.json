@@ -9,6 +9,7 @@
     "template/resource"
   ],
   "scripts": {
+    "setup": "bun tools/setup.ts",
     "new": "bun template/new.ts",
     "rcon": "bun tools/rcon.ts",
     "build": "bun tools/run.ts build",

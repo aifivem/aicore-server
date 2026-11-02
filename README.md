@@ -11,6 +11,7 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 | `resources/[ai]/` | ai-core resources, each `ai-*` folder its own git repo. |
 | `packages/` | The `@aicore-fivem/*` npm packages (own git repo). |
 | `template/` | Template for new resources (`bun run new <name> "<description>"`). |
+| `tools/setup.ts` | Clones `packages/` and the `ai-*` resources for a development setup: `bun run setup`. |
 | `tools/rcon.ts` | RCON client: `bun run rcon "restart ai-core"`. |
 | `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, `.claude/skills/` | Instructions and knowledge for AI assistants (and a good read for people). |
 
@@ -24,7 +25,7 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 
 1. Install [bun](https://bun.sh) and MariaDB.
 2. Copy `env.example.cfg` to `env.cfg`, fill in the license key and the database connection, create the database.
-3. In this folder: `bun install`, then `bun run build`.
+3. In this folder: `bun run setup` (clones `packages/` and every `ai-*` resource of `server.cfg`, each its own git repo), then `bun install` and `bun run build`.
 4. Start FXServer (txAdmin) with this folder as the server data folder.
 
 ## Working with an AI
