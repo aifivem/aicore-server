@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/aifivem/aicore-server/compare/v0.2.0...v0.3.0) (2026-11-02)
+
+
+### New Features
+
+* **recipe:** install every script from one download and require FXServer 38039 ([45fd7e8](https://github.com/aifivem/aicore-server/commit/45fd7e886cb0ef2e49771702cf2b04a7218eaa34))
+
+
+### Documentation
+
+* **recipe:** scripts come from their release zips ([fa425f8](https://github.com/aifivem/aicore-server/commit/fa425f8524198236b342beda2009edaebf643276))
+* **rules:** line-ending-only changes after a build are restored, never committed ([fe0dd78](https://github.com/aifivem/aicore-server/commit/fe0dd7814a3b16f0c19ae4d5053aabcbece87d5b))
+
 ## [0.2.0](https://github.com/aifivem/aicore-server/compare/v0.1.6...v0.2.0) (2026-11-02)
 
 
