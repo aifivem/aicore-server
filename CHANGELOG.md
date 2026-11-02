@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.3.1](https://github.com/aifivem/aicore-server/compare/v0.3.0...v0.3.1) (2026-11-02)
+
+
+### Bug Fixes
+
+* **recipe:** give the script bundle unzip 15 minutes instead of txAdmin's 180 s ([3145001](https://github.com/aifivem/aicore-server/commit/31450015e75f1851394cfc35f2d9b4aba97e94b6))
+* **recipe:** install each script from its own release zip again ([681cbeb](https://github.com/aifivem/aicore-server/commit/681cbeb2f07cdca356f3a9644a5c19cb83bf6b55))
+
+
+### Documentation
+
+* codem-phone gives only the phone used signal ([3ffa440](https://github.com/aifivem/aicore-server/commit/3ffa4404b1e5fd52c7524e7351e888ed62eafa90))
+* codem-phone is back in the phone layer ([3341602](https://github.com/aifivem/aicore-server/commit/3341602a2a38f59572b390c32cb6106fd2564810))
+* describe ai-core's needs layer ([b71b8e9](https://github.com/aifivem/aicore-server/commit/b71b8e954b6035eaf307051460ee144b9c19f980))
+* document ai-core's warrants ([8773907](https://github.com/aifivem/aicore-server/commit/8773907171c34b822f7019beab2f20b7e9f2524b))
+* document new lib helpers, the MDT warrant check and the qbx_smallresources bridge ([91891fb](https://github.com/aifivem/aicore-server/commit/91891fb9e7c29eb5dc1b0393cfe607a6a35500aa))
+* document qbx_smallresources SendWantedAlert ([0697e55](https://github.com/aifivem/aicore-server/commit/0697e55aeabe101a4a3218a99bfd6c718e8e593d))
+* document the phone used signal ([e83327a](https://github.com/aifivem/aicore-server/commit/e83327a271614f43b2a812b73040e24b0567833b))
+* phone open signals; restore the 17mov_Phone and high-phone layer rows ([57f61fa](https://github.com/aifivem/aicore-server/commit/57f61fa4eb503362286e8cbaeff5ac14b2b84837))
+* **rules:** state of one server lives in the git-ignored data/local.json ([d41eb6b](https://github.com/aifivem/aicore-server/commit/d41eb6b5ef5cd4b35e9b57fe18d5728671f5e4d6))
+* shorten the phone used table ([e41017c](https://github.com/aifivem/aicore-server/commit/e41017c3391bcbfb7aef972335195d9888a5e597))
+* what gksphone, 17mov_Phone, yseries and roadphone offer for phone opening ([f23464e](https://github.com/aifivem/aicore-server/commit/f23464ed39909f5d0446c9f69ddfd809f4827c95))
+
+
+### Miscellaneous Chores
+
+* **template:** keep data/local.json out of git ([fab3971](https://github.com/aifivem/aicore-server/commit/fab397153cfac951e14511aad88f90347cf2e9c7))
+
 ## [0.3.0](https://github.com/aifivem/aicore-server/compare/v0.2.0...v0.3.0) (2026-11-02)
 
 
