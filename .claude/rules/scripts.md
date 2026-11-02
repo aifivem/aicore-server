@@ -51,6 +51,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | The seat belt state | lib `seatbelt.isOn()` / `onChange` (client) | a seat belt or HUD script's exports, ai-smallresources' event |
 | Stress up or down | lib `stress.gain` / `relieve` (server) | `hud:server:GainStress` events, ai-hud's `AddNeed` |
 | Hunger and thirst to full (revive, hospital) | lib `needs.refill(source)` (server) | ai-hud's `SetNeed`, setting metadata `hunger` / `thirst` by hand |
+| Is a character illegal (illegal-only content, a business owner check) | lib `illegal.is(source)` / `of(citizenid)` / `set` (server) | an own flag, metadata `illegal` read or written by hand |
 | Where notifications show | ai-core panel setting `notify` (ai-lib's cards to another UI) | calling a notification script's exports from a script |
 | A radial menu entry (job menu, vehicle action) | lib `radial.add({ id, label, icon, parent?, canShow, onPressed })` once at start (client); `radial.refresh()` when what `canShow` reads changes | a radial script's exports (ai-radialmenu included), re-adding on a radial's start |
 | Jail a player, release, time left | lib `prison` (server) | a prison script's exports or events (ai-prison included) |
@@ -61,7 +62,7 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 | A death, who killed whom and how | ai-core `CORE.playerDiedEvent` (4th argument `DeathInfo`) | health polling, a client's own death report |
 | Revive, heal, is the player down | lib `medical.revive` / `heal` / `isDead` (server), `medical.isDead()` / `onChange` (client) | a death script's exports or state bags (ai-death included), `IsEntityDead(cache.ped)` for "is the player down" (death scripts keep a downed ped alive) |
 | Bill a player (fines, service fees, a player's invoice) | lib `billing.send({ to | toCitizenid, amount, label, from?, job? })` (server; `toCitizenid` also reaches an offline character); `billing.unpaid` / `pay` | a billing script's exports or events, a forced `money.transfer` from the target |
-| A police record (fine, warrant, arrest, jail) or opening the MDT | lib `mdt.record(...)` (server), `mdt.open()` (client) | an MDT's exports or events |
+| A police record (fine, warrant, arrest, jail), a warrant check or opening the MDT | lib `mdt.record(...)` / `mdt.hasWarrant(citizenid)` (server), `mdt.open()` (client) | an MDT's exports, events or tables |
 | How many medics are free, a distress call | lib `ems.available(jobs)` / `ems.distress(source, { jobs })` (server) | `online.countOnDuty` for that rule, an ambulance or alert script's exports |
 | Open a bank screen, a banking script's own society balance | lib `banking.open(source)` / `societyBalance(job)` (server) | a banking script's exports; moving job money anywhere but ai-core (`money`) |
 | Money from one account to another (bank transfer, deposit, society) | lib `money.transfer(from, to, amount, reason, fee?)` (one transaction) | a `RemoveMoney` + `AddMoney` pair |
