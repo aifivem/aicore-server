@@ -17,6 +17,7 @@ Server memory is the source of truth; the DB is its persistent copy; clients mir
 | Player data | character, money, inventory, jobs | DB | online players in memory | snapshot + delta to the owner |
 | Shared transient state | door lock, heist stage | none | server memory | per-key GlobalState (everyone) or targeted deltas (a group) |
 | Entity-bound state | vehicle lock, fuel | via player data | entity state bag | replication to nearby players |
+| Server-local state | setup guide finished | resource `data/local.json` (git-ignored, a panel file) | server memory | panel only |
 | Client preference | HUD position | client KVP | client | never sent |
 | Logs | money movements, admin actions | DB, append only | write queue | paged, to admins on request |
 
