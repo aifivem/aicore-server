@@ -52,4 +52,7 @@ jobs:
           done < versions.txt
           (cd out && zip -qr ../ai-scripts.zip "[ai]")
           gh release upload "$TAG" ai-scripts.zip versions.txt --clobber
+          # A new release file comes slowly from GitHub's download servers until it is cached (measured: 39 MB in
+          # about 150 s cold, 2-4 s warm); one download here warms it before the first install.
+          curl -fsSL -o /dev/null "https://github.com/${GITHUB_REPOSITORY}/releases/download/$TAG/ai-scripts.zip"
           cat versions.txt
