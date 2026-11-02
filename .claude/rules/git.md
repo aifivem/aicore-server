@@ -14,6 +14,7 @@ The owner's standing rules; follow them without being asked.
 - Never commit: secrets (`env.cfg`, `data/secrets.json`, webhook urls, tokens), temporary test edits to tracked files (a test `ensure` in `server.cfg` stays uncommitted and is removed after the test), third-party test resources (they live in git-ignored folders such as `resources/[test]`).
 - Source and its generated files that live in git go in the same commit: `resource/server/tables.ts`, `data/schemas/*.json`. `dist/` and `fxmanifest.lua` are not in git (each resource's `.gitignore`): the release zip carries them.
 - A contract change in `packages/` is committed before (or with) the resources that use it.
+- After a build or a server restart Git on Windows can list generated files (`resource/server/tables.ts`, `data/schemas/*.json`, ai-core's `bridge/lib/`) as modified with the same content (line endings): compare with `cmp <(git show HEAD:<file> | tr -d '') <(tr -d '' < <file>)` and restore an equal one with `git checkout -- <file>`; never commit it.
 
 ## How to write the commit
 
