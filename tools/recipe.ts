@@ -1,10 +1,10 @@
 /**
  * Writes the txAdmin recipe (`recipe/`) from this server's files: `recipe/server.cfg` (server.cfg with the recipe's
  * server name), `recipe/env.cfg` (env.example.cfg with txAdmin's variables) and `recipe/ai-core.yaml` (the server
- * files, the script bundle and one `download_github` per third-party resource of `STANDALONE` that server.cfg ensures).
- * Run after changing server.cfg or env.example.cfg: `bun tools/recipe.ts`. The bundle (`ai-scripts.zip` on the
- * "scripts" release) holds the latest release of every `ensure ai-*` script, kept current by
- * `.github/workflows/bundle.yml`: one download instead of one per script (each costs about 2 s whatever its size).
+ * files, the latest release zip of each `ensure ai-*` line of server.cfg, each downloaded and unzipped on its own, and
+ * one `download_github` per third-party resource of `STANDALONE` that server.cfg ensures). Run after changing
+ * server.cfg or env.example.cfg: `bun tools/recipe.ts`. One zip per script (owner decision): a single bundle of every
+ * script took longer to unzip than txAdmin's task timeout and grows with each new script.
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
@@ -13,7 +13,6 @@ const SERVER_REPO = `https://github.com/${OWNER}/aicore-server`;
 const SHARED = ["security.cfg", "misc.cfg", "permission.cfg"];
 /** ai-core's `fxDependencies` `/server:<build>`: txAdmin refuses an older FXServer before installing anything. */
 const MIN_FX_VERSION = 38039;
-const BUNDLE = `${SERVER_REPO}/releases/download/scripts/ai-scripts.zip`;
 /**
  * What an AI agent working on the installed server needs (the script update skill and the others, the rules, the
  * `bun tools/*` commands, the adapters' compatibility notes): the same files a hand install has.
@@ -111,11 +110,13 @@ const yaml = [
     ([name, repo]) =>
       `  - action: download_github\n    src: ${repo.src}\n    ref: ${repo.ref}\n    dest: ./resources/[standalone]/${name}\n`,
   ),
-  `  # ai-core and its ${ensures.length} scripts in one zip: each one's latest release, built and ready (no build tools needed), with its source`,
-  `  - action: download_file\n    url: ${BUNDLE}\n    path: ./tmp/ai-scripts.zip\n    timeoutSeconds: 600\n`,
-  "  - action: ensure_dir\n    path: ./resources\n",
-  // ~5500 files: txAdmin's 180 s unzip default runs out on Windows (each file written and scanned on its own).
-  "  - action: unzip\n    src: ./tmp/ai-scripts.zip\n    dest: ./resources\n    timeoutSeconds: 900\n",
+  "  # ai-core and its scripts: each one's latest release zip, built and ready (no build tools needed), with its source",
+  "  - action: ensure_dir\n    path: ./resources/[ai]\n",
+  ...ensures.map(
+    (r) =>
+      `  - action: download_file\n    url: https://github.com/${OWNER}/${r}/releases/latest/download/${r}.zip\n    path: ./tmp/${r}.zip\n` +
+      `  - action: unzip\n    src: ./tmp/${r}.zip\n    dest: ./resources/[ai]\n`,
+  ),
   "  # Clean up",
   "  - action: remove_path\n    path: ./tmp\n",
 ].join("\n");
