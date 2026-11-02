@@ -4,7 +4,7 @@ Every ai-* script puts its wheel entries through ai-core (owner decision: compat
 
 ## Item model
 
-`RadialItem` in `@aicore-fivem/shared` (`radial.ts`), the tgiann-radialmenu model under the lib's names:
+`RadialItem` in `@aifivem/shared` (`radial.ts`), the tgiann-radialmenu model under the lib's names:
 
 | Field | Meaning |
 |---|---|

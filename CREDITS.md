@@ -21,7 +21,7 @@ AI Core is released under the GNU GPL v3 (`LICENSE` in every repository), which 
 
 | Project | Authors | License | What AI Core takes from it |
 |---|---|---|---|
-| [ox_lib](https://github.com/overextended/ox_lib) | Overextended | LGPL-3.0 | The shape of `@aicore-fivem/lib` (callbacks, points, zones, cache, skill check, progress, menus), written again in TypeScript; its vehicle properties code (`bridge/core/client/vehicleprops.lua`) and `require` loader (ESX `imports.lua` without ox_lib) copied into the bridge |
+| [ox_lib](https://github.com/overextended/ox_lib) | Overextended | LGPL-3.0 | The shape of `@aifivem/lib` (callbacks, points, zones, cache, skill check, progress, menus), written again in TypeScript; its vehicle properties code (`bridge/core/client/vehicleprops.lua`) and `require` loader (ESX `imports.lua` without ox_lib) copied into the bridge |
 | [oxmysql](https://github.com/overextended/oxmysql) | Overextended | LGPL-3.0 | The API and return shapes `ai-mysql` answers |
 | [fivem-ts](https://github.com/overextended/fivem-ts) | Overextended | Unlicense | Resource layout and build setup of every ai-* script |
 | [cfx-server-data](https://github.com/citizenfx/cfx-server-data) | Cfx.re | MIT | The `chat` resource API `ai-chat` answers |

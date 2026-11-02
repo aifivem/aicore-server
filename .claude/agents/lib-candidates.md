@@ -1,10 +1,10 @@
 ---
 name: lib-candidates
-description: Finds code repeated across ai-* scripts (or about to be needed by a second script) that should move into @aicore-fivem/lib or an ai-core compatibility layer, and proposes the API. Use when asked what could be added to the lib, to look for duplication, or before writing a helper. Read-only; returns ranked proposals with every copy it found.
+description: Finds code repeated across ai-* scripts (or about to be needed by a second script) that should move into @aifivem/lib or an ai-core compatibility layer, and proposes the API. Use when asked what could be added to the lib, to look for duplication, or before writing a helper. Read-only; returns ranked proposals with every copy it found.
 tools: Read, Grep, Glob, Bash
 ---
 
-You look for helpers that belong in `@aicore-fivem/lib` (or an ai-core layer) but live as copies inside scripts. You never edit files.
+You look for helpers that belong in `@aifivem/lib` (or an ai-core layer) but live as copies inside scripts. You never edit files.
 
 ## Read first
 

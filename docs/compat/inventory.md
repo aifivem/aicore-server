@@ -1,8 +1,8 @@
 # Inventory layer (ai-core)
 
-Every script reaches items through ai-core: ai-* scripts with `@aicore-fivem/lib` `inventory` (server: `addItem`, `removeItem`, `getItemCount`, `hasItem`, `canCarryItem`, `getItems`, `clearInventory`, `registerStash`, `openInventory`, `registerUsableItem`, `getItemDefinition`, `registerShop`, `openShop`, `setItemMetadata`, `setMaxWeight`, `usableItems`; client: `openInventory`, `hasItem`, `itemCount`, `itemDefinition`), ESX / QB / Qbox scripts through ai-core's bridge (`xPlayer.addInventoryItem`, `Player.Functions.AddItem`, `ESX.RegisterUsableItem`, `QBCore.Functions.CreateUseableItem`...), any other script through ai-core's exports of the same names (`exports['ai-core']:AddItem(source, 'bread', 2)`). ai-core forwards each call to the active inventory through its adapter, so changing the inventory changes it for every script at once.
+Every script reaches items through ai-core: ai-* scripts with `@aifivem/lib` `inventory` (server: `addItem`, `removeItem`, `getItemCount`, `hasItem`, `canCarryItem`, `getItems`, `clearInventory`, `registerStash`, `openInventory`, `registerUsableItem`, `getItemDefinition`, `registerShop`, `openShop`, `setItemMetadata`, `setMaxWeight`, `usableItems`; client: `openInventory`, `hasItem`, `itemCount`, `itemDefinition`), ESX / QB / Qbox scripts through ai-core's bridge (`xPlayer.addInventoryItem`, `Player.Functions.AddItem`, `ESX.RegisterUsableItem`, `QBCore.Functions.CreateUseableItem`...), any other script through ai-core's exports of the same names (`exports['ai-core']:AddItem(source, 'bread', 2)`). ai-core forwards each call to the active inventory through its adapter, so changing the inventory changes it for every script at once.
 
-Contract: `@aicore-fivem/shared` `inventory.ts`. Code: `resources/[ai]/ai-core/resource/server/inventory/` (layer, registry, one adapter file per inventory) and `resource/client/inventory/`.
+Contract: `@aifivem/shared` `inventory.ts`. Code: `resources/[ai]/ai-core/resource/server/inventory/` (layer, registry, one adapter file per inventory) and `resource/client/inventory/`.
 
 ## How it works
 

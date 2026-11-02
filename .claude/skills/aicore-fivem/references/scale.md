@@ -5,7 +5,7 @@ How ai-core behaves with a database that has seen 1,000,000 players and 10,000 o
 ## Setup
 
 - Local MariaDB 11.4, separate database `ai_core_stress` (never the server's own). `resources/[ai]/ai-core/bench/seed.ts` fills it with MariaDB's sequence engine: 1M users, 1.5M characters, 6M money accounts (4 per character), 1.5M job rows, 5M ledger rows (about 1.6 GB with indexes).
-- `bench/stress.ts [pool]` runs ai-core's real DB code (`@aicore-fivem/mysql`, `users.ts`, `characters/repo.ts`, `jobs/repo.ts`, `money/account.ts`) with natives stubbed: 10k players logging in at once (account upsert, character screen with card extras, character load: accounts, jobs, gangs), then the periodic save of 10k characters, then one paycheck for 10k players. Run with `bun --preload ./bench/preload.ts bench/stress.ts 10`.
+- `bench/stress.ts [pool]` runs ai-core's real DB code (`@aifivem/mysql`, `users.ts`, `characters/repo.ts`, `jobs/repo.ts`, `money/account.ts`) with natives stubbed: 10k players logging in at once (account upsert, character screen with card extras, character load: accounts, jobs, gangs), then the periodic save of 10k characters, then one paycheck for 10k players. Run with `bun --preload ./bench/preload.ts bench/stress.ts 10`.
 - `bench/explain.ts`: EXPLAIN of every per-login query on the seeded data.
 - `packages/lib/bench/online.bench.ts`: the online mirror and proximity helpers at 2048 and 10k online (ai-core's `GetPlayersInScope` stubbed with precomputed 424 m scope lists, copied per call like the export).
 - `packages/lib/bench/players.bench.ts`: per-player stores (`PendingActions`, `PlayerMap`, `Cooldowns`), `KeyedCooldowns` by character id, panel records views, the `onCharacter` restart replay and the gate's capped log preview.

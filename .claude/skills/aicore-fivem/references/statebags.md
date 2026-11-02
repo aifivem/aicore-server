@@ -25,7 +25,7 @@ Every read repeats all of it. On a busy server the map lock is shared with the n
 - Clients get no event when an entity leaves their scope; its bag is gone, a mirror must prune by itself.
 - Network ids are reused; a bag can outlive its vehicle (issue #3289 with `CreateVehicleServerSetter`): compare the entity handle, never trust a value by network id alone.
 
-## The lib classes (`@aicore-fivem/lib` client and server)
+## The lib classes (`@aifivem/lib` client and server)
 
 `EntityState<T>(key, parse)`, `PlayerState<T>(key, parse)`, `GlobalKey<T>(key, parse)`, `GlobalGroup<T>(prefix, parse)`:
 

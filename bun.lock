@@ -12,25 +12,25 @@
       },
     },
     "packages/build": {
-      "name": "@aicore-fivem/build",
-      "version": "0.1.0",
+      "name": "@aifivem/build",
+      "version": "0.1.4",
       "bin": {
         "aicore-client-errors": "./clientErrors.ts",
         "aicore-db-types": "./dbTypes.ts",
       },
       "dependencies": {
-        "@aicore-fivem/shared": "^0.1.0",
+        "@aifivem/shared": "^0.5.0",
       },
       "devDependencies": {
         "@types/bun": "latest",
       },
     },
     "packages/lib": {
-      "name": "@aicore-fivem/lib",
-      "version": "0.1.0",
+      "name": "@aifivem/lib",
+      "version": "0.6.0",
       "dependencies": {
-        "@aicore-fivem/mysql": "^0.1.0",
-        "@aicore-fivem/shared": "^0.1.0",
+        "@aifivem/mysql": "^0.1.0",
+        "@aifivem/shared": "^0.5.0",
       },
       "devDependencies": {
         "@citizenfx/client": "latest",
@@ -39,7 +39,7 @@
       },
     },
     "packages/mysql": {
-      "name": "@aicore-fivem/mysql",
+      "name": "@aifivem/mysql",
       "version": "0.1.0",
       "dependencies": {
         "mysql2": "3.24.5",
@@ -50,8 +50,8 @@
       },
     },
     "packages/shared": {
-      "name": "@aicore-fivem/shared",
-      "version": "0.1.0",
+      "name": "@aifivem/shared",
+      "version": "0.5.0",
       "devDependencies": {
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
@@ -59,13 +59,13 @@
     },
     "resources/[ai]/ai-admin": {
       "name": "ai-admin",
-      "version": "0.1.0",
+      "version": "0.3.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -80,14 +80,14 @@
     },
     "resources/[ai]/ai-appearance": {
       "name": "ai-appearance",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -104,7 +104,7 @@
       "name": "ai-appearance-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -138,14 +138,14 @@
     },
     "resources/[ai]/ai-banking": {
       "name": "ai-banking",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -162,7 +162,7 @@
       "name": "ai-banking-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -196,13 +196,13 @@
     },
     "resources/[ai]/ai-chat": {
       "name": "ai-chat",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -219,7 +219,7 @@
       "name": "ai-chat-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -253,13 +253,13 @@
     },
     "resources/[ai]/ai-cityhall": {
       "name": "ai-cityhall",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -276,7 +276,7 @@
       "name": "ai-cityhall-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
+        "@aifivem/lib": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -302,14 +302,14 @@
     },
     "resources/[ai]/ai-core": {
       "name": "ai-core",
-      "version": "0.1.0",
+      "version": "0.5.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -326,7 +326,7 @@
       "name": "ai-core-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -361,13 +361,13 @@
     },
     "resources/[ai]/ai-death": {
       "name": "ai-death",
-      "version": "0.1.0",
+      "version": "0.4.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -384,7 +384,7 @@
       "name": "ai-death-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -418,13 +418,13 @@
     },
     "resources/[ai]/ai-doorlock": {
       "name": "ai-doorlock",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -439,14 +439,14 @@
     },
     "resources/[ai]/ai-drugs": {
       "name": "ai-drugs",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -461,14 +461,14 @@
     },
     "resources/[ai]/ai-exitsleeping": {
       "name": "ai-exitsleeping",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -483,13 +483,13 @@
     },
     "resources/[ai]/ai-fuel": {
       "name": "ai-fuel",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -504,13 +504,13 @@
     },
     "resources/[ai]/ai-garages": {
       "name": "ai-garages",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -527,7 +527,7 @@
       "name": "ai-garages-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -561,13 +561,13 @@
     },
     "resources/[ai]/ai-hud": {
       "name": "ai-hud",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -584,7 +584,7 @@
       "name": "ai-hud-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -618,14 +618,14 @@
     },
     "resources/[ai]/ai-inventory": {
       "name": "ai-inventory",
-      "version": "0.1.0",
+      "version": "0.4.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -642,7 +642,7 @@
       "name": "ai-inventory-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -676,13 +676,13 @@
     },
     "resources/[ai]/ai-jobs": {
       "name": "ai-jobs",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -697,13 +697,13 @@
     },
     "resources/[ai]/ai-lib": {
       "name": "ai-lib",
-      "version": "0.1.0",
+      "version": "0.5.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -720,7 +720,7 @@
       "name": "ai-lib-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -750,13 +750,13 @@
     },
     "resources/[ai]/ai-loading": {
       "name": "ai-loading",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -773,7 +773,7 @@
       "name": "ai-loading-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -801,13 +801,13 @@
     },
     "resources/[ai]/ai-management": {
       "name": "ai-management",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -822,13 +822,13 @@
     },
     "resources/[ai]/ai-mechanic": {
       "name": "ai-mechanic",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -843,13 +843,13 @@
     },
     "resources/[ai]/ai-mysql": {
       "name": "ai-mysql",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -864,13 +864,13 @@
     },
     "resources/[ai]/ai-pawnshop": {
       "name": "ai-pawnshop",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -885,13 +885,13 @@
     },
     "resources/[ai]/ai-pedscale": {
       "name": "ai-pedscale",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -906,13 +906,13 @@
     },
     "resources/[ai]/ai-police": {
       "name": "ai-police",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -927,13 +927,13 @@
     },
     "resources/[ai]/ai-policealert": {
       "name": "ai-policealert",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -950,7 +950,7 @@
       "name": "ai-policealert-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -984,13 +984,13 @@
     },
     "resources/[ai]/ai-prison": {
       "name": "ai-prison",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1005,14 +1005,14 @@
     },
     "resources/[ai]/ai-properties": {
       "name": "ai-properties",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1027,13 +1027,13 @@
     },
     "resources/[ai]/ai-radialmenu": {
       "name": "ai-radialmenu",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1050,7 +1050,7 @@
       "name": "ai-radialmenu-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -1084,13 +1084,13 @@
     },
     "resources/[ai]/ai-rental": {
       "name": "ai-rental",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1105,13 +1105,13 @@
     },
     "resources/[ai]/ai-robberies": {
       "name": "ai-robberies",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1126,13 +1126,13 @@
     },
     "resources/[ai]/ai-scoreboard": {
       "name": "ai-scoreboard",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1149,7 +1149,7 @@
       "name": "ai-scoreboard-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -1183,13 +1183,13 @@
     },
     "resources/[ai]/ai-sirens": {
       "name": "ai-sirens",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1204,13 +1204,13 @@
     },
     "resources/[ai]/ai-smallresources": {
       "name": "ai-smallresources",
-      "version": "0.1.0",
+      "version": "0.4.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1225,13 +1225,13 @@
     },
     "resources/[ai]/ai-streetraces": {
       "name": "ai-streetraces",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1246,13 +1246,13 @@
     },
     "resources/[ai]/ai-target": {
       "name": "ai-target",
-      "version": "0.1.0",
+      "version": "0.2.2",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1269,7 +1269,7 @@
       "name": "ai-target-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -1298,13 +1298,13 @@
     },
     "resources/[ai]/ai-vehiclekeys": {
       "name": "ai-vehiclekeys",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1319,14 +1319,14 @@
     },
     "resources/[ai]/ai-vehicles": {
       "name": "ai-vehicles",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1341,14 +1341,14 @@
     },
     "resources/[ai]/ai-vehiclesales": {
       "name": "ai-vehiclesales",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1365,7 +1365,7 @@
       "name": "ai-vehiclesales-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -1399,13 +1399,13 @@
     },
     "resources/[ai]/ai-vehicleshop": {
       "name": "ai-vehicleshop",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1422,7 +1422,7 @@
       "name": "ai-vehicleshop-web",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/shared": "workspace:*",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/unbounded": "^5.3.0",
         "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -1456,13 +1456,13 @@
     },
     "resources/[ai]/ai-voice": {
       "name": "ai-voice",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1477,13 +1477,13 @@
     },
     "resources/[ai]/ai-weathersync": {
       "name": "ai-weathersync",
-      "version": "0.1.0",
+      "version": "0.1.3",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1500,12 +1500,12 @@
       "name": "__NAME__",
       "version": "0.1.0",
       "dependencies": {
-        "@aicore-fivem/lib": "workspace:*",
-        "@aicore-fivem/mysql": "workspace:*",
-        "@aicore-fivem/shared": "workspace:*",
+        "@aifivem/lib": "workspace:*",
+        "@aifivem/mysql": "workspace:*",
+        "@aifivem/shared": "workspace:*",
       },
       "devDependencies": {
-        "@aicore-fivem/build": "workspace:*",
+        "@aifivem/build": "workspace:*",
         "@citizenfx/client": "latest",
         "@citizenfx/server": "latest",
         "@types/bun": "latest",
@@ -1520,13 +1520,13 @@
     },
   },
   "packages": {
-    "@aicore-fivem/build": ["@aicore-fivem/build@workspace:packages/build"],
+    "@aifivem/build": ["@aifivem/build@workspace:packages/build"],
 
-    "@aicore-fivem/lib": ["@aicore-fivem/lib@workspace:packages/lib"],
+    "@aifivem/lib": ["@aifivem/lib@workspace:packages/lib"],
 
-    "@aicore-fivem/mysql": ["@aicore-fivem/mysql@workspace:packages/mysql"],
+    "@aifivem/mysql": ["@aifivem/mysql@workspace:packages/mysql"],
 
-    "@aicore-fivem/shared": ["@aicore-fivem/shared@workspace:packages/shared"],
+    "@aifivem/shared": ["@aifivem/shared@workspace:packages/shared"],
 
     "@babel/code-frame": ["@babel/code-frame@7.29.7", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.29.7", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw=="],
 

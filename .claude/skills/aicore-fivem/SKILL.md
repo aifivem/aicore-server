@@ -11,7 +11,7 @@ The project's own rules come first: `CLAUDE.md` (goals, process), `.claude/rules
 
 1. **Server authoritative, strict security.** `security.cfg` runs strict entity lockdown, state bag strict mode and request-control filtering; code is written for it, never loosened. Networked entities are created on the server; clients ask through validated callbacks (lib `onClientCallback` / `onClientEvent` gate).
 2. **Snapshot + delta.** Live server data reaches clients as one snapshot, then only changes, only to who needs it. No polling, no "changed, refetch" signals, no per-player data to `-1`, no constant data per tick; action answers are `{ ok }`. Read `references/sync.md` before writing any server -> client push.
-3. **Our lib, not ox_lib.** ai-* resources use `@aicore-fivem/lib` (callbacks, keybinds, zones, prompts, menu, inventory, vehicle keys, commands). Missing helper? Add it to the lib.
+3. **Our lib, not ox_lib.** ai-* resources use `@aifivem/lib` (callbacks, keybinds, zones, prompts, menu, inventory, vehicle keys, commands). Missing helper? Add it to the lib.
 4. **Scale first.** Plan every system for millions of records and 2048 players online; never walk every online player on a frequent path (lib `online`, `playersNear`); benchmark collection helpers (`references/scale.md`).
 
 ## References

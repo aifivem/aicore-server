@@ -6,7 +6,7 @@ paths:
 
 # Writing or changing a script (hard rules)
 
-Every ai-* script is built from the lib and ai-core; nothing here is optional. A second copy of something the lib does is a defect, even when it works. If the lib lacks what you need and a second script will need it too, add it to `@aicore-fivem/lib` (with JSDoc, a line in `lib.md`, a bench when it holds a collection) and use it from there.
+Every ai-* script is built from the lib and ai-core; nothing here is optional. A second copy of something the lib does is a defect, even when it works. If the lib lacks what you need and a second script will need it too, add it to `@aifivem/lib` (with JSDoc, a line in `lib.md`, a bench when it holds a collection) and use it from there.
 
 ## Before writing
 

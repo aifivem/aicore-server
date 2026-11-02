@@ -9,7 +9,7 @@ The server data folder of ai-core: a public (GPL-3.0) FiveM framework and script
 | `server.cfg`, `security.cfg`, `misc.cfg`, `permission.cfg` | Server config. Secrets go into `env.cfg` (copy `env.example.cfg`). |
 | `resources/[standalone]/` | Third-party resources the server ships with: only bob74_ipl (GTA Online interiors), downloaded by the txAdmin recipe. `ai-voice` stands in for pma-voice, `ai-mysql` for oxmysql, and there is no ox_lib. |
 | `resources/[ai]/` | ai-core resources, each `ai-*` folder its own git repo. |
-| `packages/` | The `@aicore-fivem/*` npm packages (own git repo). |
+| `packages/` | The `@aifivem/*` npm packages (own git repo). |
 | `template/` | Template for new resources (`bun run new <name> "<description>"`). |
 | `tools/setup.ts` | Clones `packages/` and the `ai-*` resources for a development setup: `bun run setup`. |
 | `tools/rcon.ts` | RCON client: `bun run rcon "restart ai-core"`. |

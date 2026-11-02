@@ -34,4 +34,4 @@ Found, not added:
 | okokPhone | its docs are a Notion site that cannot be read; API not verified |
 | codem-phone, sd-phone, cylex_phone, sky_phone | only seen in other scripts' integrations, no docs read |
 
-A new phone: a file in `phone/adapters/` exporting a `PhoneAdapter` (`@aicore-fivem/shared` `phone.ts`) and a line in `phone/index.ts`.
+A new phone: a file in `phone/adapters/` exporting a `PhoneAdapter` (`@aifivem/shared` `phone.ts`) and a line in `phone/index.ts`.

@@ -9,7 +9,7 @@ ai-core has its own character screen (built in, it cannot be removed). When a se
 - GlobalState `ai:characterScreen` (`CORE.characterScreenKey`) holds the external script's name; export `GetCharacterScreen()` answers `"ai-core"` or that name.
 - While an external screen runs ai-core does not open its screen (client boot and `ai-core:characters` refuse), does not put the joining player into its private bucket, and runs neither its spawn nor its spawn chooser. The joining player's account is upserted at `playerJoining` (so the login exports find it). When the external script stops, players without a character get ai-core's screen at once; when one starts, ai-core's open screen closes and its bucket is given back.
 
-## Login entry points (server exports, `MulticharServerExports` in `@aicore-fivem/shared`)
+## Login entry points (server exports, `MulticharServerExports` in `@aifivem/shared`)
 
 | Export | Does |
 |---|---|

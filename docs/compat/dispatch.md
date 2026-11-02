@@ -57,6 +57,6 @@ Scripts that call those systems directly (instead of the QB event) need that sys
 
 ## Adding an alert system
 
-1. A file in `server/dispatch/adapters/` exporting a `DispatchAdapter` (`@aicore-fivem/shared` `dispatch.ts`), calling the system with lib `callExport`; `answersPoliceAlert: true` when the system answers `police:server:policeAlert` itself.
+1. A file in `server/dispatch/adapters/` exporting a `DispatchAdapter` (`@aifivem/shared` `dispatch.ts`), calling the system with lib `callExport`; `answersPoliceAlert: true` when the system answers `police:server:policeAlert` itself.
 2. Add it to `DISPATCH_SYSTEMS` in `registry.ts`, after the other dispatch scripts and before the MDTs and `aiPoliceAlert`.
 3. Build ai-core; the panel lists the new system.

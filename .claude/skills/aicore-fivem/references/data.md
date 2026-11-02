@@ -81,7 +81,7 @@ Details and checklist: `sync.md`. Summary:
 
 ## 7. Database
 
-- Driver: our own engine `@aicore-fivem/mysql` (owner decision): every ai-* resource runs a small mysql2 pool in-process, so queries skip the cross-resource export hop. Third-party scripts use `MySQL.*` / `exports.oxmysql` and reach `ai-mysql`, which stands in for oxmysql with the same API and result types. More connections in total, each pool small with an idle timeout.
+- Driver: our own engine `@aifivem/mysql` (owner decision): every ai-* resource runs a small mysql2 pool in-process, so queries skip the cross-resource export hop. Third-party scripts use `MySQL.*` / `exports.oxmysql` and reach `ai-mysql`, which stands in for oxmysql with the same API and result types. More connections in total, each pool small with an idle timeout.
 - Schema: everything queried, filtered, aggregated or atomically updated is a real column/table. A JSON column only for a free-form bag (metadata). The ESX/QB model of "everything in one `users`/`players` row as JSON" rewrites the whole row on every save, cannot update money atomically and cannot be indexed; we do not take it.
 - Every table has a PRIMARY KEY, `utf8mb4`, InnoDB; money as integer or `DECIMAL`, times as UTC `DATETIME`. Details: the `aicore-mysql` skill.
 - Target engine: MariaDB 10.6+ or MySQL 8; SQL stays portable.

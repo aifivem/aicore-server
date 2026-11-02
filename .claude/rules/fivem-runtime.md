@@ -31,12 +31,12 @@ Engine and native knowledge: the `aicore-fivem` skill (`references/engine.md`, `
 - A client waits for a server-created entity with lib `waitForEntity(netId, timeoutMs)` (`NetworkDoesEntityExistWithNetworkId` + `NetToEnt`, 0 on timeout). entity↔netId conversion goes through one helper. Never send entity handles or player indices between machines.
 - `GetEntityArchetypeName` does not exist on the server: validate a model with `GetHashKey(model) === GetEntityModel(entity)`.
 
-## @aicore-fivem/lib (instead of ox_lib)
+## @aifivem/lib (instead of ox_lib)
 
 ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib was used for. Missing something ox_lib had? Add it to the lib, never pull ox_lib in.
 
 - Callbacks: server `onClientCallback` (same forms and gate as `onClientEvent`; a refused call rejects the client's promise at once), client `triggerServerCallback(name, [args], timeoutMs?)`; the reverse direction `onServerCallback` / `triggerClientCallback(name, src, [args])`. Answers are `unknown`: parse them. No hand-made request/response event pairs.
-- Lang: `createLocale<typeof en>()` from `@aicore-fivem/lib/fivem` (the template's `resource/common/locale.ts`).
+- Lang: `createLocale<typeof en>()` from `@aifivem/lib/fivem` (the template's `resource/common/locale.ts`).
 - Keybinds: client `new Keybind({ name, description, defaultKey, onPressed, onReleased })`; the name is a stable id without the key (the lib appends the panel's or the default key); mouse buttons need `defaultMapper: "MOUSE_BUTTON"`. Commands: server `addCommand` (`lib.md` "Commands and keybinds").
 - Player values: `cache.ped`, `cache.playerId`, `cache.serverId`, `cache.vehicle`, `cache.seat`, `cache.weapon` (`false` = none) instead of calling natives in loops; `onCache(key, (value, old) => ...)` reacts to a change. One watcher in ai-core feeds every resource (entering a vehicle from the game event at once; ped, weapon and in-vehicle seat / exit read every 100 ms); nobody polls these. `onCache("vehicle")` instead of reading `GetVehiclePedIsIn` / `IsPedInAnyVehicle` on a timer.
 - Areas: lib `Zones` (`sphere`, `cylinder`, `poly`; each zone its own `interval` ms, default 500; `onEnter` / `onExit`). Never a hand-written distance loop; per-frame work only while inside, and only when it must draw. ai-lib checks every resource's zones in one engine (export `AddZone` / `RemoveZone`, enter / exit back on `LIB_UI.zoneEvent`): FiveM enters a resource's JS every frame while it has any timer or tick (about 0.03-0.05 ms each in resmon), so an idle resource holds none; a resource checks its own zones only while ai-lib does not run and hands them over when it starts. Prompt-mode model points (`points.addModel` / `addVehicle`) are scanned the same way (export `AddModelPoint` / `RemoveModelPoint`, nearest object back on `LIB_UI.modelPointEvent`).
@@ -51,7 +51,7 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 - On the server, return to the game thread with `setImmediate` before calling a native inside a Node callback (fs, http, Node timers), or it fails with "No current resource manager".
 - Periodic work on either side runs on the resource's one scheduler: lib `every(ms, fn)` (0 = every frame), never `setInterval` / `setTick` (`lib.md` "Periodic work"). Server jobs run on the game thread, so natives work in them.
 - Client code has no DOM/Node APIs (fs, Buffer, localStorage, fetch); packages using them never enter the client bundle.
-- Never write bare `exports` in source and never `export` a value from an entry file (the script shows "Started" but does not load). Use `registerExport(name, fn)` and a top-level `const core = resourceExport("ai-core")` from `@aicore-fivem/lib` (`lib.md` "Exports of other resources").
+- Never write bare `exports` in source and never `export` a value from an entry file (the script shows "Started" but does not load). Use `registerExport(name, fn)` and a top-level `const core = resourceExport("ai-core")` from `@aifivem/lib` (`lib.md` "Exports of other resources").
 
 ## Events and naming
 
@@ -67,7 +67,7 @@ ai-* resources never import ox_lib (owner decision); the lib covers what ox_lib 
 
 ## Logs
 
-- Every log goes through ai-core: `aiLog(channel, message, { level, source, target, metadata })` from `@aicore-fivem/lib/server` (channels described once with `aiLogChannels`). Never post to a Discord webhook or a log service from a resource: providers, minimum level, routing, webhook urls and API keys are all ai-core panel settings (secrets in its git-ignored `data/secrets.json`).
+- Every log goes through ai-core: `aiLog(channel, message, { level, source, target, metadata })` from `@aifivem/lib/server` (channels described once with `aiLogChannels`). Never post to a Discord webhook or a log service from a resource: providers, minimum level, routing, webhook urls and API keys are all ai-core panel settings (secrets in its git-ignored `data/secrets.json`).
 - Pass `source` / `target` instead of writing names into the message; ai-core adds the player's name, character and identifiers. Values go into `metadata`.
 
 ## Permissions

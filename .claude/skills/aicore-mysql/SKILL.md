@@ -1,6 +1,6 @@
 ---
 name: aicore-mysql
-description: MySQL / MariaDB on ai-core - schema and data types, indexes, query patterns, EXPLAIN, transactions and locking, bulk writes, the @aicore-fivem/mysql engine and its typed tables, and safe operations. Use whenever work touches SQL - a resource's sql/main.sql, a query, an index, a slow path, a transaction or database settings.
+description: MySQL / MariaDB on ai-core - schema and data types, indexes, query patterns, EXPLAIN, transactions and locking, bulk writes, the @aifivem/mysql engine and its typed tables, and safe operations. Use whenever work touches SQL - a resource's sql/main.sql, a query, an index, a slow path, a transaction or database settings.
 ---
 
 # ai-core MySQL / MariaDB
@@ -52,7 +52,7 @@ Project rules first: `.claude/rules/database.md` (engine API, typed access, resu
 - Deadlocks (1213) and lock wait timeouts (1205) happen under load: retry an idempotent transaction a bounded number of times.
 - ai-core keeps money memory-first and batches its writes (one transaction per 50 ms window); other resources never write ai-core's tables.
 
-## The engine (`@aicore-fivem/mysql`)
+## The engine (`@aifivem/mysql`)
 
 - `mysql.query / single / scalar / insert / update / prepare / transaction / startTransaction`; each resource runs its own small pool in-process; `ai-mysql` stands in for oxmysql for third-party scripts.
 - Results as oxmysql returns them: `DATETIME`/`DATE` epoch ms, `DECIMAL` string, `BIGINT` number (string beyond 2^53), `TINYINT(1)` boolean through `query` but number through `prepare`, TEXT string, binary BLOB a byte array.
