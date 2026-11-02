@@ -1,12 +1,14 @@
 # MDT layer (police records)
 
-Fines, warrants, arrests and jail records go into the police MDT through ai-core, warrant checks ask it, and its screen opens through ai-core, so scripts never call an MDT directly. There is no ai-* MDT and no ai-core warrant system: with none running nothing is written, nobody is wanted and nothing opens.
+Fines, warrants, arrests and jail records go into the police MDT through ai-core, warrant checks ask it and / or ai-core's own warrants, and its screen opens through ai-core, so scripts never call an MDT directly. There is no ai-* MDT: with none running nothing is written and nothing opens, and warrant checks answer from ai-core's own warrants.
 
 - Server: lib `mdt.record({ kind: "fine" | "warrant" | "arrest" | "jail", target, by?, title, amount?, minutes? })`, `hasWarrant(source | citizenid)` (promise of a boolean: false = no warrant, no MDT, or an MDT without a warrant query), `provider()` (exports `AddMdtRecord`, `HasMdtWarrant(target, done)` (a callback), `GetMdtSystem`; `resources/[ai]/ai-core/resource/server/mdt/`). Lua `aiLib.mdt.record`, `aiLib.mdt.hasWarrant` (waits).
-- Warrant answers are kept 30 s per citizenid (`mdt/warrants.ts`; dropped on an MDT switch): a warrant issued in the MDT counts within 30 s. A failed read (missing table, export error) is logged and answers false.
+- ai-core's own warrants (`resources/[ai]/ai-core/resource/server/warrants/`, table `ai_core_warrants`): issued and cleared by admins (Warrants card on a character's Players page), on-duty officers (ai-police job menu, Warrants) and scripts (lib `warrants`: `add({ target, reason, minutes?, by? })`, `clear(id, by?)`, `clearAll(target, by?)`, `of(target)`, `page(cursor?)`; exports `AddWarrant`, `ClearWarrant`, `ClearWarrants`, `GetWarrants`, `ListWarrants`). A new one of an online target is also written into the active MDT as a `warrant` record when the MDT takes them.
+- Which warrants count: panel setting `warrants` (General, Police records card): `auto` (default) = the active MDT's while it has a warrant query (table below), else ai-core's own (no MDT, or lb-tablet / wasabi_mdt); `both` = either; `mdt` = only the MDT's (nobody is wanted without one).
+- Warrant answers are kept 30 s per citizenid (`mdt/warrants.ts`; dropped on an MDT switch): a warrant issued in the MDT counts within 30 s. ai-core's own warrants answer from memory for a loaded character and forget a stored one's answer on every change, so they count at once. A failed read (missing table, export error) is logged and answers false.
 - Client: lib `mdt.open()` (client export `OpenMdt`; `resource/client/mdt/`), following the server's pick (GlobalState `ai:mdt`). The MDT checks the player's job itself.
 - Picked by the panel setting `mdt` (General, Police records): `auto` = the first running MDT of `MDT_SYSTEMS`.
-- Writers: ai-police (fine and arrest records), ai-prison (a jail record on every jailing). Warrant checks: ai-police's wanted sightings.
+- Writers: ai-police (fine and arrest records), ai-prison (a jail record on every jailing). Warrant checks: ai-police's wanted sightings (and through ai-core's bridge `qbx_smallresources` `SendWantedAlert`: tgiann-bank, tgiann-clothing, tgiann-realparking, lc_stores, codem-phone).
 
 | Script | Records | Warrant check | Open | Status |
 |---|---|---|---|---|
