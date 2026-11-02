@@ -12,7 +12,7 @@ The owner's standing rules; follow them without being asked.
 - After every meaningful step that is verified: typecheck, lint and build pass (read the exit code, never judge from `cmd | tail`), the resource restarted with a clean log when it runs on the server. Do not wait for the end of the session.
 - At the end of a task: commit every repo that changed and check that none is left dirty (`git status --porcelain` in each).
 - Never commit: secrets (`env.cfg`, `data/secrets.json`, webhook urls, tokens), temporary test edits to tracked files (a test `ensure` in `server.cfg` stays uncommitted and is removed after the test), third-party test resources (they live in git-ignored folders such as `resources/[test]`).
-- Source and its generated files go in the same commit: `dist/`, the generated `fxmanifest.lua`, `resource/server/tables.ts`, `data/schemas/*.json`.
+- Source and its generated files that live in git go in the same commit: `resource/server/tables.ts`, `data/schemas/*.json`. `dist/` and `fxmanifest.lua` are not in git (each resource's `.gitignore`): the release zip carries them.
 - A contract change in `packages/` is committed before (or with) the resources that use it.
 
 ## How to write the commit
@@ -29,11 +29,11 @@ The owner's standing rules; follow them without being asked.
 
 - Push only when the owner says so ("push", "pushla", "yayınla"); a commit is never pushed on its own.
 - Before pushing: every repo committed and clean; scan the outgoing diff (`git diff @{u}..HEAD`) for secrets (Discord webhook urls, `ghp_` / `github_pat_` tokens, connection strings with passwords).
-- **Pull right before every push, in every repo, every time** (owner rule; skipping it is the mistake that keeps happening): the release-please bot commits to `main` on its own (the merged release pull request bumps `package.json`, `CHANGELOG.md`, `.release-please-manifest.json` and the `version` line of `fxmanifest.lua`), so the local `main` is often behind even when nobody else worked on it. Run `git fetch origin && git pull --rebase origin main` in each repo just before its `git push`; when the pull brought a release commit, build again and drop a CRLF-only `fxmanifest.lua` change (`git checkout -- fxmanifest.lua`) before pushing. Never push with `--force` to get past a rejected push: a rejection means a bot commit is missing locally, pull it.
+- **Pull right before every push, in every repo, every time** (owner rule; skipping it is the mistake that keeps happening): the release-please bot commits to `main` on its own (the merged release pull request bumps `package.json`, `CHANGELOG.md` and `.release-please-manifest.json`), so the local `main` is often behind even when nobody else worked on it. Run `git fetch origin && git pull --rebase origin main` in each repo just before its `git push`; when the pull brought a release commit, build again (the manifest takes the new version). Never push with `--force` to get past a rejected push: a rejection means a bot commit is missing locally, pull it.
 - Order: the org repo first (shared workflows the others call), then `packages/`, the server folder, every `ai-*`, the docs, the site.
 
 ## Releases (only when the owner asks)
 
 - Every push to `main` makes release-please open or update a release pull request per repo. Merging it is the release (tag, GitHub release, server zip, Discord post): only when the owner asks. Version rule: `CLAUDE.md` "Process".
 - Merge aicore-packages' release pull request first and wait for its `npm` job: a resource's release zip pins our packages to the versions in aicore-packages `main` (`^x.y.z`), so they must be on npm before the resources are released.
-- After release pull requests are merged on GitHub, run `git pull --rebase origin main` in every repo before the next commit, then build again (the release commit changed `package.json` versions and the generated manifests). release-please commits `fxmanifest.lua` with CRLF line endings, so after that build every manifest shows as modified with the same bytes (`cmp <(git show HEAD:fxmanifest.lua) fxmanifest.lua`): `git checkout -- fxmanifest.lua`, nothing to commit.
+- After release pull requests are merged on GitHub, run `git pull --rebase origin main` in every repo before the next commit, then build again (the release commit changed `package.json` versions; the build writes them into the manifest).

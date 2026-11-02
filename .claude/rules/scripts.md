@@ -98,6 +98,6 @@ Every ai-* script is built from the lib and ai-core; nothing here is optional. A
 
 ## After changing
 
-- `bun run typecheck`, `bun run lint`, `bun run build` in the script; restart it over RCON and read the log; commit source and build together.
+- `bun run typecheck`, `bun run lint`, `bun run build` in the script; restart it over RCON and read the log; commit the source with its generated `tables.ts` / `data/schemas` (`dist/` is not in git).
 - Prettier formats (`bun run format` or format on save).
 - Write down what you learned (a rule here or in `lib.md`, a mechanism in the skill or the script's `CLAUDE.md`).

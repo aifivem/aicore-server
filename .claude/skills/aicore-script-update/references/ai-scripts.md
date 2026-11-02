@@ -2,6 +2,8 @@
 
 The owner gives nothing: find what is outdated, download it from GitHub, carry the server's state over, build, restart, check.
 
+Two server layouts. A **workspace server** has `packages/` and a root `package.json` with `workspaces` (the maintainer's and developers' setup, `bun run setup`): resources depend on `@aifivem/*` with `workspace:*` and bun links the local packages. A **zip server** was installed by the txAdmin recipe from the release zips: no `packages/`, no root `package.json`; each resource builds alone and gets `@aifivem/*` from npm at the versions its zip pinned.
+
 ## 1. Find outdated scripts
 
 Every ai-* resource's `package.json` has `version` and `repository` (`github:aifivem/<name>`; the build writes both into `fxmanifest.lua`). ai-core's update check (`resources/[ai]/ai-core/resource/server/versions.ts`) compares them with `releases/latest` on GitHub and prints `<name> <current> is outdated: <latest> is out (<url>)` in the console (also on the admin dashboard, export `GetUpdates`). It only sees started resources and skips those in the panel's `updates.ignore` (ai-core `data/settings.json`), so check every folder yourself:
@@ -20,7 +22,7 @@ done
 - Without a logged-in `gh`: `curl -s -H "Accept: application/vnd.github+json" https://api.github.com/repos/<owner>/<name>/releases/latest` (60 unauthenticated requests per hour per IP, shared with ai-core's own check).
 - A resource in `updates.ignore` is listed as ignored and updated only when the owner names it.
 - **A working copy ahead of its release is not outdated**: local version above the latest tag, or commits after the latest tag in a clone (the maintainer's own repos). Skip it; never move a folder backwards.
-- `packages/` (`@aifivem/lib`, `shared`, `mysql`, `build`) has no `repository` line: compare each `package.json` version with npm (`npm view @aifivem/<pkg> version`) and with the upstream of `packages/` when it is a clone (`git remote -v`). Update packages first when a new resource release needs a range the local copies do not satisfy, or bun installs the npm copy next to the workspace one.
+- On a zip server there is no `packages/`: a resource's zip pins the package versions it needs. On a workspace server `packages/` (`@aifivem/lib`, `shared`, `mysql`, `build`) has no `repository` line: compare each `package.json` version with npm (`npm view @aifivem/<pkg> version`) and with the upstream of `packages/` when it is a clone (`git remote -v`). Update packages first when a new resource release needs a range the local copies do not satisfy, or bun installs the npm copy next to the workspace one.
 - Read the release notes of every version between current and latest (`gh release view <tag> --repo <repo> --json body,assets,url`): breaking changes, required package versions, migrations, new cfg lines (`ensure`, `add_convar_permission`, ACE), new `provide` names, manual steps.
 
 Show the list (name, current -> latest, notes that need action) and wait for the go unless already given. Update in dependency order: packages, ai-mysql, ai-core, ai-lib, then the rest.
@@ -30,12 +32,14 @@ Show the list (name, current -> latest, notes that need action) and wait for the
 Per resource, two new empty directories in the scratchpad (`update/<name>/old`, `update/<name>/new`):
 
 ```bash
-gh release download <tag> --repo aifivem/<name> --archive zip --dir update/<name>/new   # tag source
-gh release download <tag> --repo aifivem/<name> --pattern '*.zip' --dir update/<name>/new  # a release asset, when the release has one
+gh release download <new tag> --repo aifivem/<name> --pattern '<name>-<new tag>.zip' --dir update/<name>/new  # the release zip: build and source
+gh release download <old tag> --repo aifivem/<name> --archive zip --dir update/<name>/old                     # the old tag's source
 unzip -q update/<name>/new/*.zip -d update/<name>/new/x
+unzip -q update/<name>/old/*.zip -d update/<name>/old/x
 ```
 
-- Prefer a release asset when the release attaches one (a ready package); otherwise the tag's source (it carries the committed `dist/` and `fxmanifest.lua`). The zipball's top folder is `<owner>-<name>-<sha>/`.
+- **New upstream** is the release asset `<name>-<tag>.zip` (built files plus the source; top folder `<name>/`; `<name>-runtime.zip` has no source and is no upstream for the three-way). Releases before 2026-11-02 attach built files only: take the tag's source then (`--archive zip`, top folder `<owner>-<name>-<sha>/`). `dist/` and `fxmanifest.lua` are not in git and are rebuilt anyway.
+- The asset's `package.json` (and `web/package.json`) differs from git on purpose: `@aifivem/*` pinned to `^x.y.z` instead of `workspace:*`, and `"workspaces": ["web"]`. That is no server change: leave those fields out of the three-way and write them for the layout (workspace server: `workspace:*`, no `workspaces`; zip server: the new asset's).
 - **Old upstream** is the tag of the version the server runs (find the tag name style with `gh release list --repo aifivem/<name>`). It is always downloadable, so the three-way always has its base. A local clone that has the tag can use `git show <tag>:<path>` instead (in Git Bash `cd` into the folder first: `git -C` fails on `[ai]` paths).
 - Nothing from these folders is run, installed or built in place.
 
@@ -84,8 +88,8 @@ Each resource installs its tables from `sql/main.sql` with `createDatabaseTables
 
 ## 5. Build, restart, check
 
-1. `bun install` at the server root (workspace; links local `packages/`). Never delete `node_modules`.
-2. In each resource: `bun run typecheck`, `bun run lint`, `bun run build`. Always build: `dist/` must come from the merged source and the local packages. Fix errors in the server's carried changes; an error in untouched upstream code is reported, not patched.
+1. Workspace server: `bun install` at the server root (links the local `packages/`). Zip server: `bun install` in each updated resource folder (packages from npm). Never delete `node_modules`.
+2. In each resource: `bun run typecheck`, `bun run lint`, `bun run build`. Always build: `dist/` must come from the merged source. Fix errors in the server's carried changes; an error in untouched upstream code is reported, not patched.
 3. Compare the result with new upstream (`diff -r --strip-trailing-cr -x node_modules -x dist -x data update/<name>/new/x/<top> "<resource>"`): every remaining difference must be one of the server's changes.
 4. `bun tools/rcon.ts --log ../default/logs/fxserver.log --wait 3 "refresh"`, then `bun tools/restart.ts --from <resource>`; after ai-core, ai-lib, ai-mysql or a packages update, `bun tools/restart.ts` (restarts ai-core and ensures every ai-* after it, checking each). ai-mysql stands in for oxmysql: third-party resources that depend on it stop with it and are ensured again by name. New `provide` lines: full start with `bun tools/rcon.ts "quit \"<reason>\""`.
 5. Read the log: `SCRIPT ERROR`, `Failed to load script`, `[client error]`, panel and database errors. The `is outdated` warning for the resource must be gone after its next check.
