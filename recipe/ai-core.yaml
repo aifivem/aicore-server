@@ -2,7 +2,7 @@ $engine: 3
 $minFxVersion: 38039
 $onesync: on
 name: ai-core
-version: 0.2.0 # x-release-please-version
+version: 0.3.0 # x-release-please-version
 author: TGIANN
 description: ai-core, a TypeScript FiveM framework with one admin panel for every script. ESX, QB and Qbox scripts run on it unchanged through its built-in bridge.
 
