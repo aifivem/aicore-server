@@ -1,0 +1,55 @@
+# The txAdmin recipe installs every ai-* script of server.cfg from one zip (release "scripts", asset ai-scripts.zip):
+# one download instead of one per script (each GitHub download costs about 2 s whatever its size). The zip holds
+# `[ai]/<name>/` from each script's latest release zip and is rebuilt only when one of those releases changed
+# (versions.txt next to it lists the tags it was built from). Runs every 30 minutes, on pushes that change the
+# script list, and by hand (Actions > bundle > Run workflow).
+name: bundle
+
+on:
+  push:
+    branches: [main]
+    paths: [server.cfg, .github/workflows/bundle.yml]
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bundle
+  cancel-in-progress: false
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild the script bundle when a script has a new release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: scripts
+        run: |
+          set -euo pipefail
+          names=$(tr -d '\r' < server.cfg | sed -n 's/^ensure \(ai-[A-Za-z0-9_-]*\).*/\1/p')
+          : > versions.txt
+          for n in $names; do
+            echo "$n $(gh api "repos/aifivem/$n/releases/latest" --jq .tag_name)" >> versions.txt
+          done
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            if gh release download "$TAG" --pattern versions.txt --output old.txt 2> /dev/null && cmp -s old.txt versions.txt; then
+              echo "bundle is current"
+              exit 0
+            fi
+          else
+            gh release create "$TAG" --title "Script bundle" --prerelease --latest=false \
+              --notes "Every ai-* script's latest release in one zip, for the txAdmin recipe. Rebuilt by the bundle workflow."
+          fi
+          mkdir -p "out/[ai]"
+          while read -r n tag; do
+            curl -fsSL -o "$n.zip" "https://github.com/aifivem/$n/releases/download/$tag/$n.zip"
+            unzip -q "$n.zip" -d "out/[ai]"
+          done < versions.txt
+          (cd out && zip -qr ../ai-scripts.zip "[ai]")
+          gh release upload "$TAG" ai-scripts.zip versions.txt --clobber
+          cat versions.txt
