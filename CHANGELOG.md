@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.2.0](https://github.com/aifivem/aicore-server/compare/v0.1.6...v0.2.0) (2026-11-02)
+
+
+### New Features
+
+* **recipe:** install every ai-* script from its latest release zip ([a07df3e](https://github.com/aifivem/aicore-server/commit/a07df3e03ec04f2107f124288df3545812ab7de3))
+* **recipe:** install the AI agent files: skills, rules, tools and compatibility notes ([624ef59](https://github.com/aifivem/aicore-server/commit/624ef595c188f3148c32d614330e1ec5aff1aa57))
+* **tools:** bun run setup clones packages and every ai-* resource for a development setup ([7f2032b](https://github.com/aifivem/aicore-server/commit/7f2032b85b67b282868e78cd5450ffbdc494de1f))
+
+
+### Bug Fixes
+
+* **template:** keep the web build in dist/ so release zips have the NUI ([36c66d8](https://github.com/aifivem/aicore-server/commit/36c66d8c0d36d3fdb90bc34da75808ad42cf1f7e))
+
+
+### Code Refactoring
+
+* use the [@aifivem](https://github.com/aifivem) packages in the template, rules, skills and docs ([6de8553](https://github.com/aifivem/aicore-server/commit/6de85534e61f085b731c68301dc763ef9a6d62db))
+
+
+### Documentation
+
+* dist/ is out of git, releases attach a zip with the build and the source ([438868c](https://github.com/aifivem/aicore-server/commit/438868c4a4bc21976774a65e050114611c571bb6))
+* **rules:** never ln -s a folder in Git Bash ([09d90df](https://github.com/aifivem/aicore-server/commit/09d90df1da4d5c7e50de1739a05351f9cbe0d576))
+* **rules:** release the packages before the resources ([446840e](https://github.com/aifivem/aicore-server/commit/446840e11ed8a29039669f6a7e18ffac7d526e11))
+* **rules:** the packages are on npm; bin paths without ./ ([65ad009](https://github.com/aifivem/aicore-server/commit/65ad009e67df598816ced6c2998a16e65d8c11dc))
+* **rules:** tsdown never cleans dist/, every repo runs the check workflow ([df7b1df](https://github.com/aifivem/aicore-server/commit/df7b1dfcd321f33fc69c89b86bec1796bdf4fca1))
+* **skills:** script update downloads from aifivem repos, AGENTS.md lists the skill ([948367a](https://github.com/aifivem/aicore-server/commit/948367a4afbeddb319a7e64032834ff89853bc96))
+* **template:** install from the release zip ([452a1f2](https://github.com/aifivem/aicore-server/commit/452a1f23d287eaad63ffff204720eb50c977db8c))
+
+
+### Miscellaneous Chores
+
+* **template:** build files are no longer in git, the release zip carries them ([a6b2880](https://github.com/aifivem/aicore-server/commit/a6b28805768d214dad7b5e2886d8e0a30fe9dde3))
+
 ## [0.1.6](https://github.com/aifivem/aicore-server/compare/v0.1.5...v0.1.6) (2026-11-02)
 
 
