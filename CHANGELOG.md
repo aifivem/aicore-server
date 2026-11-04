@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.4.0](https://github.com/aifivem/aicore-server/compare/v0.3.1...v0.4.0) (2026-11-04)
+
+
+### New Features
+
+* **cfg:** add sv_enforceSteamAuth (off) to the env template ([dac991d](https://github.com/aifivem/aicore-server/commit/dac991d2c25da42eb969159dd591bac111156981))
+
+
+### Miscellaneous Chores
+
+* **cfg:** drop the deprecated steam_webApiKey convar ([ed001ea](https://github.com/aifivem/aicore-server/commit/ed001ea979be0b6c3650a9dd506aea2c93583040))
+
 ## [0.3.1](https://github.com/aifivem/aicore-server/compare/v0.3.0...v0.3.1) (2026-11-02)
 
 
