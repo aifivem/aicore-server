@@ -76,6 +76,28 @@ tasks:
     ref: master
     dest: ./resources/[standalone]/bob74_ipl
 
+  # The phone: sd-phone (GPL-3.0, github.com/Samuels-Development/sd-phone), its prop models and
+  # ox_lib, which it needs (3.39 or newer; ai-* resources use ai-lib, not ox_lib). The phone comes
+  # from its release zip, never the source: the source ships no built UI and the phone opens blank.
+  - action: download_file
+    url: https://github.com/overextended/ox_lib/releases/latest/download/ox_lib.zip
+    path: ./tmp/ox_lib.zip
+  - action: unzip
+    src: ./tmp/ox_lib.zip
+    dest: ./resources/[standalone]
+
+  - action: download_github
+    src: https://github.com/Samuels-Development/sd-phone-props
+    ref: main
+    dest: ./resources/[standalone]/sd-phone-props
+
+  - action: download_file
+    url: https://github.com/Samuels-Development/sd-phone/releases/latest/download/sd-phone.zip
+    path: ./tmp/sd-phone.zip
+  - action: unzip
+    src: ./tmp/sd-phone.zip
+    dest: ./resources/[standalone]
+
   # ai-core and its scripts: each one's latest release zip, built and ready (no build tools needed), with its source
   - action: ensure_dir
     path: ./resources/[ai]
