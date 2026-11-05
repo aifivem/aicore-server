@@ -76,9 +76,6 @@ tasks:
     ref: master
     dest: ./resources/[standalone]/bob74_ipl
 
-  # The phone: sd-phone (GPL-3.0, github.com/Samuels-Development/sd-phone), its prop models and
-  # ox_lib, which it needs (3.39 or newer; ai-* resources use ai-lib, not ox_lib). The phone comes
-  # from its release zip, never the source: the source ships no built UI and the phone opens blank.
   - action: download_file
     url: https://github.com/overextended/ox_lib/releases/latest/download/ox_lib.zip
     path: ./tmp/ox_lib.zip

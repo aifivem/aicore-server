@@ -19,6 +19,8 @@ The server list name, description, tags, language, banners and Discord link are 
 - `security.cfg`, `misc.cfg`, `permission.cfg`: shared settings. Never loosen `security.cfg`: every ai-* script is written for its strict values.
 - `resources/[ai]/ai-*`: each script from the latest release zip of its repository (built and ready, with its source), so no build tools are needed.
 - `resources/[standalone]/bob74_ipl`: GTA Online interiors and map fixes (github.com/Bob74/bob74_ipl), which ai-* places use (apartments, offices, banks).
+- `resources/[standalone]/sd-phone` and `sd-phone-props`: the phone (github.com/Samuels-Development/sd-phone, GPL-3.0), from its release zip - its source ships no built UI. Every ai-* script reaches it through ai-core's phone layer. Its items are `phone_black` to `phone_yellow`; ai-inventory ships them and the shops sell the black one.
+- `resources/[standalone]/ox_lib`: the library sd-phone needs (3.39 or newer, github.com/overextended/ox_lib). ai-* resources use ai-lib instead, never ox_lib.
 
 Third-party scripts (ESX / QB / Qbox) go into `resources/` with their dependencies; ai-core presents itself as `es_extended`, `qb-core` and `qbx_core`.
 

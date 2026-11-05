@@ -24,9 +24,26 @@ const AGENT_FILES = [
   "CLAUDE.md",
   "AGENTS.md",
 ];
-/** Third-party resources the server ships with (`resources/[standalone]`, not in git): repository and branch. */
-const STANDALONE: Record<string, { src: string; ref: string }> = {
+/**
+ * Third-party resources the server ships with (`resources/[standalone]`, not in git): a repository and branch, or the
+ * release zip unzipped there (sd-phone has no usable source tree - it ships no built UI and the phone opens blank;
+ * ox_lib's zip also brings cfxlua-require, which it needs). Each one is installed only while server.cfg ensures it.
+ */
+const STANDALONE: Record<
+  string,
+  { src: string; ref: string } | { zip: string }
+> = {
   bob74_ipl: { src: "https://github.com/Bob74/bob74_ipl", ref: "master" },
+  ox_lib: {
+    zip: "https://github.com/overextended/ox_lib/releases/latest/download/ox_lib.zip",
+  },
+  "sd-phone-props": {
+    src: "https://github.com/Samuels-Development/sd-phone-props",
+    ref: "main",
+  },
+  "sd-phone": {
+    zip: "https://github.com/Samuels-Development/sd-phone/releases/latest/download/sd-phone.zip",
+  },
 };
 
 function replaceOnce(text: string, from: string, to: string): string {
@@ -106,9 +123,11 @@ const yaml = [
   "  # License, slots, endpoints, the database and the server name into the cfg files",
   "  - action: replace_string\n    mode: all_vars\n    file:\n      - ./server.cfg\n      - ./env.cfg\n",
   "  # Third-party resources the server uses",
-  ...standalone.map(
-    ([name, repo]) =>
-      `  - action: download_github\n    src: ${repo.src}\n    ref: ${repo.ref}\n    dest: ./resources/[standalone]/${name}\n`,
+  ...standalone.map(([name, from]) =>
+    "zip" in from
+      ? `  - action: download_file\n    url: ${from.zip}\n    path: ./tmp/${name}.zip\n` +
+        `  - action: unzip\n    src: ./tmp/${name}.zip\n    dest: ./resources/[standalone]\n`
+      : `  - action: download_github\n    src: ${from.src}\n    ref: ${from.ref}\n    dest: ./resources/[standalone]/${name}\n`,
   ),
   "  # ai-core and its scripts: each one's latest release zip, built and ready (no build tools needed), with its source",
   "  - action: ensure_dir\n    path: ./resources/[ai]\n",
