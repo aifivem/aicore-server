@@ -24,6 +24,7 @@ Limits:
 - 17mov_Phone notifications go to its `SYSTEM` app (its app ids are its own, not ours).
 - yseries: the mail sender name also fills the sender address field. The separate `yphone` / `yflip` resources other bridges call with the same export names are not covered (TeamsGG's docs only describe `yseries`).
 - high-phone `sendMail` mails addresses from a sender set up in its mail config, roadphone mails a framework identifier, qs-smartphone mails a server id or address: `mail` answers false on these three. qs-smartphone has no number -> player export (`sourceOf` null).
+- sd-phone (shipped in `resources/[standalone]`, v1.0.10 and up) is picked up by the lb-phone adapter: its fxmanifest has `provide 'lb-phone'` and its `server/compat/lbphone` answers the six exports the adapter calls. It carries no lb-phone `version`, and it reaches AI Core through our own exports for everything else (inventory, keys, banking, dispatch, garages, records...), printing `ai-core (qbx bridge)` on boot.
 - roadphone: the older RoadPhone (same resource name) has none of these server exports; its calls fail and answer null / false.
 - codem-phone: no has-phone export (a number counts); mails and texts reach only an online player (its exports take a server id); `notify` without an `app` answers false (`SendNotify` refuses it, and its app ids are its own).
 
@@ -35,6 +36,7 @@ When the local player opens the phone, ai-core fires the client local event `COR
 |---|---|---|
 | tgiann-phone | client local `tgiann-phone:hook:visibility (isOpen, onScreen)`, an opening = `isOpen` turning true | its readable `compat/lb-phone/client.lua` (2.0.0-b8) |
 | lb-phone | client `lb-phone:phoneToggled (open)`, `open` true (listened to as a local and as a server event) | docs.lbscripts.com/phone/exports/client-events |
+| sd-phone | the same `lb-phone:phoneToggled (open)`, fired by its lb-phone compat layer | its `client/compat/lbphone.lua` (1.0.10) |
 | gksphone | the local player's state bag `phoneOpen` turning true | docs.gkshop.org/gksphone-v2/exports-and-events/state-bags |
 | 17mov_Phone | `17mov_Phone:Client:AppStateChanged (appName, state)`, an app of the phone opened or closed (no phone open event in its docs) | docs.17movement.net/phone/building-custom-apps/native-features-integration |
 | yseries | the local player's state bag `phoneOpen` turning true | teamsgg.dev/docs/paid-scripts/phone/state-bags |
@@ -50,6 +52,6 @@ Found, not added:
 | npwd 3.16.0 | its number and player lookups are async exports (`getPlayerData`), the only sync one (`getPhoneNumber`) logs a deprecation error on every call, notifications are client-only, no mail: the phone layer is synchronous (source read: github.com/project-error/npwd) |
 | qs-smartphone-pro | no official docs for its exports; bridges call `GetPhoneNumberFromIdentifier(identifier, false)`, `sendNotification(number, { app, head, msg })`, `sendNewMail(source, {...})` |
 | okokPhone | its docs are a Notion site that cannot be read; API not verified |
-| sd-phone, cylex_phone, sky_phone | only seen in other scripts' integrations, no docs read |
+| cylex_phone, sky_phone | only seen in other scripts' integrations, no docs read |
 
 A new phone: a file in `server/phone/adapters/` exporting a `PhoneAdapter` (`@aifivem/shared` `phone.ts`) and a line in `server/phone/index.ts`; its open signal a file in `client/phone/adapters/` exporting a `PhoneClientAdapter` (`watch` on its documented event or state bag) and a line in `client/phone/index.ts`, in the same order.
