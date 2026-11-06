@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.5.0](https://github.com/aifivem/aicore-server/compare/v0.4.0...v0.5.0) (2026-11-06)
+
+
+### New Features
+
+* **recipe:** install sd-phone as the server's phone ([9506b35](https://github.com/aifivem/aicore-server/commit/9506b3505d9bad8fd8f276e78f09dc2b3efacd44))
+
+
+### Bug Fixes
+
+* **recipe:** write the sd-phone tasks from tools/recipe.ts, not by hand ([bc9fdc1](https://github.com/aifivem/aicore-server/commit/bc9fdc19fed63afb4a3ab957419811e2642c0c59))
+
+
+### Documentation
+
+* **compat:** sd-phone answers as lb-phone ([5b1cbed](https://github.com/aifivem/aicore-server/commit/5b1cbed7faad28ac7290c73335f55917aa37a6aa))
+
 ## [0.4.0](https://github.com/aifivem/aicore-server/compare/v0.3.1...v0.4.0) (2026-11-04)
 
 
