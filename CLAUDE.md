@@ -68,15 +68,16 @@ Before finishing, write down anything reusable:
 - A correct-usage rule ("use X for Y", "never Z") → one line in the matching `.claude/rules/*.md` (new file with `paths:` if none fits).
 - A mechanism with code shape, or the reasoning behind a decision → the matching project skill's `references/<topic>.md` (general) or the folder's `CLAUDE.md` (one script). `docs/research/` is the maintainer's private notes, not in git.
 - Something specific to one script → that script's `CLAUDE.md`, in its template section.
+- Something other scripts must follow when they use that script (its exports, item format, "use X for Y") → a line in `.claude/rules/`, because that script's `CLAUDE.md` is not open while another script is written; the detail stays under Contracts in the script file.
 - A finding valid for every FiveM project (engine, native, CEF, runtime, SQL) → the matching project skill in `.claude/skills/` (`aicore-fivem`, `aicore-ui`, `aicore-mysql`).
 - Owner preferences and project status → auto memory, not the repo.
 
-Write current truth in imperative form, no history ("used to be X"). Fix a wrong note instead of adding a second one. No file or function lists that reading the code shows.
+Write current truth in imperative form, no history ("used to be X"). Fix a wrong note instead of adding a second one. No file or function lists that reading the code shows. A cause that is only suspected is not written as a rule: prove it first (a reproduction, a measurement, the source).
 
 ## Process
 
 - Writing or changing a script: `.claude/rules/scripts.md` is the hard checklist (which lib helper for which job, what is never written by hand).
-- Audits are project agents in `.claude/agents/`: `lib-compliance` (code that bypasses the lib or ai-core), `lib-candidates` (repeated code that belongs in the lib or an ai-core layer), `stability-audit` (security, loops, memory, sync and SQL under 2048 / 10k players and 1M records, with benches). Their reports are findings; the fixes follow the rules here.
+- Audits are project agents in `.claude/agents/`: `lib-compliance` (code that bypasses the lib or ai-core), `lib-candidates` (repeated code that belongs in the lib or an ai-core layer), `stability-audit` (security, loops, memory, sync and SQL under 2048 / 10k players and 1M records, with benches). Their reports are findings; the fixes follow the rules here. After a change that is more than a small edit, run `stability-audit` (and `lib-compliance` for script code) on what changed before reporting, without being asked: give the agent the files and the goal, not your own conclusion.
 
 - After a TS change, in the resource: `bun run typecheck`, `bun run lint`, `bun run build`. The game only reads `dist/` and the generated `fxmanifest.lua`.
 - Server commands go through RCON: `bun tools/rcon.ts --log <txData profile>/logs/fxserver.log --wait 3 "ensure ai-core"`. After a build, `ensure`/`restart` the resource and search the log for `Failed to load script`, `SCRIPT ERROR`, `[client error]`, not only for "Started". `bun tools/rcon.ts "aicore_db slow"` shows database statistics of every resource. A new resource or a changed `fxmanifest.lua` needs `refresh` first.
