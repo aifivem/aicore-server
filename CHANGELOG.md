@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/aifivem/aicore-server/compare/v0.5.0...v0.5.1) (2026-11-10)
+
+
+### Documentation
+
+* run audits after larger changes, say where cross-script rules are recorded ([de03149](https://github.com/aifivem/aicore-server/commit/de03149c124067bcbb6c05b0d271b2d4976c594c))
+
 ## [0.5.0](https://github.com/aifivem/aicore-server/compare/v0.4.0...v0.5.0) (2026-11-06)
 
 
